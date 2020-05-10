@@ -1,6 +1,11 @@
 {
   "name": "mf-blog-theme",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "gatsby-config.js",
+  "license": "MIT",
+  "peerDependencies": {
+    "gatsby": "^2.21.21",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
 }

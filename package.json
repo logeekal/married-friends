@@ -1,8 +1,7 @@
 {
   "private": true,
-  "workspaces": [
-    "mf",
-    "packages/*"
-  ]
-  
+  "workspaces": ["mf", "packages/*"],
+  "scripts": {
+    "start": "yarn workspace mf start"
+  }
 }
