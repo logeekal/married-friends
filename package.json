@@ -2,6 +2,7 @@
   "private": true,
   "workspaces": ["mf", "packages/*"],
   "scripts": {
-    "start": "yarn workspace mf start"
+    "start": "yarn workspace mf start",
+    "deploy": "yarn workspace mf deploy"
   }
 }
