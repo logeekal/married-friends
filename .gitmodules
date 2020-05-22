@@ -1,0 +1,6 @@
+[submodule "react-image-carousel"]
+	path = react-image-carousel
+	url = https://github.com/logeekal/react-image-carousel.git
+[submodule "packages/react-image-carousel"]
+	path = packages/react-image-carousel
+	url = https://github.com/logeekal/react-image-carousel.git

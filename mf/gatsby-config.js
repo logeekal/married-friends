@@ -1,3 +1,4 @@
 module.exports = {
-  plugins: ["mf-blog-theme"]
+  plugins: ["mf-blog-theme"],
+  pathPrefix: "/marriedfriends",
 };
