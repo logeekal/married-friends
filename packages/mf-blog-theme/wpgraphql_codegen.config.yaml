@@ -1,0 +1,6 @@
+schema: http://marriedfriends.in/blog/graphql
+documents: ./src/graphql/queries.graphql
+generates:
+  ./src/types/wp-graphql.types.ts:
+    plugins:
+      - typescript

@@ -2,39 +2,39 @@ import { merge } from "theme-ui";
 
 const colors = {
   bgPrimary: "#f0f0f0",
-  bgAccent: "#FB84AF",
+  bgAccent: "rgba(251, 132, 175,.2)",
   bgCard: "#FFFFFF",
   bgButton: "#FF035E",
 
   primary: "#000000",
   accent: "#FF035E",
-  secondary: "#6C6666"
+  secondary: "#6C6666",
 };
 
 const fonts = {
   special: "Fredericka the Great",
   normal: "IBM Plex Sans",
-  cursive: "Sacramento"
+  cursive: "Sacramento",
 };
 
 const fontWeights = {
   regular: 500,
-  bold: 600
+  bold: 600,
 };
 
-const fontSizes = [16, 20, 32, 42];
+const fontSizes = [16, 20, 32, 42, 52];
 
-const space = [15, 30, 60]
+const space = [15, 30, 60];
 
 const styles = {
   root: {
     backgroundColor: "bgPrimary",
-    paddingX: 30
+    paddingX: 30,
   },
   h1: {
     fontFamily: "special",
-    fontSize: 3
-  }
+    fontSize: 3,
+  },
 };
 
 export default merge(
@@ -46,6 +46,6 @@ export default merge(
     fonts,
     fontWeights,
     fontSizes,
-    styles
+    styles,
   }
 );
