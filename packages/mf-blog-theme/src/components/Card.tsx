@@ -25,7 +25,6 @@ const Card: React.FC<CardProps> = ({ children, heading }) => {
         <DecoratedHeading heading={heading} fontSizes={[2,3]} />
       </div>
       <div className="card__content">{children}</div>
-      <div className="card__footer"></div>
     </div>
   );
 };
