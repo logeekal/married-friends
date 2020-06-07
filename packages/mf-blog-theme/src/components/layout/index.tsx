@@ -19,7 +19,8 @@ const Layout: React.FC<{}> = ({ children }) => {
         ]}
       />
       {children}
-      <Footer> {"Sample Footer"} </Footer>
+      <Footer>
+      </Footer>
     </div>
   );
 };

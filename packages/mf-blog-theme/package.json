@@ -12,6 +12,7 @@
     "codegen": "graphql-codegen --config ./wpgraphql_codegen.config.yaml"
   },
   "dependencies": {
+    "@theme-ui/color": "^0.3.1",
     "@types/theme-ui": "^0.3.2",
     "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-plugin-theme-ui": "^0.3.0",

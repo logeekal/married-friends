@@ -4,14 +4,14 @@ import React from "react";
 import { jsx } from "theme-ui";
 interface DecoratedHeadingProps {
   heading: string;
-  fontSizes: number[2];
+  fontSizes: number[];
 }
 
 const DecoratedHeading: React.FC<DecoratedHeadingProps> = ({
   heading,
   fontSizes
 }) => (
-  <span>
+  <React.Fragment>
     {heading.split(" ").map(part => {
       return (
         <span
@@ -27,10 +27,10 @@ const DecoratedHeading: React.FC<DecoratedHeadingProps> = ({
           <span sx={{ color: "primary", fontSize: fontSizes[0] }}>
             {part.slice(1)}
           </span>
-          <span> </span>
+          <span>&nbsp;</span>
         </span>
       );
     })}
-  </span>
+  </React.Fragment>
 );
 export default DecoratedHeading;
