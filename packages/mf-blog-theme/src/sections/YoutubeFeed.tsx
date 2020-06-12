@@ -36,28 +36,52 @@ const YoutubeFeed: FC<YoutubeFeedProps> = ({ videos }) => {
       className="youtube-feed__container"
       sx={{
         display: "flex",
+        flexDirection: "row",
         flexWrap: "wrap",
-        width: "100%",
-        '@media (min-width: "640px")': {
-          iframe: {
-            margin: "15px",
-            flexGrow: 1,
+        paddingTop: 1,
+        "@media only screen and (max-width: 650px)": {
+          ".video-wrapper": {
+            flex: "100%"
+          }
+        },
+        "@media only screen and (min-width: 650px)": {
+          ".video-wrapper": {
+            flex: "20%"
+          }
+        },
+
+        ".video-wrapper": {
+          width: "100%",
+          display: "inline-flex",
+          //border: "3px solid red",
+          margin: 1,
+          ".video": {
+            position: "relative",
             width: "100%",
-            maxWidth: "400px"
+            paddingTop: "56.25%",
+            iframe: {
+              position: "absolute",
+              top:"0px",
+              left:"0px",
+              width: "100%",
+              height: "100%"
+            }
           }
         }
       }}
     >
-      {videos.map(vid => {
+      {videos.map((vid, index) => {
         return (
-          <div>
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/cVDASbWZ_KI"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+          <div key={index} className="video-wrapper">
+            <div className="video">
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/cVDASbWZ_KI"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen="true"
+              ></iframe>
+            </div>
           </div>
         );
       })}

@@ -11,7 +11,14 @@ const DecoratedHeading: React.FC<DecoratedHeadingProps> = ({
   heading,
   fontSizes
 }) => (
-  <React.Fragment>
+  <div className="decorated-heading-container"
+    sx={{
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
     {heading.split(" ").map(part => {
       return (
         <span
@@ -31,6 +38,6 @@ const DecoratedHeading: React.FC<DecoratedHeadingProps> = ({
         </span>
       );
     })}
-  </React.Fragment>
+  </div>
 );
 export default DecoratedHeading;

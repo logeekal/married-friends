@@ -12,7 +12,6 @@ const colors = {
   secondary: "#6C6666",
 };
 
-const breakpoints = ["640px"];
 const fonts = {
   special: "Fredericka the Great",
   normal: "IBM Plex Sans",
@@ -35,10 +34,14 @@ const fontSizes = [16, 20, 32, 42, 52, 104];
 const space = [7.5, 15, 30, 60];
 
 const styles = {
+  "*": {
+    boxSizing: "border-box",
+  },
   root: {
     backgroundColor: "bgPrimary",
     paddingX: 0,
     fontFamily: "normal",
+    boxSizing: "border-box",
   },
   h1: {
     fontFamily: "special",
