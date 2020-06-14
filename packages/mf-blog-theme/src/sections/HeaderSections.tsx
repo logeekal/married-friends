@@ -4,8 +4,8 @@ import React from "react";
 import { jsx, SxStyleProp } from "theme-ui";
 import Header from "../components/header/Header";
 import DecoratedHeading from "../components/DecoratedHeading";
-import {FLEX_CONFIG} from '../utils/style';
-
+import { FLEX_CONFIG } from "../utils/style";
+import SocialIcons from "../components/SocialIcons";
 
 interface MenuShape {
   label: string;
@@ -28,13 +28,14 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
     <Header>
       <div
         className="header-container"
-        sx={{
-          ...FLEX_CONFIG(),
-          justifyContent: "space-between",
-          width: "100%",
-          height: "100%",
-          
-        }as SxStyleProp}
+        sx={
+          {
+            ...FLEX_CONFIG(),
+            justifyContent: "space-between",
+            width: "100%",
+            height: "100%"
+          } as SxStyleProp
+        }
       >
         <div
           className="header__menu"
@@ -50,15 +51,17 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
         </div>
         <div
           className="header__heading"
-          sx={{
-            fontSize: 3,
-            justifySelf: "center",
-            justifyItems: "center",
-            alignItems: "center",
-            paddingX: "15px",
-            height: "100%",
-            ...FLEX_CONFIG('inline-flex','column')
-          } as SxStyleProp}
+          sx={
+            {
+              fontSize: 3,
+              justifySelf: "center",
+              justifyItems: "center",
+              alignItems: "center",
+              paddingX: "15px",
+              height: "100%",
+              ...FLEX_CONFIG("inline-flex", "column")
+            } as SxStyleProp
+          }
         >
           <DecoratedHeading heading={title} fontSizes={[3, 4]} />
           <div
@@ -74,13 +77,15 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
         </div>
         <div
           className="header__controls"
-          sx={{
-            height: "100%",
-            flex: '0.25',
-            ...FLEX_CONFIG()
-          }as SxStyleProp}
+          sx={
+            {
+              height: "100%",
+              flex: "0.25",
+              ...FLEX_CONFIG()
+            } as SxStyleProp
+          }
         >
-          Controls
+          <SocialIcons />
         </div>
       </div>
     </Header>
