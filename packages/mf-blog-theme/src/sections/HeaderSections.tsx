@@ -6,6 +6,7 @@ import Header from "../components/header/Header";
 import DecoratedHeading from "../components/DecoratedHeading";
 import { FLEX_CONFIG } from "../utils/style";
 import SocialIcons from "../components/SocialIcons";
+import { ICON_COMPONENTS } from "../utils/config";
 
 interface MenuShape {
   label: string;
@@ -24,16 +25,33 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
   subTitle,
   menu
 }) => {
+  const [isHeaderSticky, setIsHeaderSticky] = React.useState(false);
+  React.useEffect(() => {
+    const win = typeof window === "object" && window;
+
+    win.addEventListener("scroll", () => setIsHeaderSticky(true));
+
+    return () => {
+      win.removeEventListener("scroll", () => setIsHeaderSticky(true));
+    };
+  });
   return (
     <Header>
       <div
-        className="header-container"
+        className={`header-container ${isHeaderSticky && "stickyyyyy"}`}
         sx={
           {
             ...FLEX_CONFIG(),
             justifyContent: "space-between",
             width: "100%",
-            height: "100%"
+            height: "100%",
+            backgroundColor: "bgPrimary",
+            "&.sticky": {
+              position: "fixed",
+              top: 0,
+              left: 0,
+              zIndex: "9999"
+            }
           } as SxStyleProp
         }
       >
@@ -43,11 +61,17 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
             flex: 0.25,
             height: "100%",
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
+            justifyContent: "flex-start",
+            alignItems: "center",
+            svg: {
+              cursor: "pointer",
+              "&:hover": {
+                stroke: "accent"
+              }
+            }
           }}
         >
-          Menu
+          {ICON_COMPONENTS.menu}
         </div>
         <div
           className="header__heading"
@@ -81,7 +105,8 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
             {
               height: "100%",
               flex: "0.25",
-              ...FLEX_CONFIG()
+              ...FLEX_CONFIG(),
+              justifyContent: "flex-end"
             } as SxStyleProp
           }
         >

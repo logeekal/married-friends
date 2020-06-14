@@ -61,19 +61,26 @@ const SocialIcons: FC<SocialIconsProps> = ({
             ...FLEX_CONFIG(),
             cursor: "pointer",
             ".social-icon__label": {
-              opacity: 0,
-              width: 0,
+              opacity: 1,
+              display: "none",
               marginInlineEnd: "5px",
-              transition: "all 1s ease-out",
+              transition: "all .1s ease-out",
               "&.visible": {
                 opacity: 1,
-                width: "auto"
+                width: "50px"
               }
             },
             ".social-icon": {
               paddingInline: "2px",
               height: "100%",
-              transition: "0.2s easeOut",
+              transition: "all 0.3s ease-out",
+              "&:hover": {
+                svg: {
+                  fill: "accent",
+                  width: "30px",
+                  height: "30px",
+                }
+              },
               "svg.icon": {
                 width: "24px",
                 height: "24px"
@@ -92,10 +99,11 @@ const SocialIcons: FC<SocialIconsProps> = ({
            */
         }
         let toggleFocusMod = e => toggleFocus(e, index);
+        console.log(socialProfile.type);
         return (
           <React.Fragment>
             {index > 0 && <div className="icon-saperator">/</div>}
-            <div className="social-icon__container">
+            <div key={socialProfile.type} className="social-icon__container">
               <div
                 className={`social-icon__label ${
                   index === visibleIconLabelIndex ? "visible" : ""

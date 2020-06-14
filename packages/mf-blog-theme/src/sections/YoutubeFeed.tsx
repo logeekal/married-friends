@@ -61,8 +61,8 @@ const YoutubeFeed: FC<YoutubeFeedProps> = ({ videos }) => {
             paddingTop: "56.25%",
             iframe: {
               position: "absolute",
-              top:"0px",
-              left:"0px",
+              top: "0px",
+              left: "0px",
               width: "100%",
               height: "100%"
             }
@@ -79,7 +79,7 @@ const YoutubeFeed: FC<YoutubeFeedProps> = ({ videos }) => {
                 height="315"
                 src="https://www.youtube.com/embed/cVDASbWZ_KI"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen="true"
+                allowFullScreen="true"
               ></iframe>
             </div>
           </div>
