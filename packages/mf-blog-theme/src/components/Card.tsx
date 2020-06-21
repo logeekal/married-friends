@@ -31,14 +31,13 @@ const Card: React.FC<CardProps> = ({
     <div
       className={`card-container ${className}`}
       sx={{
-        width: "100%",
         backgroundColor: "bgCard",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         paddingInline: "30px",
-        margin: "15px 15px",
+        margin: 0,
         ...cardStyle
       }}
       {...restProps}

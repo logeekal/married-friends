@@ -27,9 +27,9 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
         }}
       >
         <img
-          src={post.featuredImage.link}
-          alt={post.featuredImage.altText || post.title}
-        />
+          src={post.featuredImage.mediaItemUrl}
+          alt={post.featuredImage.altText}
+          width="100%" />
       </div>
 
       <div
@@ -39,12 +39,11 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
           backgroundColor: "bgCard"
         }}
       >
-        <Styled.h2>{post.title}</Styled.h2>
+        <Styled.h2 dangerouslySetInnerHTML={{ __html: post.title }}></Styled.h2>
         <p>
           {post.categories.nodes[0].name}/{post.date}
         </p>
-        <p>{post.excerpt} </p>
-        <div className="card__footer">Comments({post.commentCount})/ Share</div>
+        <p dangerouslySetInnerHTML={{ __html: post.excerpt }}></p>
       </div>
     </div>
   );

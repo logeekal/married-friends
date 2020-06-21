@@ -4,6 +4,14 @@ module.exports = {
   plugins: [
     "gatsby-plugin-theme-ui",
     {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "WPGraphql",
+        fieldName: "wpgraphql",
+        url: "http://marriedfriends.in/blog/graphql",
+      },
+    },
+    {
       resolve: "gatsby-source-instagram",
       options: {
         username: "marriedfriends",
