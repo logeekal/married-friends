@@ -9,6 +9,7 @@ import Mail from "../../assets/mail.svg";
 import Twitter from "../../assets/twitter.svg";
 import Search from "../../assets/search.svg";
 import Menu from "../../assets/menu.svg";
+import Share from "../../assets/share.svg";
 
 export const ICON_COMPONENTS = {
   facebook: <Facebook />,
@@ -18,4 +19,5 @@ export const ICON_COMPONENTS = {
   mail: <Mail />,
   search: <Search />,
   menu: <Menu />,
+  share: <Share />
 };

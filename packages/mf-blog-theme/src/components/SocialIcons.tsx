@@ -2,7 +2,7 @@
 
 import React, { FC, MouseEvent } from "react";
 import { FLEX_CONFIG } from "../utils/style";
-import { SxStyleProp, jsx } from "theme-ui";
+import { SxStyleProp, jsx, Link } from "theme-ui";
 import { ICON_COMPONENTS } from "../utils/config";
 
 export interface SocialProps {
@@ -14,11 +14,15 @@ export interface SocialProps {
 export interface SocialIconsProps {
   socialProfiles: Array<SocialProps>;
   includeSearch: boolean;
+  width?: string;
+  height?: string;
 }
 
 const SocialIcons: FC<SocialIconsProps> = ({
   socialProfiles,
-  includeSearch
+  includeSearch,
+  width,
+  height
 }) => {
   const [visibleIconLabelIndex, setVisibleIconLabelIndex] = React.useState(-1);
 
@@ -78,12 +82,12 @@ const SocialIcons: FC<SocialIconsProps> = ({
                 svg: {
                   fill: "accent",
                   width: "30px",
-                  height: "30px",
+                  height: "30px"
                 }
               },
               "svg.icon": {
-                width: "24px",
-                height: "24px"
+                width: width || "24px",
+                height: height || width || "24px"
               }
             }
           }
@@ -118,7 +122,9 @@ const SocialIcons: FC<SocialIconsProps> = ({
                 onFocus={toggleFocusMod}
                 onBlur={toggleFocusMod}
               >
-                {ICON_COMPONENTS[socialProfile.type]}
+                <a href={socialProfile.target}>
+                  {ICON_COMPONENTS[socialProfile.type]}
+                </a>
               </div>
             </div>
           </React.Fragment>

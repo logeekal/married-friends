@@ -9,24 +9,24 @@ const colors = {
 
   primary: "#000000",
   accent: "#FF035E",
-  secondary: "#6C6666",
+  secondary: "#6C6666"
 };
 
 const fonts = {
   special: "Fredericka the Great",
   normal: "IBM Plex Sans",
-  cursive: "Sacramento",
+  cursive: "Sacramento"
 };
 
 const fontWeights = {
   regular: 500,
-  bold: 600,
+  bold: 600
 };
 
 const forms = {
   input: {
-    ...input.primary,
-  },
+    ...input.primary
+  }
 };
 
 const fontSizes = [16, 20, 32, 42, 52, 104];
@@ -35,21 +35,30 @@ const space = [7.5, 15, 30, 60];
 
 const styles = {
   "*": {
-    boxSizing: "border-box",
+    boxSizing: "border-box"
   },
   root: {
     backgroundColor: "bgPrimary",
     paddingX: 0,
     fontFamily: "normal",
-    boxSizing: "border-box",
+    boxSizing: "border-box"
   },
   h1: {
-    fontFamily: "special",
-    fontSize: 3,
+    fontFamily: "normal",
+    fontSize: 3
   },
+  h2: {
+    fontFamily: "normal",
+    fontSize: 2
+  },
+  h3: {
+    fontFamily: "normal",
+    fontSize: 1
+  },
+
   a: {
     color: "accent",
-    textDecoration: "none",
+    textDecoration: "none"
   },
   hr: {
     width: "100px",
@@ -57,8 +66,8 @@ const styles = {
     border: "transparent",
     backgroundColor: "accent",
     marginBlockEnd: "30px",
-    borderRadius: "2px",
-  },
+    borderRadius: "2px"
+  }
 };
 
 export default merge(
@@ -73,6 +82,6 @@ export default merge(
     styles,
     buttons,
     forms,
-    space,
+    space
   }
 );

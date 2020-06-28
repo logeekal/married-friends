@@ -12,15 +12,13 @@ module.exports = async ({ actions, graphql }) => {
 
   const { data: postsWrapper } = await graphql(QUERIES.GET_POSTS);
 
-  console.log("Got posts data");
   const posts = postsWrapper.wpgraphql.posts.nodes;
-  console.log(posts);
 
   createPage({
     path: "/hello",
     component: indexTemplate,
     context: {
-      posts
-    }
+      posts,
+    },
   });
 };

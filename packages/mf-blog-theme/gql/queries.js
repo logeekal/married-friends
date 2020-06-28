@@ -19,6 +19,7 @@ query GET_POSTS {
         nodes {
           id
           title
+          date
           excerpt
           content
           slug
