@@ -28,7 +28,9 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
         flexDirection: "column",
         height: "100%",
         flex: type === "major" ? "100%" : "50%",
+        minWidth: "100px",
         backgroundColor: "bgCard",
+        margin: 1,
         cursor: "pointer"
       }}
     >
@@ -76,9 +78,11 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             <Text sx={{ fontSize: 0 }}> / </Text>
             {`${date.day}.${date.month}.${date.year}`}
           </AccentText>
-          <p>
-            <Text>{extractTextfromHTML(post.excerpt)}</Text>
-          </p>
+          <article>
+            <p>
+            <Text>{extractTextfromHTML(post.excerpt).substr(0,150)}</Text>
+              </p>
+          </article>
           <div
             className="card-footer"
             sx={{ display: "flex", justifyContent: "space-between" }}

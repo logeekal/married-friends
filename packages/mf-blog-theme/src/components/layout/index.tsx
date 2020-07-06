@@ -6,7 +6,6 @@ import HeaderSection from "../../sections/HeaderSections";
 const Layout: React.FC<{}> = ({ children }) => {
   return (
     <div>
-      {" "}
       <HeaderSection
         title="Married Friends."
         subTitle="creating a delicious lifestyle together"
@@ -19,8 +18,7 @@ const Layout: React.FC<{}> = ({ children }) => {
         ]}
       />
       {children}
-      <Footer>
-      </Footer>
+      <Footer></Footer>
     </div>
   );
 };

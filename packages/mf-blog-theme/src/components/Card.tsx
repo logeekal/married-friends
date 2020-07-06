@@ -37,7 +37,7 @@ const Card: React.FC<CardProps> = ({
         justifyContent: "center",
         alignItems: "center",
         paddingInline: "30px",
-        margin: 0,
+        margin: 1,
         ...cardStyle
       }}
       {...restProps}

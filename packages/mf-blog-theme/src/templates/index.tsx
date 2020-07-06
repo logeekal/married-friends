@@ -31,26 +31,36 @@ function Home({ pageContext }): React.ReactFragment {
         sx={{
           display: "flex",
           flexDirection: "row",
-          flexWrap: "wrap",
-          "@media only screen and (max-width: 650px)": {
-            flexDirection: "column"
-          }
+          flexWrap: "wrap"
         }}
       >
         <div
           className="home-left__container"
-          sx={{ flex: "0.70", border: "1px solid red", margin: minMargin }}
+          sx={{
+            border: "1px solid red",
+            marginTop: 0,
+            marginBottom: 0,
+            flex:0.7,
+            "@media only screen and (max-width: 768px)": {
+              flex: 1,
+              minWidth: "100%"
+            }
+          }}
         >
           <Grid articles={posts} />
         </div>
         <div
           className="home-right__container"
           sx={{
-            flex: "0.30",
             border: "3px solid green",
-            margin: minMargin,
-            minWidth: "400px"
-          }}
+            marginTop: 0,
+            marginBottom: 0,
+            flex: 0.3,
+           "@media only screen and (max-width: 768px)": {
+              flex: 1,
+              width: "100%"
+            }
+}}
         >
           <Instagram />
           <About />
