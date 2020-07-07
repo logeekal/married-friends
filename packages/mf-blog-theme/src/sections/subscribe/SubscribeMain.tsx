@@ -27,7 +27,7 @@ const SubscribeMain: FC<SubscribeMainProps> = props => {
     <div
       className="main-subscribe__container"
       sx={{
-        height: "500px",
+        minHeight: "500px",
         fontSize: 2,
         display: "flex",
         flexDirection: "column",
@@ -48,13 +48,13 @@ const SubscribeMain: FC<SubscribeMainProps> = props => {
           width: "100%"
         }}
       >
-        <DecoratedHeading heading={props.title} fontSizes={[3, 4]} />
+        <DecoratedHeading heading={props.title} fontSizes={[3, 4]} responsive={true}/>
       </div>
-      <div sx={{ color: "secondary" }}>{props.subtitle}</div>
+      <div sx={{ color: "secondary", display: "grid", placeItems: "center", textAlign: "center" }}>{props.subtitle}</div>
       <div className="main_subscribe__form">
         <Divider
           sx={{
-            width: "900px",
+            width: "100%",
             height: "1px",
             bg: "accent",
             marginBlockStart: "15px",
@@ -64,8 +64,7 @@ const SubscribeMain: FC<SubscribeMainProps> = props => {
         />
         <form
           sx={{
-            display: "flex",
-            flexDirection: "row",
+            display: "grid",
           }}
           id="main_subForm "
           onSubmit={handleSubmission}
@@ -83,7 +82,7 @@ const SubscribeMain: FC<SubscribeMainProps> = props => {
           />
           <Button
             variant="primary"
-            sx={{ margin: "7.5px", flex: "0.3" }}
+            sx={{ margin: "7.5px", flex: "0.3", padding:"0px" }}
             type="submit"
             name="submit"
           >

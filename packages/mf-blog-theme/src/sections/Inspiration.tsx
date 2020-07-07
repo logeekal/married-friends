@@ -12,7 +12,7 @@ const Inspiration: FC<InspirationProps> = props => {
 
   React.useEffect(()=>{
 
-    let timer = setTimeout(()=>{setRandom(Math.floor(Math.random() * quotes.length))},5000)
+    let timer = setTimeout(()=>{setRandom(Math.floor(Math.random() * quotes.length))}, 6*3600*1000)
 
     function cleanup(){      
       clearTimeout(timer)

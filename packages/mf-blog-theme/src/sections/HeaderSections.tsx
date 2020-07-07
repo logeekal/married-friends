@@ -55,6 +55,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
             transformOrigin: "0px",
             "&.sticky": {
               position: "fixed",
+              boxShadow: "1px 1px 12px 1px rgba(0,0,0,0.5)",
               top: "0px",
               left: "0px",
               height: "80px",
@@ -98,14 +99,26 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
             } as SxStyleProp
           }
         >
-          <DecoratedHeading heading={title} fontSizes={[3, 4]} />
+          <div
+            sx={{
+                          }}
+          >
+            <DecoratedHeading
+              heading={title}
+              fontSizes={[0, 1]}
+              responsive={true}
+            />
+          </div>
           {!isHeaderSticky && (
             <div
               className="header__subtitle"
               sx={{
                 fontFamily: "cursive",
                 fontSize: 3,
-                color: "secondary"
+                color: "secondary",
+                "@media only screen and (max-width: 700px)": {
+                  display: "none"
+                }
               }}
             >
               {subTitle}
@@ -119,8 +132,11 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
               height: "100%",
               flex: "0.25",
               ...FLEX_CONFIG(),
-              justifyContent: "flex-end"
-            } as SxStyleProp
+              justifyContent: "flex-end",
+              "@media only screen and (max-width: 700px)": {
+                  display: "flex"
+                }
+} as SxStyleProp
           }
         >
           <SocialIcons />

@@ -64,8 +64,11 @@ function Home({ pageContext }): React.ReactFragment {
         >
           <Instagram />
           <About />
-        </div>
+          <Inspiration />
+              
       </div>
+      </div>
+      <SubscribeMain />
     </Layout>
   );
 }
