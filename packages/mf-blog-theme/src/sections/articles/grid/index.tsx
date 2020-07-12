@@ -21,15 +21,21 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
       <div
         className="rest-grid"
         sx={{
-          display: "inline-grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          alignItems: "flex-start"
+          //display: "inline-grid",
+          //gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          //alignItems: "flex-start",
+          display: "flex",
+          flexWrap: "wrap"
         }}
       >
         {props.articles.map((article, index) => {
           return (
             index > 0 && (
-              <Card post={article} type={index === 0 ? "major" : "minor"} />
+              <Card
+                sx={{ flex: "1 1 300px" }}
+                post={article}
+                type={index === 0 ? "major" : "minor"}
+              />
             )
           );
         })}

@@ -7,6 +7,7 @@ import DecoratedHeading from "../components/DecoratedHeading";
 import { FLEX_CONFIG } from "../utils/style";
 import SocialIcons from "../components/SocialIcons";
 import { ICON_COMPONENTS } from "../utils/config";
+import useWindowDims from "../hooks/useWindowDims";
 
 interface MenuShape {
   label: string;
@@ -26,6 +27,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
   menu
 }) => {
   const [isHeaderSticky, setIsHeaderSticky] = React.useState(false);
+  const { width: windowWidth, height } = useWindowDims();
 
   React.useEffect(() => {
     const win = typeof window === "object" && window;
@@ -48,21 +50,24 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
           {
             ...FLEX_CONFIG(),
             justifyContent: "space-between",
-            width: "100%",
             height: "100%",
             backgroundColor: "bgPrimary",
             maxHeight: "200px",
             transformOrigin: "0px",
+            marginLeft: 1,
+            marginRight: 1,
             "&.sticky": {
               position: "fixed",
+              width: "100%",
+              paddingLeft: "30px",
+              paddingRight: "30px",
+              marginLeft: "0px",
+              marginRight: "0px",
               boxShadow: "1px 1px 12px 1px rgba(0,0,0,0.5)",
               top: "0px",
               left: "0px",
               height: "80px",
               zIndex: "9999",
-              paddingLeft: 0,
-              paddingRight: 0,
-              width: "100%"
             }
           } as SxStyleProp
         }
@@ -92,23 +97,19 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
               fontSize: 3,
               justifySelf: "center",
               justifyItems: "center",
-              alignItems: "center",
               paddingX: "15px",
               height: "100%",
-              ...FLEX_CONFIG("inline-flex", "column")
+              ...FLEX_CONFIG("inline-flex", "column"),
+              flex: "auto",
+              alignItems: windowWidth <= 700 ? "flex-start" : "center"
             } as SxStyleProp
           }
         >
-          <div
-            sx={{
-                          }}
-          >
-            <DecoratedHeading
-              heading={title}
-              fontSizes={[0, 1]}
-              responsive={true}
-            />
-          </div>
+          <DecoratedHeading
+            heading={title}
+            fontSizes={windowWidth <= 700 ? [1, 2] : [3, 4]}
+            responsive={false}
+          />
           {!isHeaderSticky && (
             <div
               className="header__subtitle"
@@ -134,12 +135,16 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
               ...FLEX_CONFIG(),
               justifyContent: "flex-end",
               "@media only screen and (max-width: 700px)": {
-                  display: "flex"
-                }
-} as SxStyleProp
+                display: "flex"
+              }
+            } as SxStyleProp
           }
         >
-          <SocialIcons />
+          {windowWidth < 700 ? (
+            <SocialIcons socialProfiles={[]} includeSearch={true} />
+          ) : (
+            <SocialIcons />
+          )}
         </div>
       </div>
     </Header>

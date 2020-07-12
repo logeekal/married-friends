@@ -24,7 +24,7 @@ const InstagramFooter: React.FC<{}> = ({}) => {
 const Instagram: React.FC<InstagramProps> = ({ data }) => {
   return (
     <Card  className="card___instagram" heading="insta life" footer={<InstagramFooter />}>
-      <div className="instagram__image-container">
+      <div className="instagram__image-container" sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center" }}>
         {data.map((image, index) => {
           return (
             <img

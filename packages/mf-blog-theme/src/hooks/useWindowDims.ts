@@ -9,7 +9,7 @@ const useWindowDims = () => {
     const height = hasWindow ? window.innerHeight : null;
     return {
       width,
-      height,
+      height
     };
   }
 
@@ -21,7 +21,7 @@ const useWindowDims = () => {
         setWindowDim(getWindowSize);
       }
 
-      const debouncedHandler = debounce(handleResize, 200);
+      const debouncedHandler = debounce(handleResize, 0);
       window.addEventListener("resize", debouncedHandler);
       function cleanup() {
         window.removeEventListener("resize", debouncedHandler);

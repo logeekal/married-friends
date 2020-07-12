@@ -37,10 +37,10 @@ function Home({ pageContext }): React.ReactFragment {
         <div
           className="home-left__container"
           sx={{
-            border: "1px solid red",
+            border: "0px solid red",
             marginTop: 0,
             marginBottom: 0,
-            flex:0.7,
+            flex: 0.7,
             "@media only screen and (max-width: 768px)": {
               flex: 1,
               minWidth: "100%"
@@ -52,21 +52,20 @@ function Home({ pageContext }): React.ReactFragment {
         <div
           className="home-right__container"
           sx={{
-            border: "3px solid green",
+            border: "0px solid green",
             marginTop: 0,
             marginBottom: 0,
             flex: 0.3,
-           "@media only screen and (max-width: 768px)": {
+            "@media only screen and (max-width: 768px)": {
               flex: 1,
               width: "100%"
             }
-}}
+          }}
         >
           <Instagram />
           <About />
           <Inspiration />
-              
-      </div>
+        </div>
       </div>
       <SubscribeMain />
     </Layout>

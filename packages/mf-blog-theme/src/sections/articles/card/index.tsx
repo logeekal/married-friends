@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import React from "react";
-import { jsx, Styled, Link } from "theme-ui";
+import { jsx, Styled, Link, SxStyleProp } from "theme-ui";
 import { Post } from "../../../types/wp-graphql.types";
 import {
   extractTextfromHTML,
@@ -14,6 +14,7 @@ import SocialIcons from "../../../components/SocialIcons";
 interface CardProps {
   post: Post;
   type: "major" | "minor";
+  sx: SxStyleProp;
 }
 
 const Card: React.FC<CardProps> = (props: CardProps) => {
@@ -27,11 +28,12 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
         display: "flex",
         flexDirection: "column",
         height: "100%",
-        flex: type === "major" ? "100%" : "50%",
+        flex: type === "major" ? "100%" : "1 1 300px",
         minWidth: "100px",
         backgroundColor: "bgCard",
         margin: 1,
-        cursor: "pointer"
+        cursor: "pointer",
+        ...props.sx
       }}
     >
       <Link href={makePostSlug(post)}>
@@ -80,8 +82,8 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
           </AccentText>
           <article>
             <p>
-            <Text>{extractTextfromHTML(post.excerpt).substr(0,150)}</Text>
-              </p>
+              <Text>{extractTextfromHTML(post.excerpt)}</Text>
+            </p>
           </article>
           <div
             className="card-footer"

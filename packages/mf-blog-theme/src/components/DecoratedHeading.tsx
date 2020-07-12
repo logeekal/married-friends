@@ -8,13 +8,12 @@ interface DecoratedHeadingProps {
   responsive: boolean;
 }
 
-
-const getResponsiveFontSizes = ( responsive: boolean,fontSizes: number[2]) => {
-  if(fontSizes[0] !==0 && responsive){
-    return [fontSizes[0]-1 , fontSizes[1] - 1]
+const getResponsiveFontSizes = (responsive: boolean, fontSizes: number[2]) => {
+  if (fontSizes[0] !== 0 && responsive) {
+    return [fontSizes[0] - 1, fontSizes[1] - 1];
   }
   return fontSizes;
-}
+};
 
 const DecoratedHeading: React.FC<DecoratedHeadingProps> = ({
   heading,
@@ -33,11 +32,14 @@ const DecoratedHeading: React.FC<DecoratedHeadingProps> = ({
   >
     {heading.split(" ").map(part => {
       return (
-        <span
+        <div
           className="decorated-heading"
           sx={{
             fontFamily: "special",
-            textTransform: "uppercase"
+            textTransform: "uppercase",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
           }}
         >
           <span
@@ -45,7 +47,7 @@ const DecoratedHeading: React.FC<DecoratedHeadingProps> = ({
               color: "accent",
               fontSize: fontSizes[1],
               "@media only screen and (max-width: 700px)": {
-                fontSize: getResponsiveFontSizes(responsive,fontSizes)[1],
+                fontSize: getResponsiveFontSizes(responsive, fontSizes)[1]
               }
             }}
           >
@@ -56,14 +58,14 @@ const DecoratedHeading: React.FC<DecoratedHeadingProps> = ({
               color: "primary",
               fontSize: fontSizes[0],
               "@media only screen and (max-width: 700px)": {
-                fontSize: getResponsiveFontSizes(responsive,fontSizes)[0],
+                fontSize: getResponsiveFontSizes(responsive, fontSizes)[0]
               }
             }}
           >
             {part.slice(1)}
           </span>
-          <span>&nbsp;</span>
-        </span>
+          <span sx={{ marginLeft: "0.5rem" }}></span>
+        </div>
       );
     })}
   </div>

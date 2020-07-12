@@ -44,16 +44,28 @@ const Card: React.FC<CardProps> = ({
     >
       <div
         className="card__header"
-        sx={{ display: "flex",flexDirection: "row", justifyContent: "center", ...headerStyle }}
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          paddingTop: 1,
+          paddingBottom: 1,
+          ...headerStyle
+        }}
       >
-        <DecoratedHeading heading={heading} fontSizes={[2, 3]} />
+        <DecoratedHeading
+          heading={heading}
+          fontSizes={[2, 3]}
+          responsive={false}
+        />
       </div>
-      <Divider />
+      <Divider sx={{ marginTop: "0px" }} />
       <div
         className="card__content"
         sx={{
           display: "flex",
           justifyContent: "center",
+          alignItems: "center",
           flexDirection: "row",
           width: "100%",
           color: "secondary",
