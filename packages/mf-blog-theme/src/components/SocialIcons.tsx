@@ -4,6 +4,7 @@ import React, { FC, MouseEvent } from "react";
 import { FLEX_CONFIG } from "../utils/style";
 import { SxStyleProp, jsx, Link } from "theme-ui";
 import { ICON_COMPONENTS } from "../utils/config";
+import { IconBaseProps } from "react-icons/lib/cjs";
 
 export interface SocialProps {
   type: string;
@@ -11,7 +12,7 @@ export interface SocialProps {
   target: string;
 }
 
-export interface SocialIconsProps {
+export interface SocialIconsProps extends IconBaseProps {
   socialProfiles: Array<SocialProps>;
   includeSearch: boolean;
   width?: string;
@@ -22,8 +23,10 @@ const SocialIcons: FC<SocialIconsProps> = ({
   socialProfiles,
   includeSearch,
   width,
-  height
+  height,
+  ...iconProps
 }) => {
+  const { size = 30, color = "secondary" } = iconProps;
   const [visibleIconLabelIndex, setVisibleIconLabelIndex] = React.useState(-1);
 
   let toggleFocus: {
@@ -59,7 +62,8 @@ const SocialIcons: FC<SocialIconsProps> = ({
           fontFamily: "special",
           ".icon-saperator": {
             fontSize: 2,
-            color: "accent"
+            color: "accent",
+            display: "none"
           },
           ".social-icon__container": {
             ...FLEX_CONFIG(),
@@ -76,13 +80,17 @@ const SocialIcons: FC<SocialIconsProps> = ({
             },
             ".social-icon": {
               paddingInline: "2px",
-              height: "100%",
               transition: "all 0.3s ease-out",
+              svg: {
+                width: size + "px",
+                height: size + "px",
+                color: color || "secondary"
+              },
               "&:hover": {
                 svg: {
                   fill: "accent",
-                  width: "30px",
-                  height: "30px"
+                  width: size + "px",
+                  height: size + "px"
                 }
               },
               "svg.icon": {
@@ -123,7 +131,7 @@ const SocialIcons: FC<SocialIconsProps> = ({
                 onBlur={toggleFocusMod}
               >
                 <a href={socialProfile.target}>
-                  {ICON_COMPONENTS[socialProfile.type]}
+                  {ICON_COMPONENTS(iconProps)[socialProfile.type]}
                 </a>
               </div>
             </div>

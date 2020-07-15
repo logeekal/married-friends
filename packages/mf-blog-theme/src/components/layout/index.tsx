@@ -1,5 +1,6 @@
+/* @jsx jsx */
 import React from "react";
-import Header from "../header/Header";
+import { jsx } from "theme-ui";
 import Footer from "../footer";
 import HeaderSection from "../../sections/HeaderSections";
 
@@ -17,7 +18,17 @@ const Layout: React.FC<{}> = ({ children }) => {
           }
         ]}
       />
-      {children}
+      <div
+        className="page_content"
+        sx={{
+          paddingLeft: 0,
+          paddingRight: 0,
+          marginLeft: 0,
+          marginRight: 0
+        }}
+      >
+        {children}
+      </div>
       <Footer></Footer>
     </div>
   );

@@ -39,9 +39,14 @@ const styles = {
   },
   root: {
     backgroundColor: "bgPrimary",
-    paddingX: 0,
     fontFamily: "normal",
-    boxSizing: "border-box"
+    boxSizing: "border-box",
+    margin: "0px !important",
+    padding: "0px !important"
+  },
+  body: {
+    margin: "0px !important",
+    padding: "0px !important"
   },
   h1: {
     fontFamily: "normal",

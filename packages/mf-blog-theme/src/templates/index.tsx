@@ -23,7 +23,7 @@ function Home({ pageContext }): React.ReactFragment {
   const minMargin = 0;
   return (
     <Layout>
-      <div className="home__carousel" sx={{ margin: minMargin }}>
+      <div className="home__carousel" sx={{ margin: minMargin + 1 }}>
         <Caraousel sliderHeightInpx="600" />
       </div>
       <div

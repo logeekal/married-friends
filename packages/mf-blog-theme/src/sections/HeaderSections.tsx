@@ -54,8 +54,8 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
             backgroundColor: "bgPrimary",
             maxHeight: "200px",
             transformOrigin: "0px",
-            marginLeft: 1,
-            marginRight: 1,
+            marginLeft: 2,
+            marginRight: 2,
             "&.sticky": {
               position: "fixed",
               width: "100%",
@@ -67,7 +67,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
               top: "0px",
               left: "0px",
               height: "80px",
-              zIndex: "9999",
+              zIndex: "9999"
             }
           } as SxStyleProp
         }
@@ -88,7 +88,12 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
             }
           }}
         >
-          {ICON_COMPONENTS.menu}
+          {
+            <SocialIcons
+              socialProfiles={[{ type: "menu", name: "Menu", target: "menu" }]}
+              includeSearch={false}
+            />
+          }
         </div>
         <div
           className="header__heading"

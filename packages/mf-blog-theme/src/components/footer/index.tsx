@@ -3,37 +3,57 @@
 import { jsx, Styled } from "theme-ui";
 import React from "react";
 import YoutubeFeed from "../../sections/YoutubeFeed";
+import { FLEX_CONFIG } from "../../utils/style";
 
 const Footer: React.FC<{}> = ({ children }) => {
   return (
-    <footer
-      sx={{
-        backgroundColor: "bgAccent",
-        height: "600px",
-        position: "relative",
-        padding: "15px",
-        paddingBlockStart: "30px",
-        marginTop: "30px"
-      }}
-    >
+    <footer sx={{}}>
       <div
-        className="footer__header"
+        className="footer_1"
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          fontFamily: "cursive",
-          fontSize: 4,
-          color: "secondary",
-          margin: "auto",
-          width: "100%",
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%) translateY(-90%)"
+          backgroundColor: "bgAccent",
+          position: "relative",
+          padding: "15px",
+          paddingBlockStart: "30px",
+          marginTop: "30px"
         }}
       >
-        watch us on youtube
+        <div
+          className="footer__header"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            fontFamily: "cursive",
+            fontSize: 4,
+            color: "secondary",
+            margin: "auto",
+            width: "100%",
+            position: "absolute",
+            left: "50%",
+            transform: "translateX(-50%) translateY(-90%)"
+          }}
+        >
+          watch us on youtube
+        </div>
+        <YoutubeFeed />
       </div>
-      <YoutubeFeed />
+      <div className="footer_2">
+        <div
+          className="footer_2__message"
+          sx={{
+            fontFamily: "cursive",
+            fontSize: 3,
+            color: "bgPrimary",
+            bg: "secondary",
+            textAlign: "center",
+            paddingTop: 1,
+            paddingBottom: 1
+          }}
+        >
+          Created with love by Jatin and Richa
+        </div>
+      </div>
+
       {children}
     </footer>
   );

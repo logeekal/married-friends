@@ -21,6 +21,7 @@
     "gatsby-source-filesystem": "^2.3.8",
     "gatsby-source-graphql": "^2.5.5",
     "gatsby-source-instagram": "^0.7.0",
+    "react-icons": "^3.10.0",
     "responsive-react-image-carousel": "2.1.0",
     "theme-ui": "^0.3.1"
   },
