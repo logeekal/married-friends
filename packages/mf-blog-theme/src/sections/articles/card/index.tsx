@@ -69,22 +69,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             }}
             dangerouslySetInnerHTML={{ __html: post.title }}
           />
-          <AccentText
-            sx={{
-              textTransform: "uppercase",
-              fontSize: "12px",
-              fontWeight: "bold",
-              marginTop: 0,
-              marginBottom: 0
-            }}
-          >
-            <Link href={`/${post.categories.nodes[0].slug}`}>
-              {post.categories.nodes[0].name}
-            </Link>
-            <Text sx={{ fontSize: 0 }}> / </Text>
-            {`${date.day}.${date.month}.${date.year}`}
-          </AccentText>
-          <article sx={{...articleStyle}}>
+           <article sx={{...articleStyle}}>
             <p>
               <Text>{extractTextfromHTML(post.excerpt)}</Text>
             </p>

@@ -3,6 +3,7 @@
   "workspaces": ["mf", "packages/*"],
   "scripts": {
     "start": "yarn workspace mf start",
-    "deploy": "yarn workspace mf deploy"
+    "deploy": "yarn workspace mf deploy",
+    "serve": "yarn workspace mf build"
   }
 }

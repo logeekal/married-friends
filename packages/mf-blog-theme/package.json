@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.14.0",
-    "@graphql-codegen/typescript": "^1.14.0"
+    "@graphql-codegen/typescript": "^1.14.0",
+    "faker": "^4.1.0"
   }
 }

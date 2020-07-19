@@ -3,7 +3,7 @@ import { Post } from "../types/wp-graphql.types";
 let defaultDateFormatOption = {
   day: "2-digit",
   year: "numeric",
-  month: "long"
+  month: "long",
 };
 
 interface IFormattedDate {
@@ -13,7 +13,7 @@ interface IFormattedDate {
 }
 
 export function extractTextfromHTML(html) {
-  if (document) {
+  if (typeof document !== "undefined") {
     let span = document.createElement("span");
     span.innerHTML = html;
     return span.innerText;
@@ -40,7 +40,7 @@ export function getFormattedDate(
   let result: IFormattedDate = {
     day: 0,
     month: "",
-    year: 0
+    year: 0,
   };
   for (let part of formattedParts) {
     if (part.type in result) {

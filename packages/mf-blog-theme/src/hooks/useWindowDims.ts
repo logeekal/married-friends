@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { debounce } from "lodash";
 
 const useWindowDims = () => {
-  const hasWindow = typeof Window !== "undefined";
+  const [hasWindow, setHasWindow] = useState(typeof window !== "undefined");
 
   function getWindowSize() {
     const width = hasWindow ? window.innerWidth : null;
     const height = hasWindow ? window.innerHeight : null;
     return {
       width,
-      height
+      height,
     };
   }
 

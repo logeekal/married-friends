@@ -1,11 +1,13 @@
 const GET_CATS_SUMMARY = `
-    query GET_CATS{
+query GET_CATS{
     wpgraphql{
       categories{
         nodes{
           id
-          names
+          name
           count
+          slug
+          link
         }
       }  
     }

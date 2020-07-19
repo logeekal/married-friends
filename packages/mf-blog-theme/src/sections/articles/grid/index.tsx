@@ -14,26 +14,12 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
   const [articleHeights, setArticleHeights] = React.useState<Array<number>>([]);
   const [heights, setHeight] = React.useState<Array<number>>([]);
   const gridRef = React.useRef<HTMLDivElement>(null);
-  const articleCardRefs: Array<React.MutableRefObject<
-    HTMLDivElement
-  >> = new Array(props.articles.length).fill(
-    React.useRef<HTMLDivElement>(null)
-  );
-
-  let articleCardRefsCurrents = articleCardRefs.map(item => item.current);
-  console.log("====", articleCardRefsCurrents);
 
   React.useLayoutEffect(() => {
-    //if (!gridRef.current) return;
-    //console.log("===", gridRef.current);
-    //let minorCards: NodeList = gridRef.current.querySelectorAll(".card-minor");
-    let minorCards = articleCardRefs.map(item => {
-      return item.current;
-    });
+    if (!gridRef.current) return;
+    console.log("===", gridRef.current);
+    let minorCards: NodeList = gridRef.current.querySelectorAll(".card-minor");
     console.log("===minorcard : ", minorCards);
-    if (minorCards.filter(item => !item).length > 0) {
-      return;
-    }
     const maxHeight = Array.from(minorCards).reduce(
       (prevValue, currentElement) => {
         prevValue = Math.max(prevValue, currentElement.clientHeight);
@@ -60,7 +46,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
     setHeight(cardHeights);
     setArticleHeights(articleHeights);
     setMaxCardHeight(maxHeight);
-  }, [...articleCardRefsCurrents]);
+  }, []);
 
   return (
     <div
@@ -92,7 +78,6 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
                 data-height={heights[index - 1]}
                 data-artHeight={articleHeights[index - 1]}
                 data-diff={maxCardHeight - heights[index - 1]}
-                ref={articleCardRefs[index - 1]}
                 articleStyle={{
                   marginBottom: maxCardHeight - heights[index - 1]
                 }}

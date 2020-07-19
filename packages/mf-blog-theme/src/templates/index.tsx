@@ -10,6 +10,8 @@ import About from "../sections/About";
 import Grid from "../sections/articles/grid";
 import SubscribeMain from "../sections/subscribe/SubscribeMain";
 import { Post } from "../types/wp-graphql.types";
+import GoToTop from "../components/GoToTop";
+import CategoryCard from "../sections/CategoryCard";
 
 interface HomeProps {
   pageContext: {
@@ -18,13 +20,17 @@ interface HomeProps {
 }
 
 function Home({ pageContext }): React.ReactFragment {
-  const { posts } = pageContext;
+  const { posts, categories } = pageContext;
   console.log(posts);
   const minMargin = 0;
+
   return (
     <Layout>
+      <GoToTop />
       <div className="home__carousel" sx={{ margin: minMargin + 1 }}>
-        <Caraousel sliderHeightInpx="600" />
+        {typeof window !== "undefined" &&
+          typeof document !== "undefined" &&
+          Caraousel && <Caraousel sliderHeightInpx="600" />}
       </div>
       <div
         className="home__container"
@@ -62,6 +68,7 @@ function Home({ pageContext }): React.ReactFragment {
             }
           }}
         >
+          <CategoryCard categories={categories}/>
           <Instagram />
           <About />
           <Inspiration />
