@@ -8,6 +8,8 @@ import { FLEX_CONFIG } from "../utils/style";
 import SocialIcons from "../components/SocialIcons";
 import { ICON_COMPONENTS } from "../utils/config";
 import useWindowDims from "../hooks/useWindowDims";
+import Menu from "../components/Menu";
+import MenuIcon from "../components/MenuIcon";
 
 interface MenuShape {
   label: string;
@@ -28,6 +30,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
 }) => {
   const [isHeaderSticky, setIsHeaderSticky] = React.useState(false);
   const { width: windowWidth, height } = useWindowDims();
+  const [menuVisible, setMenuVisible] = React.useState(false);
 
   React.useEffect(() => {
     const win = typeof window === "object" && window;
@@ -42,8 +45,19 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
       win.removeEventListener("scroll", onScroll);
     };
   });
+
+  React.useEffect(() => {
+    console.log("New Menu visbility: ", menuVisible);
+  }, [menuVisible]);
+
+  const toggleMenu = () => {
+    console.log(`Toggling menu : `, menuVisible);
+    setMenuVisible(!menuVisible);
+  };
+
   return (
     <Header>
+      <Menu visible={menuVisible} />
       <div
         className={`header-container ${isHeaderSticky && "sticky"}`}
         sx={
@@ -74,12 +88,14 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
       >
         <div
           className="header__menu"
+          onClick={toggleMenu}
           sx={{
             flex: 0.25,
             height: "100%",
             display: "flex",
             justifyContent: "flex-start",
             alignItems: "center",
+            zIndex: 1000,
             svg: {
               cursor: "pointer",
               "&:hover": {
@@ -88,12 +104,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
             }
           }}
         >
-          {
-            <SocialIcons
-              socialProfiles={[{ type: "menu", name: "Menu", target: "menu" }]}
-              includeSearch={false}
-            />
-          }
+          <MenuIcon isOpen={menuVisible} width={24} strokeWidth={2} strokeColor={"secondary"} alternateColor={"accent"}/>
         </div>
         <div
           className="header__heading"
