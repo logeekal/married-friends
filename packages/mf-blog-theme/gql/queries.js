@@ -28,6 +28,13 @@ query GET_POSTS {
           featuredImage {
             altText,
             mediaItemUrl
+            mediaDetails {
+              sizes {
+                name
+                sourceUrl
+                width
+              }
+            }
           }
           categories {
             nodes{

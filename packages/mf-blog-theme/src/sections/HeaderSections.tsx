@@ -10,6 +10,7 @@ import { ICON_COMPONENTS } from "../utils/config";
 import useWindowDims from "../hooks/useWindowDims";
 import Menu from "../components/Menu";
 import MenuIcon from "../components/MenuIcon";
+import useKeyCode from "../hooks/useKeyCode";
 
 interface MenuShape {
   label: string;
@@ -31,6 +32,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
   const [isHeaderSticky, setIsHeaderSticky] = React.useState(false);
   const { width: windowWidth, height } = useWindowDims();
   const [menuVisible, setMenuVisible] = React.useState(false);
+  const keyPressed = useKeyCode(menuVisible);
 
   React.useEffect(() => {
     const win = typeof window === "object" && window;
@@ -54,6 +56,13 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
     console.log(`Toggling menu : `, menuVisible);
     setMenuVisible(!menuVisible);
   };
+
+  React.useEffect(() => {
+    console.log("Changing");
+    if (keyPressed.toLowerCase() === "escape") {
+      toggleMenu();
+    }
+  }, [keyPressed]);
 
   return (
     <Header>
@@ -104,7 +113,13 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
             }
           }}
         >
-          <MenuIcon isOpen={menuVisible} width={24} strokeWidth={2} strokeColor={"secondary"} alternateColor={"accent"}/>
+          <MenuIcon
+            isOpen={menuVisible}
+            width={24}
+            strokeWidth={2}
+            strokeColor={"secondary"}
+            alternateColor={"accent"}
+          />
         </div>
         <div
           className="header__heading"

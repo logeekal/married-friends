@@ -11,17 +11,15 @@ import {
 import { AccentText, Text } from "../../../components/Typography";
 import SocialIcons from "../../../components/SocialIcons";
 
-interface CardProps extends React.HTMLProps<HTMLDivElement>{
+interface CardProps extends React.HTMLProps<HTMLDivElement> {
   post: Post;
   type: "major" | "minor";
   sx?: SxStyleProp;
-  articleStyle?: React.CSSProperties
+  articleStyle?: React.CSSProperties;
 }
 
 const Card: React.FC<CardProps> = (props: CardProps) => {
-
   let { post, type, articleStyle, sx, className, ...restProps } = props;
-  console.log(post.excerpt);
   let date = getFormattedDate(post.date);
   return (
     <div
@@ -56,8 +54,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
           className="card__article"
           sx={{
             backgroundColor: "bgCard",
-            padding: type === "major" ? 2 : 1,
-            
+            padding: type === "major" ? 2 : 1
           }}
         >
           <Styled.h2
@@ -69,7 +66,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             }}
             dangerouslySetInnerHTML={{ __html: post.title }}
           />
-           <article sx={{...articleStyle}}>
+          <article sx={{ ...articleStyle }}>
             <p>
               <Text>{extractTextfromHTML(post.excerpt)}</Text>
             </p>

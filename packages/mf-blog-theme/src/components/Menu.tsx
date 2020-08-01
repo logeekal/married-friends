@@ -33,7 +33,7 @@ const Menu: FC<MenuProps> = props => {
             transition: "opacity 0.4s ease-out 0.4s, transform 0.4s ease-out 0.4s"
           },
           "&.visible": {
-            clipPath: "circle(2000px at 0 0)",
+            clipPath: "circle(4000px at 0 0)",
             ".menu-item": {
               opacity: 1,
               transform: "translateY(0)"

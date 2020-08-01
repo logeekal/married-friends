@@ -12,6 +12,7 @@ import SubscribeMain from "../sections/subscribe/SubscribeMain";
 import { Post } from "../types/wp-graphql.types";
 import GoToTop from "../components/GoToTop";
 import CategoryCard from "../sections/CategoryCard";
+import SearchIndexContext from "../providers/IndexProvider";
 
 interface HomeProps {
   pageContext: {
@@ -20,62 +21,66 @@ interface HomeProps {
 }
 
 function Home({ pageContext }): React.ReactFragment {
-  const { posts, categories } = pageContext;
-  console.log(posts);
+  const { postObj, catObj } = pageContext;
+  //console.log(postIndex);
+  const posts = Object.values(postObj);
+  const categories = Object.values(catObj)
   const minMargin = 0;
 
   return (
-    <Layout>
-      <GoToTop />
-      <div className="home__carousel" sx={{ margin: minMargin + 1 }}>
-        {typeof window !== "undefined" &&
-          typeof document !== "undefined" &&
-          Caraousel && <Caraousel sliderHeightInpx="600" />}
-      </div>
-      <div
-        className="home__container"
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap"
-        }}
-      >
-        <div
-          className="home-left__container"
-          sx={{
-            border: "0px solid red",
-            marginTop: 0,
-            marginBottom: 0,
-            flex: 0.7,
-            "@media only screen and (max-width: 768px)": {
-              flex: 1,
-              minWidth: "100%"
-            }
-          }}
-        >
-          <Grid articles={posts} />
+    <SearchIndexContext.Provider value={postObj}>
+      <Layout>
+        <GoToTop />
+        <div className="home__carousel" sx={{ margin: minMargin + 1 }}>
+          {typeof window !== "undefined" &&
+            typeof document !== "undefined" &&
+            Caraousel && <Caraousel sliderHeightInpx="600" />}
         </div>
         <div
-          className="home-right__container"
+          className="home__container"
           sx={{
-            border: "0px solid green",
-            marginTop: 0,
-            marginBottom: 0,
-            flex: 0.3,
-            "@media only screen and (max-width: 768px)": {
-              flex: 1,
-              width: "100%"
-            }
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap"
           }}
         >
-          <CategoryCard categories={categories}/>
-          <Instagram />
-          <About />
-          <Inspiration />
+          <div
+            className="home-left__container"
+            sx={{
+              border: "0px solid red",
+              marginTop: 0,
+              marginBottom: 0,
+              flex: 0.7,
+              "@media only screen and (max-width: 768px)": {
+                flex: 1,
+                minWidth: "100%"
+              }
+            }}
+          >
+            <Grid articles={posts} />
+          </div>
+          <div
+            className="home-right__container"
+            sx={{
+              border: "0px solid green",
+              marginTop: 0,
+              marginBottom: 0,
+              flex: 0.3,
+              "@media only screen and (max-width: 768px)": {
+                flex: 1,
+                width: "100%"
+              }
+            }}
+          >
+            <CategoryCard categories={categories} />
+            <Instagram />
+            <About />
+            <Inspiration />
+          </div>
         </div>
-      </div>
-      <SubscribeMain />
-    </Layout>
+        <SubscribeMain />
+      </Layout>
+    </SearchIndexContext.Provider>
   );
 }
 
