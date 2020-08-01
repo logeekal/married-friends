@@ -5,11 +5,13 @@ import { FLEX_CONFIG } from "../utils/style";
 import { SxStyleProp, jsx, Link } from "theme-ui";
 import { ICON_COMPONENTS } from "../utils/config";
 import { IconBaseProps } from "react-icons/lib/cjs";
+import SearchPage from "./SearchPage";
 
 export interface SocialProps {
   type: string;
   name: string;
   target: string;
+  onSelect?: () => void;
 }
 
 export interface SocialIconsProps extends IconBaseProps {
@@ -51,7 +53,7 @@ const SocialIcons: FC<SocialIconsProps> = ({
     includeSearch &&
     socialProfiles.findIndex(profile => profile.type === "search") === -1
   ) {
-    socialProfiles.push(search);
+    //socialProfiles.push(search);
   }
   return (
     <div
@@ -138,6 +140,10 @@ const SocialIcons: FC<SocialIconsProps> = ({
           </React.Fragment>
         );
       })}
+
+      {includeSearch && (
+        <SearchPage size={size as number} color={color} />
+      )}
     </div>
   );
 };

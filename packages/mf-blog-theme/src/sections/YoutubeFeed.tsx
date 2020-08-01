@@ -12,8 +12,6 @@ export interface YoutubeFeedProps {
 }
 
 const YoutubeFeed: FC<YoutubeFeedProps> = ({ videos }) => {
-  console.log(useThemeUI());
-
   const { width, height } = useWindowDims();
 
   let effectiveWidth = width - 120 - 60;
@@ -25,7 +23,6 @@ const YoutubeFeed: FC<YoutubeFeedProps> = ({ videos }) => {
   const [vidWidth, setVidWidth] = useState(getFinalWidth());
   const [vidHeight, setVidHeight] = useState(getFinalWidth());
 
-  console.log({ vidWidth });
   useEffect(() => {
     setVidWidth(getFinalWidth());
     setVidHeight((9 * getFinalWidth()) / 16);

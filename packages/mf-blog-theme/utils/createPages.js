@@ -1,5 +1,6 @@
 const path = require("path");
-
+const sizeof = require("object-sizeof");
+const { createIndex } = require("./createIndex");
 const QUERIES = require("../gql/queries");
 
 module.exports = async ({ actions, graphql }) => {
@@ -15,14 +16,26 @@ module.exports = async ({ actions, graphql }) => {
   const { data: categoriesWrapper } = await graphql(QUERIES.GET_CATS_SUMMARY);
 
   const posts = postsWrapper.wpgraphql.posts.nodes;
+  const postObj = {};
+
+  for (let post of posts) {
+    postObj[post.id] = post;
+  }
+
   const categories = categoriesWrapper.wpgraphql.categories.nodes;
+  const catObj = {};
+  for (let cat in categories) {
+    catObj[cat.id] = cat;
+  }
+
+  //const postIndex = createIndex(posts);
 
   createPage({
     path: "/",
     component: indexTemplate,
     context: {
-      posts,
-      categories
+      postObj,
+      catObj
     }
   });
 };

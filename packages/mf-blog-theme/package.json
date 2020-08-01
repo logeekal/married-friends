@@ -21,13 +21,16 @@
     "gatsby-source-filesystem": "^2.3.8",
     "gatsby-source-graphql": "^2.5.5",
     "gatsby-source-instagram": "^0.7.0",
+    "lunr": "^2.3.8",
     "react-icons": "^3.10.0",
     "responsive-react-image-carousel": "2.1.0",
+    "striptags": "^3.1.1",
     "theme-ui": "^0.3.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.14.0",
     "@graphql-codegen/typescript": "^1.14.0",
+    "@types/lunr": "^2.3.3",
     "faker": "^4.1.0"
   }
 }
