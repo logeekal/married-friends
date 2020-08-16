@@ -9,7 +9,7 @@ import Inspiration from "../sections/Inspiration";
 import About from "../sections/About";
 import Grid from "../sections/articles/grid";
 import SubscribeMain from "../sections/subscribe/SubscribeMain";
-import { Post } from "../types/wp-graphql.types";
+import { Post, Category } from "../types/wp-graphql.types";
 import GoToTop from "../components/GoToTop";
 import CategoryCard from "../sections/CategoryCard";
 import SearchIndexContext from "../providers/IndexProvider";
@@ -25,7 +25,9 @@ function Home({ pageContext }): React.ReactFragment {
   const { postObj, catObj } = pageContext;
   //console.log(postIndex);
   const posts = Object.values(postObj);
-  const categories = Object.values(catObj);
+  console.log("Recieved posts : ",  posts.length);
+  const categories:  Category[] = Object.values(catObj);
+  console.log('categories ... ', categories);
   const minMargin = 0;
 
   const [hasWindow, hasDocument] = useWindow();
@@ -65,14 +67,16 @@ function Home({ pageContext }): React.ReactFragment {
               border: "0px solid green",
               marginTop: 0,
               marginBottom: 0,
+              maxWidth: "400px",
               flex: 0.3,
               "@media only screen and (max-width: 768px)": {
                 flex: 1,
+                maxWidth: "100%",
                 width: "100%"
               }
             }}
           >
-            <CategoryCard categories={categories} />
+            { categories.length ? <CategoryCard categories={categories} /> : null }
             <Instagram />
             <About />
             <Inspiration />

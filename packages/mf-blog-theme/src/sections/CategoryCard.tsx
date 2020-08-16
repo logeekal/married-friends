@@ -13,7 +13,6 @@ export interface CategoryCardProps {
 }
 
 const CategoryCard: FC<CategoryCardProps> = ({ categories }) => {
-  console.log("Categories....: ", categories);
   return (
     <Card
       className="card-category"
@@ -33,6 +32,7 @@ const CategoryCard: FC<CategoryCardProps> = ({ categories }) => {
       }
     >
       {categories.map((category, index) => {
+        console.log(`Category - ${index} - ${category.name} `);
         return (
           <CategoryCountItem
             key={index}

@@ -6,7 +6,14 @@ import HeaderSection from "../../sections/HeaderSections";
 
 const Layout: React.FC<{}> = ({ children }) => {
   return (
-    <div>
+    <div
+      sx={{
+        "*::selection": {
+          color: "bgPrimary",
+          backgroundColor: "primary"
+        }
+      }}
+    >
       <HeaderSection
         title="Married Friends."
         subTitle="creating a delicious lifestyle together"

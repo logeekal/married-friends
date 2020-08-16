@@ -50,19 +50,28 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
       return card.firstChild.parentElement.clientHeight;
     });
 
-    let articleHeights = Array.from(minorCards).map((card, index) => {
+    if (!articleHeights) {
+      let originalArticleHeigts = Array.from(minorCards).map(card => {
+        let article = card.firstChild.parentElement.querySelector("article");
+        return article.clientHeight;
+      });
+
+      setArticleHeights(originalArticleHeigts);
+    }
+
+    let localArticleHeights = Array.from(minorCards).map((card, index) => {
       let article = card.firstChild.parentElement.querySelector("article");
+      let height = articleHeights && articleHeights.length > 0 ? articleHeights[index] : article.clientHeight;
       const diff = maxHeight - cardHeights[index];
-      console.log("marginbottom", article.style.marginBottom);
+      console.log("===New Height articles : ", height, diff, height+diff);
       if (diff > 0) {
-        article.style.height = `${article.clientHeight + diff}px`;
+        article.style.height = `${height + diff}px`;
       }
-      console.log("===", article);
       return diff;
     });
 
     console.log("===card height: ", cardHeights);
-    console.log("===article height :", articleHeights);
+    console.log("===article height :", localArticleHeights);
   }, [gridHeight]);
 
   return (
@@ -96,9 +105,6 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
                 sx={{ flex: "1 1 300px" }}
                 post={article}
                 type={index === 0 ? "major" : "minor"}
-                data-height={heights[index - 1]}
-                data-artHeight={articleHeights[index - 1]}
-                data-diff={maxCardHeight - heights[index - 1]}
                 thumbnailLoadHandler={onThumbnailLoad}
               />
             )
