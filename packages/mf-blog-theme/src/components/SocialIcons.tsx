@@ -116,17 +116,17 @@ const SocialIcons: FC<SocialIconsProps> = ({
         console.log(socialProfile.type);
         return (
           <React.Fragment>
-            {index > 0 && <div className="icon-saperator">/</div>}
             <div key={socialProfile.type} className="social-icon__container">
-              <div
+              {/*
+                  <div
                 className={`social-icon__label ${
                   index === visibleIconLabelIndex ? "visible" : ""
                 }`}
               >
                 {socialProfile.name}
-              </div>
+                </div>*/}
               <div
-                className="social-icon"
+                className={"social-icon " + socialProfile.type}
                 onMouseEnter={toggleFocusMod}
                 onMouseLeave={toggleFocusMod}
                 onFocus={toggleFocusMod}
@@ -141,9 +141,7 @@ const SocialIcons: FC<SocialIconsProps> = ({
         );
       })}
 
-      {includeSearch && (
-        <SearchPage size={size as number} color={color} />
-      )}
+      {includeSearch && <SearchPage size={size as number} color={color} />}
     </div>
   );
 };

@@ -33,6 +33,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
   const { width: windowWidth, height } = useWindowDims();
   const [menuVisible, setMenuVisible] = React.useState(false);
   const keyPressed = useKeyCode(menuVisible);
+  console.log(`windowwidth`, windowWidth);
 
   React.useEffect(() => {
     const win = typeof window === "object" && window;
@@ -132,7 +133,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
               height: "100%",
               ...FLEX_CONFIG("inline-flex", "column"),
               flex: "auto",
-              alignItems: windowWidth <= 700 ? "flex-start" : "center"
+              alignItems: windowWidth > 700 ? "center" : "flex-start"
             } as SxStyleProp
           }
         >

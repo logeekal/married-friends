@@ -77,7 +77,7 @@ const Card: React.FC<CardProps> = ({
       <div
         className="card__footer"
         sx={{
-          paddingBlock: "15px",
+          paddingY:2 ,
           color: "accent",
           display: "flex",
           flexDirection: "row",

@@ -19,8 +19,8 @@ const AboutFooter: React.FC<{}> = props => {
         justifyContent: "space-between",
         alignItems: "center",
         backgroundColor: "bgAccent",
-        paddingInline: "15px",
-        paddingBlock: "15px"
+        paddingX: 1,
+        paddingY: 1
       }}
     >
       <Link href="#" sx={{color: 'secondary'}}>Read More</Link>
@@ -57,9 +57,9 @@ const About: FC<AboutProps> = props => {
           }}
         >
           <img
-            src="https://picsum.photos/seed/photo/300"
-            width="300px"
-            height="300px"
+            src="https://picsum.photos/seed/photo/320/180"
+            width="270px"
+            height="auto"
             sx={{ display: "block", margin: "auto" }}
           />
         </div>

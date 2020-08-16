@@ -10,6 +10,7 @@ import {
 } from "../../../utils";
 import { AccentText, Text } from "../../../components/Typography";
 import SocialIcons from "../../../components/SocialIcons";
+import useWindow from "../../../hooks/useWindow";
 
 interface CardProps extends React.HTMLProps<HTMLDivElement> {
   post: Post;
@@ -21,6 +22,9 @@ interface CardProps extends React.HTMLProps<HTMLDivElement> {
 const Card: React.FC<CardProps> = (props: CardProps) => {
   let { post, type, articleStyle, sx, className, ...restProps } = props;
   let date = getFormattedDate(post.date);
+  const categories = post.categories.nodes[0];
+
+  const [, hasDocument] = useWindow();
   return (
     <div
       className={`card-${type} ${className}`}
@@ -49,7 +53,6 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             width="100%"
           />
         </div>
-
         <div
           className="card__article"
           sx={{
@@ -66,9 +69,28 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             }}
             dangerouslySetInnerHTML={{ __html: post.title }}
           />
+          <div
+            className="card__date"
+            sx={{
+              fontSize: 0,
+              textTransform: "uppercase",
+              fontWeight: 500,
+              paddingTop: 0
+            }}
+          >
+            <span>
+              <Link href={`/${categories.slug}`}>{categories.name} </Link>
+            </span>
+            <span>
+              <Text> / </Text>
+              {`${date.day}.${date.month}.${date.year}`}{" "}
+            </span>
+          </div>
           <article sx={{ ...articleStyle }}>
             <p>
-              <Text>{extractTextfromHTML(post.excerpt)}</Text>
+              <Text>
+                {hasDocument ? extractTextfromHTML(post.excerpt) : ""}
+              </Text>
             </p>
           </article>
           <div
@@ -76,7 +98,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
             <span className="footer-left">
-              <AccentText sx={{ cursor: "pointer", fontSize: "12px" }}>
+              <AccentText sx={{ cursor: "pointer", fontSize: 0 }}>
                 READ MORE
               </AccentText>
             </span>
@@ -86,7 +108,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
                 socialProfiles={[
                   { type: "share", name: "share", target: "http://google.com" }
                 ]}
-                width="16px"
+                width="20px"
               />
             </span>
           </div>

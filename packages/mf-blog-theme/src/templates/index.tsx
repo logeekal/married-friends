@@ -13,6 +13,7 @@ import { Post } from "../types/wp-graphql.types";
 import GoToTop from "../components/GoToTop";
 import CategoryCard from "../sections/CategoryCard";
 import SearchIndexContext from "../providers/IndexProvider";
+import useWindow from "../hooks/useWindow";
 
 interface HomeProps {
   pageContext: {
@@ -24,17 +25,16 @@ function Home({ pageContext }): React.ReactFragment {
   const { postObj, catObj } = pageContext;
   //console.log(postIndex);
   const posts = Object.values(postObj);
-  const categories = Object.values(catObj)
+  const categories = Object.values(catObj);
   const minMargin = 0;
 
+  const [hasWindow, hasDocument] = useWindow();
   return (
     <SearchIndexContext.Provider value={postObj}>
       <Layout>
         <GoToTop />
         <div className="home__carousel" sx={{ margin: minMargin + 1 }}>
-          {typeof window !== "undefined" &&
-            typeof document !== "undefined" &&
-            Caraousel && <Caraousel sliderHeightInpx="600" />}
+          {hasWindow && hasDocument && <Caraousel sliderHeightInpx="600" />}
         </div>
         <div
           className="home__container"

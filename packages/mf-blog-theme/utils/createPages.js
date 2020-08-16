@@ -1,6 +1,4 @@
 const path = require("path");
-const sizeof = require("object-sizeof");
-const { createIndex } = require("./createIndex");
 const QUERIES = require("../gql/queries");
 
 module.exports = async ({ actions, graphql }) => {

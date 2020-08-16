@@ -10,14 +10,16 @@ interface ArticleGridProps {
 }
 
 const ArticleGrid: React.FC<ArticleGridProps> = props => {
+  const relevantArticles = props.articles.slice(0, 7);
   const [maxCardHeight, setMaxCardHeight] = React.useState(0);
   const [articleHeights, setArticleHeights] = React.useState<Array<number>>([]);
   const [heights, setHeight] = React.useState<Array<number>>([]);
-  const gridRef = React.useRef<HTMLDivElement>(null);
+  const gridRef = React.useRef<HTMLDivElement | any>({
+    current: { clientHeight: 0 }
+  });
 
-  React.useLayoutEffect(() => {
-    if (!gridRef.current) return;
-    console.log("===", gridRef.current);
+  React.useEffect(() => {
+    console.log("***", gridRef.current.clientHeight);
     let minorCards: NodeList = gridRef.current.querySelectorAll(".card-minor");
     console.log("===minorcard : ", minorCards);
     const maxHeight = Array.from(minorCards).reduce(
@@ -29,24 +31,23 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
     );
 
     console.log(`===Max Height is : `, maxHeight);
-
-    let articleHeights = Array.from(minorCards).map(card => {
-      let articleHeight = card.firstChild.parentElement.querySelector(
-        "article"
-      );
-      return articleHeight.clientHeight;
-    });
-
     let cardHeights = Array.from(minorCards).map(card => {
-      return card.clientHeight;
+      return card.firstChild.parentElement.clientHeight;
     });
 
+    let articleHeights = Array.from(minorCards).map((card, index) => {
+      let article = card.firstChild.parentElement.querySelector("article");
+      console.log("===", article);
+      const diff = maxHeight - cardHeights[index];
+      console.log("marginbottom", article.style.marginBottom);
+      if (diff > 0) {
+        article.style.marginBottom = `${diff}px`;
+      }
+      return diff;
+    });
     console.log("===card height: ", cardHeights);
     console.log("===article height :", articleHeights);
-    setHeight(cardHeights);
-    setArticleHeights(articleHeights);
-    setMaxCardHeight(maxHeight);
-  }, []);
+  }, [gridRef]);
 
   return (
     <div
@@ -54,7 +55,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
       sx={{ display: "flex", flexDirection: "column" }}
     >
       <div className="first-article" sx={{ flex: 1 }}>
-        <Card post={props.articles[0]} type={"major"} />
+        <Card post={relevantArticles[0]} type={"major"} />
       </div>
       <div
         className="rest-grid"
@@ -67,7 +68,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
           flexWrap: "wrap"
         }}
       >
-        {props.articles.map((article, index) => {
+        {relevantArticles.map((article, index) => {
           return (
             index > 0 && (
               <Card
@@ -78,9 +79,6 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
                 data-height={heights[index - 1]}
                 data-artHeight={articleHeights[index - 1]}
                 data-diff={maxCardHeight - heights[index - 1]}
-                articleStyle={{
-                  marginBottom: maxCardHeight - heights[index - 1]
-                }}
               />
             )
           );
