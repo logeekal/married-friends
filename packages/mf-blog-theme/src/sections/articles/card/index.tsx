@@ -17,10 +17,20 @@ interface CardProps extends React.HTMLProps<HTMLDivElement> {
   type: "major" | "minor";
   sx?: SxStyleProp;
   articleStyle?: React.CSSProperties;
+  thumbnailLoadHandler: () => any;
+  className?: string;
 }
 
 const Card: React.FC<CardProps> = (props: CardProps) => {
-  let { post, type, articleStyle, sx, className, ...restProps } = props;
+  let {
+    post,
+    type,
+    articleStyle,
+    sx,
+    thumbnailLoadHandler,
+    className,
+    ...restProps
+  } = props;
   let date = getFormattedDate(post.date);
   const categories = post.categories.nodes[0];
 
@@ -51,6 +61,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             src={post.featuredImage.mediaItemUrl}
             alt={post.featuredImage.altText}
             width="100%"
+            onLoad={thumbnailLoadHandler}
           />
         </div>
         <div

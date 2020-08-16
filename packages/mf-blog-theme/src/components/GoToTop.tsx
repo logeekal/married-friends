@@ -9,7 +9,7 @@ import { useScroll } from "../hooks/useScroll";
 export interface GoToTopProps {}
 
 const GoToTop: FC<GoToTopProps> = props => {
-  const { scrollTo } = useScroll();
+  const { scrollTo, scrollHeight } = useScroll();
   return (
     <div
       className="go-to-top__container"
@@ -26,6 +26,7 @@ const GoToTop: FC<GoToTopProps> = props => {
           height: "50px",
           borderRadius: "50%",
           ...FLEX_CONFIG("flex", "column"),
+          display: scrollHeight < 200 ? "none" : "flex",
           cursor: "pointer",
           boxShadow: "1px 2px 5px 1px rgba(0,0,0,0.5)",
           transition: "0.3s all ease-in-out",
