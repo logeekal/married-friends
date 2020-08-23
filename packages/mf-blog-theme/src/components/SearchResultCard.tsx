@@ -5,6 +5,7 @@ import { Post } from "../types/wp-graphql.types";
 import { FLEX_CONFIG } from "../utils/style";
 import { jsx, SxStyleProp, Link } from "theme-ui";
 import { extractTextfromHTML, makePostSlug } from "../utils";
+import * as striptags from "striptags";
 
 export interface SearchResultCardProps {
   post: Post;
@@ -12,6 +13,7 @@ export interface SearchResultCardProps {
 
 const SearchResultCard: FC<SearchResultCardProps> = props => {
   const { post } = props;
+  console.log("SearchResult : ", post);
   let { sourceUrl } = post.featuredImage
     ? post.featuredImage.mediaDetails.sizes.find(size => {
         return size.name === "thumbnail";
@@ -50,7 +52,7 @@ const SearchResultCard: FC<SearchResultCardProps> = props => {
           ".search__result__excerpt": {
             span: {
               textOverflow: "ellipsis",
-              paddingX: 0,
+              paddingX: "0px",
               paddingY: 0,
               paddingBottom: "0px",
               display: "table",
@@ -70,12 +72,12 @@ const SearchResultCard: FC<SearchResultCardProps> = props => {
       }
     >
       <div className="search__result__image">
-        <Link href={makePostSlug(post)} sx={{ color: "primary" }}>
+        <Link href={post.slug} sx={{ color: "primary" }}>
           <img src={sourceUrl} alt={post.title} />
         </Link>
       </div>
       <div className="search__result__details">
-        <Link href={makePostSlug(post)} sx={{ color: "primary" }}>
+        <Link href={post.slug} sx={{ color: "primary" }}>
           <h2
             className="search__result__title"
             dangerouslySetInnerHTML={{ __html: post.title }}
@@ -85,7 +87,7 @@ const SearchResultCard: FC<SearchResultCardProps> = props => {
           className="search__result__excerpt"
           dangerouslySetInnerHTML={{
             __html: `<span> ${
-              extractTextfromHTML(post.excerpt).substr(0, 300) + "..."
+              striptags(post.excerpt).substr(0, 300) + "..."
             } </span>`
           }}
         />

@@ -45,7 +45,14 @@ const SearchPage: FC<SearchPageProps> = props => {
       {isSearchOpen ? (
         <span
           className="search-close-icon"
-          sx={{ zIndex: 1002 }}
+          sx={
+            {
+              zIndex: 1002,
+              "@media only screen and (max-width: 700px)": {
+                transform: "translateX(1rem)"
+              }
+            } as SxStyleProp
+          }
           onClick={toggleSearch}
         >
           <MenuIcon
@@ -84,7 +91,7 @@ const SearchPage: FC<SearchPageProps> = props => {
             top: "0px",
             right: "0px",
             backgroundColor: "bgPrimary",
-            padding: 3,
+            paddingY: 3,
             zIndex: 1001,
             width: "100vw",
             height: "100%",

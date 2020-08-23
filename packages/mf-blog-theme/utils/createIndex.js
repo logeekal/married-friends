@@ -17,42 +17,46 @@
  *
  */
 
-const Fuse = require("fuse.js");
 const striptags = require("striptags");
 const fs = require("fs");
 const path = require("path");
+const lunr = require("lunr");
+const { log } = require("./utils");
 
 function createIndex(posts) {
-  const options = {
-    includeScore: true,
-    keys: [
-      {
-        name: "title",
-        score: 0.5
-      },
-      {
-        name: "content",
-        score: 0.3
-      },
-      {
-        name: "categories.nodes.name",
-        score: 0.2
-      }
-    ]
-  };
-
-  let cleanedPosts = posts.map(post => {
+  let cleanedPosts = posts.map((post) => {
     return {
       ...post,
-      content: striptags(post["content"])
+      content: striptags(post["content"]),
     };
   });
 
-  const postIndex = Fuse.createIndex(options.keys, cleanedPosts);
+  //const postIndex = Fuse.createIndex(options.keys, cleanedPosts);
+
+  const postIndex = buildIndex(cleanedPosts);
+
+  log("Writing post Index");
+
   fs.writeFileSync(
-    path.join(__dirname, "../content/post_index.json"),
-    JSON.stringify(postIndex)
+    `public/post_index.json`,
+    JSON.stringify(postIndex),
+    "utf-8"
   );
 }
 
-module.exports = { createIndex };
+function buildIndex(cleanedPosts) {
+  const idx = lunr(function () {
+    this.ref("id");
+    this.field("title");
+    this.field("content");
+
+    cleanedPosts.forEach(function (post) {
+      this.add(post);
+    }, this);
+  });
+  return idx;
+}
+
+module.exports = {
+  createIndex,
+};

@@ -10,36 +10,36 @@ const colors = {
 
   primary: "#000000",
   accent: "#FF035E",
-  secondary: "#6C6666",
+  secondary: "#6C6666"
 };
 
 const fonts = {
   special: "Fredericka the Great",
   normal: "IBM Plex Sans",
-  cursive: "Sacramento",
+  cursive: "Sacramento"
 };
 
 const fontWeights = {
   regular: 500,
-  bold: 600,
+  bold: 600
 };
 
 const forms = {
   input: {
     ...input.primary,
     accented: {
-      ...input.secondary,
-    },
-  },
+      ...input.secondary
+    }
+  }
 };
 
 const fontSizes = [14, 20, 32, 42, 52, 104];
 
-const space = [7.5, 15, 30, 60];
+const space = [7.5, 15, 30, 60, 120];
 
 const styles = {
   "*": {
-    boxSizing: "border-box",
+    boxSizing: "border-box"
   },
   root: {
     backgroundColor: "bgPrimary",
@@ -62,30 +62,30 @@ const styles = {
       fontWeight: 3,
       "*": {
         fontStyle: "normal",
-        fontWeight: 3,
-      },
-    } as SxStyleProp,
+        fontWeight: 3
+      }
+    } as SxStyleProp
   },
   body: {
     margin: "0px !important",
-    padding: "0px !important",
+    padding: "0px !important"
   },
   h1: {
     fontFamily: "normal",
-    fontSize: 3,
+    fontSize: 3
   },
   h2: {
     fontFamily: "normal",
-    fontSize: 2,
+    fontSize: 2
   },
   h3: {
     fontFamily: "normal",
-    fontSize: 1,
+    fontSize: 1
   },
 
   a: {
     color: "accent",
-    textDecoration: "none",
+    textDecoration: "none"
   },
   hr: {
     width: "100px",
@@ -93,8 +93,8 @@ const styles = {
     border: "transparent",
     backgroundColor: "accent",
     marginBlockEnd: "30px",
-    borderRadius: "2px",
-  },
+    borderRadius: "2px"
+  }
 };
 
 export default merge(
@@ -109,6 +109,6 @@ export default merge(
     styles,
     buttons,
     forms,
-    space,
+    space
   }
 );

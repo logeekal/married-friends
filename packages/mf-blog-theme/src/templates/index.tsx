@@ -32,7 +32,6 @@ function Home({ pageContext }): React.ReactFragment {
 
   const [hasWindow, hasDocument] = useWindow();
   return (
-    <SearchIndexContext.Provider value={postObj}>
       <Layout>
         <GoToTop />
         <div
@@ -89,7 +88,6 @@ function Home({ pageContext }): React.ReactFragment {
         </div>
         <SubscribeMain />
       </Layout>
-    </SearchIndexContext.Provider>
   );
 }
 

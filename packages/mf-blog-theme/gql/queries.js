@@ -116,6 +116,18 @@ const GET_ALL_POSTS = `
           slug
           status
           content
+          excerpt
+          featuredImage {
+              altText
+              mediaItemUrl
+              mediaDetails {
+                sizes {
+                  name
+                  sourceUrl
+                  width
+                }
+              }
+            }
           categories {
             nodes {
               id
@@ -134,5 +146,5 @@ module.exports = {
   GET_POSTS,
   GET_CATS_SUMMARY,
   GET_CATS_DETAILS,
-  GET_ALL_POSTS,
+  GET_ALL_POSTS
 };

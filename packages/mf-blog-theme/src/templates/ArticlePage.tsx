@@ -18,12 +18,10 @@ export interface ArticlePageProps {
 
 const ArticlePage: FC<ArticlePageProps> = ({ pageContext }) => {
   const { post } = pageContext;
-  console.log(post);
 
   let date = getFormattedDate(post.date);
   const category = post.categories.nodes[0];
   return (
-    <SearchIndexContext.Provider value={{}}>
       <Layout>
         <main
           sx={
@@ -99,7 +97,6 @@ const ArticlePage: FC<ArticlePageProps> = ({ pageContext }) => {
           </section>
         </main>
       </Layout>
-    </SearchIndexContext.Provider>
   );
 };
 

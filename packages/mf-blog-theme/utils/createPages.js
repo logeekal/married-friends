@@ -1,7 +1,8 @@
+const fs = require("fs");
 const path = require("path");
 const QUERIES = require("../gql/queries");
 const { log, array2Obj, cleanContentURLS } = require("./utils");
-const { WORDPRESS_URL } = require("../config");
+const { createIndex } = require("./createIndex");
 
 module.exports = async ({ actions, graphql }) => {
   console.log(actions, graphql);
@@ -40,8 +41,8 @@ module.exports = async ({ actions, graphql }) => {
     component: indexTemplate,
     context: {
       postObj,
-      catObj,
-    },
+      catObj
+    }
   });
 
   /*
@@ -59,7 +60,7 @@ module.exports = async ({ actions, graphql }) => {
 
   const categoriesDetails = categoriesDetailsWrapper.wpgraphql.categories.nodes;
 
-  categoriesDetails.forEach((cat) => {
+  categoriesDetails.forEach(cat => {
     if (!cat.count) return;
     console.log(
       `--------- Building path ${cat.slug} with posts :  ${cat.count} ---------`
@@ -81,8 +82,8 @@ module.exports = async ({ actions, graphql }) => {
       component: indexTemplate,
       context: {
         postObj,
-        catObj,
-      },
+        catObj
+      }
     });
   });
 
@@ -97,14 +98,20 @@ module.exports = async ({ actions, graphql }) => {
 
   posts = allPostsWrapper.wpgraphql.posts.nodes;
 
-  posts.forEach((post) => {
+  array2Obj(posts, "id");
+
+  fs.writeFileSync("posts.json", JSON.stringify(postObj), "utf-8");
+
+  createIndex(posts);
+
+  posts.forEach(post => {
     post.content = cleanContentURLS(post.content);
     createPage({
       path: post.slug,
       component: articlePageTemplate,
       context: {
-        post,
-      },
+        post
+      }
     });
   });
 };

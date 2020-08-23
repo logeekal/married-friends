@@ -1,5 +1,3 @@
-const { URL_MATCHER } = require("../config");
-
 function log(msg) {
   console.log("*******************************");
   console.log(`************ ${msg} ***********`);
@@ -19,8 +17,14 @@ function cleanContentURLS(content) {
   return content.replace(/((http(s)?):\/\/)?marriedfriends.in\/blog/g, "");
 }
 
+/*
+ *function writeToPublic(content, name) {
+ *  fs.writeFileSync(`public/${name}`, content, "utf-8");
+ *}
+ */
+
 module.exports = {
   log,
   array2Obj,
-  cleanContentURLS,
+  cleanContentURLS
 };
