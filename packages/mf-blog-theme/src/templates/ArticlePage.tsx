@@ -1,10 +1,14 @@
 /* @jsx jsx */
 
-import { jsx } from "theme-ui";
+import { jsx, SxStyleProp, Link } from "theme-ui";
 import React, { FC } from "react";
 import { Post } from "../types/wp-graphql.types";
 import Layout from "../components/layout";
 import SearchIndexContext from "../providers/IndexProvider";
+import { FLEX_CONFIG } from "../utils/style";
+import SubscribeMain from "../sections/subscribe/SubscribeMain";
+import { Text, AccentText } from "../components/Typography";
+import { getFormattedDate } from "../utils";
 
 export interface ArticlePageProps {
   pageContext: {
@@ -15,26 +19,83 @@ export interface ArticlePageProps {
 const ArticlePage: FC<ArticlePageProps> = ({ pageContext }) => {
   const { post } = pageContext;
   console.log(post);
+
+  let date = getFormattedDate(post.date);
+  const category = post.categories.nodes[0];
   return (
     <SearchIndexContext.Provider value={{}}>
       <Layout>
-        <main>
+        <main
+          sx={
+            {
+              ...FLEX_CONFIG("flex", "column"),
+              paddingX: 2,
+              maxWidth: "1000px",
+              width: "100%",
+              margin: "0 auto"
+            } as SxStyleProp
+          }
+        >
           <section
             sx={{
               margin: "0 auto",
               display: "block",
-              width: "70%",
-              paddingX: 1
+              width: "100%"
             }}
           >
             <h1
               sx={{
-                fontSize: 4,
-                marginY: 1
+                fontSize: 3,
+                marginBottom: 1,
+                marginTop: "0px"
               }}
               dangerouslySetInnerHTML={{ __html: post.title }}
             />
-            <article dangerouslySetInnerHTML={{ __html: post.content }} />
+            <div
+              className="card__date"
+              sx={{
+                fontSize: 0,
+                textTransform: "uppercase",
+                fontWeight: 700
+              }}
+            >
+              <span>
+                <Link href={`/${category.slug}`}>{category.name} </Link>
+              </span>
+              <span>
+                <Text> / </Text>
+                <AccentText>{`${date.day}.${date.month}.${date.year}`}</AccentText>
+              </span>
+            </div>
+
+            <article
+              sx={{
+                ".embed-youtube": {
+                  display: "block",
+                  position: "relative",
+                  width: "100%",
+                  paddingBottom: "56.25%",
+                  iframe: {
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                    top: 0,
+                    left: 0
+                  }
+                },
+                a: {
+                  textDecoration: "none",
+                  color: "accent",
+                  borderBottomWidth: "0px",
+                  borderBottomColor: "accent",
+                  borderBottomStyle: "solid"
+                }
+              }}
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+          </section>
+          <section class="section-sub">
+            <SubscribeMain />
           </section>
         </main>
       </Layout>

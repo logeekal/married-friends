@@ -17,7 +17,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
   const [heights, setHeight] = React.useState<Array<number>>([]);
   const [gridHeight, setGridHeight] = React.useState(0);
   //const gridRef = useGridRef;
-
+  //
   const gridRef = React.useRef<HTMLDivElement | any>({
     current: { clientHeight: 0 }
   });
@@ -29,7 +29,19 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
   };
 
   React.useEffect(() => {
+    //update original article heights
+    let minorCards: NodeList = gridRef.current.querySelectorAll(".card-minor");
+    let originalArticleHeigts = Array.from(minorCards).map(card => {
+      let article = card.firstChild.parentElement.querySelector("article");
+      return article.clientHeight;
+    });
+
+    setArticleHeights(originalArticleHeigts);
+  }, [gridRef]);
+
+  React.useEffect(() => {
     console.log("***", gridRef.current.clientHeight);
+    if (articleHeights.length === 0) return;
     let minorCards: NodeList = gridRef.current.querySelectorAll(".card-minor");
     console.log("===minorcard : ", minorCards);
     const maxHeight = Array.from(minorCards).reduce(
@@ -42,37 +54,28 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
 
     console.log(`===Max Height is : `, maxHeight);
     let cardHeights = Array.from(minorCards).map(card => {
-      console.log(
-        "===",
-        card,
-        card.firstChild.parentElement.getBoundingClientRect()
-      );
+      //console.log("===", card, card.firstChild.parentElement.clientHeight);
       return card.firstChild.parentElement.clientHeight;
     });
 
-    if (!articleHeights) {
-      let originalArticleHeigts = Array.from(minorCards).map(card => {
-        let article = card.firstChild.parentElement.querySelector("article");
-        return article.clientHeight;
-      });
-
-      setArticleHeights(originalArticleHeigts);
-    }
-
     let localArticleHeights = Array.from(minorCards).map((card, index) => {
       let article = card.firstChild.parentElement.querySelector("article");
-      let height = articleHeights && articleHeights.length > 0 ? articleHeights[index] : article.clientHeight;
+      let height =
+        articleHeights && articleHeights.length > 0
+          ? articleHeights[index]
+          : article.clientHeight;
       const diff = maxHeight - cardHeights[index];
-      console.log("===New Height articles : ", height, diff, height+diff);
+      //console.log("===New Height articles : ", height, diff, height + diff);
       if (diff > 0) {
-        article.style.height = `${height + diff}px`;
+        article.style.paddingBottom = `${diff}px`;
       }
       return diff;
     });
 
     console.log("===card height: ", cardHeights);
+    console.log("===original Article Heights", articleHeights);
     console.log("===article height :", localArticleHeights);
-  }, [gridHeight]);
+  }, [articleHeights, gridHeight]);
 
   return (
     <div
@@ -105,7 +108,6 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
                 sx={{ flex: "1 1 300px" }}
                 post={article}
                 type={index === 0 ? "major" : "minor"}
-                thumbnailLoadHandler={onThumbnailLoad}
               />
             )
           );

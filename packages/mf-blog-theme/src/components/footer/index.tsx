@@ -47,7 +47,11 @@ const Footer: React.FC<{}> = ({ children }) => {
             bg: "secondary",
             textAlign: "center",
             paddingTop: 1,
-            paddingBottom: 1
+            paddingBottom: 1,
+            paddingX: 1,
+            "@media only screen and (max-width: 500px)":{
+            fontSize: 2,
+          }
           }}
         >
           Created with love by Jatin and Richa

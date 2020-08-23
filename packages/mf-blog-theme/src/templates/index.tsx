@@ -25,9 +25,9 @@ function Home({ pageContext }): React.ReactFragment {
   const { postObj, catObj } = pageContext;
   //console.log(postIndex);
   const posts = Object.values(postObj);
-  console.log("Recieved posts : ",  posts.length);
-  const categories:  Category[] = Object.values(catObj);
-  console.log('categories ... ', categories);
+  console.log("Recieved posts : ", posts.length);
+  const categories: Category[] = Object.values(catObj);
+  console.log("categories ... ", categories);
   const minMargin = 0;
 
   const [hasWindow, hasDocument] = useWindow();
@@ -35,8 +35,11 @@ function Home({ pageContext }): React.ReactFragment {
     <SearchIndexContext.Provider value={postObj}>
       <Layout>
         <GoToTop />
-        <div className="home__carousel" sx={{ margin: minMargin + 1 }}>
-          {hasWindow && hasDocument && <Caraousel sliderHeightInpx="600" />}
+        <div
+          className="home__carousel"
+          sx={{ margin: minMargin + 1, height: "400px" }}
+        >
+          {hasWindow && hasDocument && <Caraousel />}
         </div>
         <div
           className="home__container"
@@ -76,7 +79,9 @@ function Home({ pageContext }): React.ReactFragment {
               }
             }}
           >
-            { categories.length ? <CategoryCard categories={categories} /> : null }
+            {categories.length ? (
+              <CategoryCard categories={categories} />
+            ) : null}
             <Instagram />
             <About />
             <Inspiration />

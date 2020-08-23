@@ -17,11 +17,12 @@ query GET_CATS{
 const GET_POSTS = `
   query GET_POSTS {
       wpgraphql{
-        posts {
+        posts(first: 100, where: {orderby: {field: DATE, order: DESC}}) {
           nodes {
             id
             title
             date
+            link
             excerpt
             content
             slug
@@ -61,7 +62,7 @@ const GET_CATS_DETAILS = `
           name
           slug
           count
-          posts {
+          posts (first: 100, where: {orderby: {field: DATE, order: DESC}}){
             nodes {
               id
               title
@@ -107,17 +108,26 @@ const GET_CATS_DETAILS = `
 
 const GET_ALL_POSTS = `
   query GET_POSTS {
-    wpgraphql{
-      posts {
+    wpgraphql {
+      posts(first: 100, where: {orderby: {field: DATE, order: DESC}, status: PUBLISH}) {
         nodes {
           id
           title
           slug
+          status
           content
+          categories {
+            nodes {
+              id
+              name
+              link
+              slug
+            }
+          }
         }
       }
-    }
   }
+}
   `;
 
 module.exports = {

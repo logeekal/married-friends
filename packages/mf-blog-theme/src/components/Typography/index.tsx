@@ -48,14 +48,14 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
 };
 
 interface TextProps extends TypographyProps {
-  spanProps?: React.HTMLProps<HTMLSpanElement>;
+  spanProps?: React.HTMLAttributes<HTMLSpanElement>;
 }
 
 export const Text: React.FC<TextProps> = ({
   children,
   className,
   sx,
-  ...spanProps
+  spanProps
 }) => {
   return (
     <span

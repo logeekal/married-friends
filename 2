@@ -17,11 +17,20 @@ interface CardProps extends React.HTMLProps<HTMLDivElement> {
   type: "major" | "minor";
   sx?: SxStyleProp;
   articleStyle?: React.CSSProperties;
+  thumbnailLoadHandler: () => any;
   className?: string;
 }
 
 const Card: React.FC<CardProps> = (props: CardProps) => {
-  let { post, type, articleStyle, sx, className, ...restProps } = props;
+  let {
+    post,
+    type,
+    articleStyle,
+    sx,
+    thumbnailLoadHandler,
+    className,
+    ...restProps
+  } = props;
   let date = getFormattedDate(post.date);
   const categories = post.categories.nodes[0];
 
@@ -42,22 +51,17 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       }}
       {...restProps}
     >
-      <Link href={post.slug}>
+      <Link href={makePostSlug(post)}>
         <div
           sx={{
-            position: "relative",
-            paddingBottom: "56.25%",
-            width: "100%"
+            flex: "50%"
           }}
         >
           <img
-            sx={{
-              position: "absolute",
-              width: "100%",
-              height: "100%"
-            }}
             src={post.featuredImage.mediaItemUrl}
             alt={post.featuredImage.altText}
+            width="100%"
+            onLoad={thumbnailLoadHandler}
           />
         </div>
         <div
@@ -98,9 +102,9 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               ".heateor_sss_sharing_container": {
                 display: "none"
               },
-              br: {
-                display: "none"
-              },
+            br: {
+            display:  "none",
+            },
               ...articleStyle
             }}
           >

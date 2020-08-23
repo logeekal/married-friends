@@ -1,4 +1,5 @@
 import { Post } from "../types/wp-graphql.types";
+import { document } from "browser-monads";
 
 let defaultDateFormatOption = {
   day: "2-digit",
@@ -14,8 +15,11 @@ interface IFormattedDate {
 
 export function extractTextfromHTML(html) {
   let span = document.createElement("span");
-  span.innerHTML = html;
-  return span.innerText;
+  let result = "";
+  if ("innerHTML" in span) {
+    result = span.innerHTML;
+  }
+  return result;
 }
 
 export function getFormattedDate(

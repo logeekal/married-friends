@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import React from "react";
-import { jsx, SxStyleProp } from "theme-ui";
+import { jsx, SxStyleProp, Link } from "theme-ui";
 import Header from "../components/header/Header";
 import DecoratedHeading from "../components/DecoratedHeading";
 import { FLEX_CONFIG } from "../utils/style";
@@ -122,42 +122,44 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
             alternateColor={"accent"}
           />
         </div>
-        <div
-          className="header__heading"
-          sx={
-            {
-              fontSize: 3,
-              justifySelf: "center",
-              justifyItems: "center",
-              paddingX: "15px",
-              height: "100%",
-              ...FLEX_CONFIG("inline-flex", "column"),
-              flex: "auto",
-              alignItems: windowWidth > 700 ? "center" : "flex-start"
-            } as SxStyleProp
-          }
-        >
-          <DecoratedHeading
-            heading={title}
-            fontSizes={windowWidth <= 700 ? [1, 2] : [3, 4]}
-            responsive={false}
-          />
-          {!isHeaderSticky && (
-            <div
-              className="header__subtitle"
-              sx={{
-                fontFamily: "cursive",
+        <Link href="/">
+          <div
+            className="header__heading"
+            sx={
+              {
                 fontSize: 3,
-                color: "secondary",
-                "@media only screen and (max-width: 700px)": {
-                  display: "none"
-                }
-              }}
-            >
-              {subTitle}
-            </div>
-          )}
-        </div>
+                justifySelf: "center",
+                justifyItems: "center",
+                height: "100%",
+                ...FLEX_CONFIG("inline-flex", "column"),
+                flex: "auto",
+                alignItems: windowWidth > 700 ? "center" : "flex-start",
+                paddingX: windowWidth > 700 ? 1 : 0
+              } as SxStyleProp
+            }
+          >
+            <DecoratedHeading
+              heading={title}
+              fontSizes={windowWidth <= 700 ? [1, 2] : [3, 4]}
+              responsive={false}
+            />
+            {!isHeaderSticky && (
+              <div
+                className="header__subtitle"
+                sx={{
+                  fontFamily: "cursive",
+                  fontSize: 3,
+                  color: "secondary",
+                  "@media only screen and (max-width: 700px)": {
+                    display: "none"
+                  }
+                }}
+              >
+                {subTitle}
+              </div>
+            )}
+          </div>
+        </Link>
         <div
           className="header__controls"
           sx={
