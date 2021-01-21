@@ -4,7 +4,6 @@ import React, { FC } from "react";
 import { Post } from "../types/wp-graphql.types";
 import { FLEX_CONFIG } from "../utils/style";
 import { jsx, SxStyleProp, Link } from "theme-ui";
-import { extractTextfromHTML, makePostSlug } from "../utils";
 import * as striptags from "striptags";
 
 export interface SearchResultCardProps {
@@ -13,6 +12,7 @@ export interface SearchResultCardProps {
 
 const SearchResultCard: FC<SearchResultCardProps> = props => {
   const { post } = props;
+  if(!post) return null;
   console.log("SearchResult : ", post);
   let { sourceUrl } = post.featuredImage
     ? post.featuredImage.mediaDetails.sizes.find(size => {

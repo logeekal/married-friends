@@ -41,8 +41,8 @@ module.exports = async ({ actions, graphql }) => {
     component: indexTemplate,
     context: {
       postObj,
-      catObj
-    }
+      catObj,
+    },
   });
 
   /*
@@ -60,7 +60,7 @@ module.exports = async ({ actions, graphql }) => {
 
   const categoriesDetails = categoriesDetailsWrapper.wpgraphql.categories.nodes;
 
-  categoriesDetails.forEach(cat => {
+  categoriesDetails.forEach((cat) => {
     if (!cat.count) return;
     console.log(
       `--------- Building path ${cat.slug} with posts :  ${cat.count} ---------`
@@ -82,8 +82,8 @@ module.exports = async ({ actions, graphql }) => {
       component: indexTemplate,
       context: {
         postObj,
-        catObj
-      }
+        catObj,
+      },
     });
   });
 
@@ -100,18 +100,18 @@ module.exports = async ({ actions, graphql }) => {
 
   array2Obj(posts, "id");
 
-  fs.writeFileSync("posts.json", JSON.stringify(postObj), "utf-8");
+  fs.writeFileSync("public/posts.json", JSON.stringify(postObj), "utf-8");
 
   createIndex(posts);
 
-  posts.forEach(post => {
+  posts.forEach((post) => {
     post.content = cleanContentURLS(post.content);
     createPage({
       path: post.slug,
       component: articlePageTemplate,
       context: {
-        post
-      }
+        post,
+      },
     });
   });
 };

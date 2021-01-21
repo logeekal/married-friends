@@ -9,7 +9,6 @@ import SearchResultCard from "./SearchResultCard";
 import { FLEX_CONFIG } from "../utils/style";
 import { jsx, SxStyleProp } from "theme-ui";
 import useWindow from "../hooks/useWindow";
-//import * as INDEX from '../../static/post_index.json'
 
 export interface SearchResultsProps
   extends PropsWithChildren<{
@@ -33,6 +32,7 @@ const SearchResults: FC<SearchResultsProps> = props => {
     if (postObj) {
       setIsLoading(false);
     }
+    console.log("postObj", postObj);
   }, [postObj]);
 
   //Set LUNR Data

@@ -21,6 +21,8 @@ interface HomeProps {
   };
 }
 
+console.log(`Carousel is ${Caraousel}`);
+
 function Home({ pageContext }): React.ReactFragment {
   const { postObj, catObj } = pageContext;
   //console.log(postIndex);
@@ -32,62 +34,60 @@ function Home({ pageContext }): React.ReactFragment {
 
   const [hasWindow, hasDocument] = useWindow();
   return (
-      <Layout>
-        <GoToTop />
+    <Layout>
+      <GoToTop />
+      <div
+        className="home__carousel"
+        sx={{ margin: minMargin + 1, height: "400px" }}
+      >
+        {hasWindow && hasDocument && <Caraousel />}
+      </div>
+      <div
+        className="home__container"
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap"
+        }}
+      >
         <div
-          className="home__carousel"
-          sx={{ margin: minMargin + 1, height: "400px" }}
-        >
-          {hasWindow && hasDocument && <Caraousel />}
-        </div>
-        <div
-          className="home__container"
+          className="home-left__container"
           sx={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap"
+            border: "0px solid red",
+            marginTop: 0,
+            marginBottom: 0,
+            flex: 0.7,
+            "@media only screen and (max-width: 768px)": {
+              flex: 1,
+              minWidth: "100%"
+            }
           }}
         >
-          <div
-            className="home-left__container"
-            sx={{
-              border: "0px solid red",
-              marginTop: 0,
-              marginBottom: 0,
-              flex: 0.7,
-              "@media only screen and (max-width: 768px)": {
-                flex: 1,
-                minWidth: "100%"
-              }
-            }}
-          >
-            <Grid articles={posts} />
-          </div>
-          <div
-            className="home-right__container"
-            sx={{
-              border: "0px solid green",
-              marginTop: 0,
-              marginBottom: 0,
-              maxWidth: "400px",
-              flex: 0.3,
-              "@media only screen and (max-width: 768px)": {
-                flex: 1,
-                maxWidth: "100%",
-                width: "100%"
-              }
-            }}
-          >
-            {categories.length ? (
-              <CategoryCard categories={categories} />
-            ) : null}
-            <Instagram />
-            <About />
-            <Inspiration />
-          </div>
+          <Grid articles={posts} />
         </div>
-        <SubscribeMain />
-      </Layout>
+        <div
+          className="home-right__container"
+          sx={{
+            border: "0px solid green",
+            marginTop: 0,
+            marginBottom: 0,
+            maxWidth: "400px",
+            flex: 0.3,
+            "@media only screen and (max-width: 768px)": {
+              flex: 1,
+              maxWidth: "100%",
+              width: "100%"
+            }
+          }}
+        >
+          {categories.length ? <CategoryCard categories={categories} /> : null}
+          <Instagram />
+          <About />
+          <Inspiration />
+        </div>
+      </div>
+      <SubscribeMain />
+    </Layout>
   );
 }
 

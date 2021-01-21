@@ -17,7 +17,10 @@ const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
   React.useEffect(() => {
     console.log(`Fetching Posts`);
     fetch("/posts.json")
-      .then(res => res.json())
+    .then(res => {
+      console.log(res);
+      return  res.json()
+    })
       .then(postObj => {
         console.log(`Fetching posts`, postObj);
         setPosts(postObj)
