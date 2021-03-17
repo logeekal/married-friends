@@ -1,5 +1,4 @@
 node_modules
 .cache/
-*lock*
 public
 yarn-error.log
