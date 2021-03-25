@@ -8,6 +8,7 @@ import {
   getFormattedDate,
   makePostSlug
 } from "../../../utils";
+import { Link as GatsbyLink } from 'gatsby'
 import { AccentText, Text } from "../../../components/Typography";
 import SocialIcons from "../../../components/SocialIcons";
 import useWindow from "../../../hooks/useWindow";
@@ -42,7 +43,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       }}
       {...restProps}
     >
-      <Link href={post.slug}>
+      <Link as={GatsbyLink} href={post.slug}>
         <div
           sx={{
             position: "relative",
