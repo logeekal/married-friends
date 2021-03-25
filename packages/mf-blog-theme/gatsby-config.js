@@ -8,7 +8,7 @@ module.exports = {
       options: {
         typeName: "WPGraphql",
         fieldName: "wpgraphql",
-        url: "http://backend.marriedfriends.in/graphql",
+        url: "https://backend.marriedfriends.in/graphql",
       },
     },
     {
