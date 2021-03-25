@@ -14,6 +14,7 @@ import GoToTop from "../components/GoToTop";
 import CategoryCard from "../sections/CategoryCard";
 import SearchIndexContext from "../providers/IndexProvider";
 import useWindow from "../hooks/useWindow";
+import { SEO, SEOWithQuery } from "../components/SEO";
 
 interface HomeProps {
   pageContext: {
@@ -36,6 +37,11 @@ function Home({ pageContext }): React.ReactFragment {
   return (
     <Layout>
       <GoToTop />
+      <SEOWithQuery title="Welcome to Married Friends"  description="Making tasty food healthier."
+        image=""
+        isArticle={false}
+        url=""
+      />
       <div
         className="home__carousel"
         sx={{ margin: minMargin + 1, height: "400px" }}
