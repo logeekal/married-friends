@@ -74,7 +74,7 @@ const YoutubeFeed: FC<YoutubeFeedProps> = ({ videos }) => {
               <iframe
                 width="560"
                 height="315"
-                src="https://www.youtube.com/embed/cVDASbWZ_KI"
+                src="https://www.youtube-nocookie.com/embed/cVDASbWZ_KI"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen="true"
               ></iframe>
