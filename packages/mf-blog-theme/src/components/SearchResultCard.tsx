@@ -15,7 +15,7 @@ const SearchResultCard: FC<SearchResultCardProps> = props => {
   if(!post) return null;
   console.log("SearchResult : ", post);
   let { sourceUrl } = post.featuredImage
-    ? post.featuredImage.mediaDetails.sizes.find(size => {
+    ? post.featuredImage.node.mediaDetails.sizes.find(size => {
         return size.name === "thumbnail";
       })
     : { sourceUrl: "https://picum.photos/150/90" };

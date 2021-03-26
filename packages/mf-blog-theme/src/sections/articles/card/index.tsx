@@ -8,6 +8,7 @@ import {
   getFormattedDate,
   makePostSlug
 } from "../../../utils";
+import { Link as GatsbyLink } from 'gatsby'
 import { AccentText, Text } from "../../../components/Typography";
 import SocialIcons from "../../../components/SocialIcons";
 import useWindow from "../../../hooks/useWindow";
@@ -42,7 +43,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       }}
       {...restProps}
     >
-      <Link href={post.slug}>
+      <Link as={GatsbyLink} to={post.slug}>
         <div
           sx={{
             position: "relative",
@@ -56,8 +57,8 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               width: "100%",
               height: "100%"
             }}
-            src={post.featuredImage.mediaItemUrl}
-            alt={post.featuredImage.altText}
+            src={post.featuredImage && post.featuredImage.node.mediaItemUrl}
+            alt={post.featuredImage && post.featuredImage.node.altText}
           />
         </div>
         <div
@@ -86,7 +87,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             }}
           >
             <span>
-              <Link href={`/${categories.slug}`}>{categories.name} </Link>
+              <Link as={GatsbyLink} to={`/${categories.slug}`}>{categories.name} </Link>
             </span>
             <span>
               <Text> / </Text>

@@ -3,10 +3,11 @@ const path = require("path");
 module.exports = {
   plugins: [
     "gatsby-plugin-theme-ui",
+   "gatsby-plugin-react-helmet",
     {
       resolve: "gatsby-source-graphql",
       options: {
-        typeName: "WPGraphql",
+        typeName: "WPGraphQL",
         fieldName: "wpgraphql",
         url: "https://backend.marriedfriends.in/graphql",
       },

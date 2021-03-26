@@ -1,5 +1,4 @@
-schema: http://marriedfriends.in/blog/graphql
-documents: ./src/graphql/queries.graphql
+schema: http://backend.marriedfriends.in/graphql
 generates:
   ./src/types/wp-graphql.types.ts:
     plugins:

@@ -27,13 +27,15 @@ const GET_POSTS = `
             content
             slug
             featuredImage {
-              altText,
-              mediaItemUrl
-              mediaDetails {
-                sizes {
-                  name
-                  sourceUrl
-                  width
+              node {
+                altText,
+                mediaItemUrl
+                mediaDetails {
+                  sizes {
+                    name
+                    sourceUrl
+                    width
+                  }
                 }
               }
             }
@@ -42,8 +44,10 @@ const GET_POSTS = `
                 name
                 slug
                 parent{
-                  name
-                  slug
+                  node{
+                    name
+                    slug
+                  }
                 }
               }
             }
@@ -54,33 +58,36 @@ const GET_POSTS = `
   `;
 
 const GET_CATS_DETAILS = `
-  query GET_CATS_DETAILS {
-    wpgraphql {
-      categories {
-        nodes {
-          id
-          name
-          slug
-          count
-          posts (first: 100, where: {orderby: {field: DATE, order: DESC}}){
-            nodes {
-              id
-              title
-              date
-              excerpt
-              content
-              slug
-              categories {
-              nodes{
+query GET_CATS_DETAILS {
+  wpgraphql {
+    categories {
+      nodes {
+        id
+        name
+        slug
+        count
+        posts(first: 100, where: {orderby: {field: DATE, order: DESC}}) {
+          nodes {
+            id
+            title
+            date
+            excerpt
+            content
+            slug
+            categories {
+              nodes {
                 name
                 slug
-                parent{
-                  name
-                  slug
+                parent {
+                  node {
+                    name
+                    slug
+                  }
                 }
               }
             }
             featuredImage {
+              node {
                 altText
                 mediaItemUrl
                 mediaDetails {
@@ -93,53 +100,59 @@ const GET_CATS_DETAILS = `
               }
             }
           }
-          children {
-            nodes {
-              id
-              name
-              count
-              slug
-            }
+        }
+        children {
+          nodes {
+            id
+            name
+            count
+            slug
           }
         }
       }
     }
-  }`;
+  }
+}
+
+  `;
 
 const GET_ALL_POSTS = `
-  query GET_POSTS {
-    wpgraphql {
-      posts(first: 100, where: {orderby: {field: DATE, order: DESC}, status: PUBLISH}) {
-        nodes {
-          id
-          title
-          slug
-          status
-          content
-          excerpt
-          featuredImage {
-              altText
-              mediaItemUrl
-              mediaDetails {
-                sizes {
-                  name
-                  sourceUrl
-                  width
-                }
+query GET_POSTS {
+  wpgraphql {
+    posts(first: 100, where: {orderby: {field: DATE, order: DESC}, status: PUBLISH}) {
+      nodes {
+        id
+        title
+        slug
+        status
+        content
+        excerpt
+        featuredImage {
+          node {
+            altText
+            mediaItemUrl
+            mediaDetails {
+              sizes {
+                name
+                sourceUrl
+                width
               }
-            }
-          categories {
-            nodes {
-              id
-              name
-              link
-              slug
             }
           }
         }
+        categories {
+          nodes {
+            id
+            name
+            link
+            slug
+          }
+        }
       }
+    }
   }
 }
+
   `;
 
 module.exports = {

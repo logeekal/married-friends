@@ -14,8 +14,11 @@ module.exports = async ({ actions, graphql }) => {
 
   log("Building Home Page");
   const { data: postsWrapper } = await graphql(QUERIES.GET_POSTS);
+  log('Got all Posts')
 
   const { data: categoriesWrapper } = await graphql(QUERIES.GET_CATS_SUMMARY);
+
+  log('Got all categories')
 
   let posts = postsWrapper.wpgraphql.posts.nodes;
   let postObj = {};

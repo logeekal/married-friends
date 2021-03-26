@@ -14,6 +14,7 @@ function array2Obj(arr, keyAttr) {
 }
 
 function cleanContentURLS(content) {
+  if(!content) return;
   return content.replace(/((http(s)?):\/\/)?marriedfriends.in\/blog/g, "");
 }
 

@@ -1,9 +1,11 @@
 /* @jsx jsx */
 
-import { jsx } from "theme-ui";
+import { jsx, Link } from "theme-ui";
 import React, { FC } from "react";
 import { FLEX_CONFIG } from "../utils/style";
 import { SxStyleProp } from "theme-ui";
+import { Link as GastbyLink } from 'gatsby';
+
 
 export interface CategoryCountItemProps
   extends React.HTMLProps<HTMLDivElement> {
@@ -15,7 +17,7 @@ export interface CategoryCountItemProps
 
 const CategoryCountItem: FC<CategoryCountItemProps> = props => {
   return (
-    <a href={`/${props.link}`} sx={{display: "block",
+    <Link as={GastbyLink} to={`/${props.link}`} sx={{display: "block",
           ...props.sx,
       textDecoration: "none",
       color:"secondary"
@@ -36,7 +38,7 @@ const CategoryCountItem: FC<CategoryCountItemProps> = props => {
       <span sx={{ textTransform: "capitalize" }}>{props.name}</span>
       <span>({props.count})</span>
     </div>
-      </a>
+      </Link>
   );
 };
 
