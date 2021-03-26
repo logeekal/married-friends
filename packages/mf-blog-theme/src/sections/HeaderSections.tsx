@@ -11,6 +11,7 @@ import useWindowDims from "../hooks/useWindowDims";
 import Menu from "../components/Menu";
 import MenuIcon from "../components/MenuIcon";
 import useKeyCode from "../hooks/useKeyCode";
+import { Link as GatsbyLink } from 'gatsby';
 
 interface MenuShape {
   label: string;
@@ -122,7 +123,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
             alternateColor={"accent"}
           />
         </div>
-        <Link href="/">
+        <Link as={GatsbyLink} to="/">
           <div
             className="header__heading"
             sx={

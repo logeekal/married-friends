@@ -3,7 +3,7 @@ module.exports = {
   pathPrefix: "/marriedfriends",
   siteMetadata: {
     title: "Welcome to the Kitchen of Married Friends",
-    image: "http://backend.marriedfriends.in/wp-content/uploads/2021/03/mug_cake-scaled.jpg" ,
+    image: "https://backend.marriedfriends.in/wp-content/uploads/2021/03/mug_cake-scaled.jpg" ,
     canonicalUrl: "https://marriedfriends.in",
     description: "We are married friends are making world food more tastier and more healthy. Healthy food will have never have to taste bad.",
     social: {
