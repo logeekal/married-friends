@@ -37,11 +37,7 @@ function Home({ pageContext }): React.ReactFragment {
   return (
     <Layout>
       <GoToTop />
-      <SEOWithQuery title="Welcome to Married Friends"  description="Making tasty food healthier."
-        image=""
-        isArticle={false}
-        url=""
-      />
+      <SEOWithQuery isArticle={false} />
       <div
         className="home__carousel"
         sx={{ margin: minMargin + 1, height: "400px" }}
@@ -53,7 +49,7 @@ function Home({ pageContext }): React.ReactFragment {
         sx={{
           display: "flex",
           flexDirection: "row",
-          flexWrap: "wrap"
+          flexWrap: "wrap",
         }}
       >
         <div
@@ -65,8 +61,8 @@ function Home({ pageContext }): React.ReactFragment {
             flex: 0.7,
             "@media only screen and (max-width: 768px)": {
               flex: 1,
-              minWidth: "100%"
-            }
+              minWidth: "100%",
+            },
           }}
         >
           <Grid articles={posts} />
@@ -82,8 +78,8 @@ function Home({ pageContext }): React.ReactFragment {
             "@media only screen and (max-width: 768px)": {
               flex: 1,
               maxWidth: "100%",
-              width: "100%"
-            }
+              width: "100%",
+            },
           }}
         >
           {categories.length ? <CategoryCard categories={categories} /> : null}
