@@ -103,16 +103,22 @@ const ArticlePage: FC<ArticlePageProps> = ({ pageContext }) => {
               },
             }}
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(post.content.replace(/((http(s)?):\/\/)?youtube.com/g, "youtube-nocookie.com/"), {
-                ADD_TAGS: ["iframe"],
-                ADD_ATTR: [
-                  "frameborder",
-                  "allow",
-                  "allowfullscreen",
-                  "scrolling",
-                  "src",
-                ],
-              }),
+              __html: post.content
+                ? post.content.replace(
+                    /((http(s)?):\/\/)?youtube.com/g,
+                    "youtube-nocookie.com/"
+                  )
+                : // DOMPurify.sanitize(post.content.replace(/((http(s)?):\/\/)?youtube.com/g, "youtube-nocookie.com/"), {
+                  //   ADD_TAGS: ["iframe"],
+                  //   ADD_ATTR: [
+                  //     "frameborder",
+                  //     "allow",
+                  //     "allowfullscreen",
+                  //     "scrolling",
+                  //     "src",
+                  //   ],
+                  // })
+                  "",
             }}
           />
         </section>
