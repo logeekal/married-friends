@@ -42,7 +42,7 @@ export function SEO({siteMetadata, title, description, image, isArticle, url  }:
                 <title>{title || siteMetadata.title}</title>
                 <meta name="description" content={description || siteMetadata.description }></meta>
                 <meta name="image" content={image || siteMetadata.image} />
-                <link rel="icon" type="image/png" href="http://backend.marriedfriends.in/wp-content/uploads/2021/03/logo_transparent.png" sizes="16x16" />
+                <link rel="icon" type="image/png" href="https://backend.marriedfriends.in/wp-content/uploads/2021/03/logo_transparent.png" sizes="16x16" />
 
                 {/* Open Graph Tags */}
                 <meta property="og:url" content={url || siteMetadata.canonicalUrl}/>

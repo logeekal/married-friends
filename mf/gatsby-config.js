@@ -17,7 +17,7 @@ module.exports = {
     organization: {
       name: "Married Friends",
       url: "https://marriedfriends.in",
-      logo: "http://backend.marriedfriends.in/wp-content/uploads/2021/03/logo_transparent.png",
+      logo: "https://backend.marriedfriends.in/wp-content/uploads/2021/03/logo_transparent.png",
     },
   },
 };
