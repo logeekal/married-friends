@@ -58,7 +58,7 @@ export function makePostSlug(post: Post): string {
   let slug = `/${baseCategory.slug}`;
   let currCategory = baseCategory;
   while (currCategory.parent) {
-    slug += `/${currCategory.parent.slug}`;
+    slug += `/${currCategory.parent.node.slug}`;
     currCategory = currCategory.parent;
   }
 

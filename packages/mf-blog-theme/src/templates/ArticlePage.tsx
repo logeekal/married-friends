@@ -10,8 +10,9 @@ import SubscribeMain from "../sections/subscribe/SubscribeMain";
 import { Text, AccentText } from "../components/Typography";
 import { getFormattedDate } from "../utils";
 import { SEOWithQuery } from "../components/SEO";
-import * as striptags from 'striptags'
-import { Link as GastbyLink } from 'gatsby';
+import * as striptags from "striptags";
+import { Link as GastbyLink } from "gatsby";
+import DOMPurify from "dompurify";
 
 export interface ArticlePageProps {
   pageContext: {
@@ -29,7 +30,7 @@ const ArticlePage: FC<ArticlePageProps> = ({ pageContext }) => {
       <SEOWithQuery
         title={post.title}
         description={striptags(post.excerpt)}
-        image={post.featuredImage.mediaItemUrl}
+        image={post.featuredImage?.node?.mediaItemUrl}
         isArticle={false}
         url=""
       />
@@ -68,7 +69,9 @@ const ArticlePage: FC<ArticlePageProps> = ({ pageContext }) => {
             }}
           >
             <span>
-              <Link as={GastbyLink} to={`/${category.slug}`}>{category.name} </Link>
+              <Link as={GastbyLink} to={`/${category.slug}`}>
+                {category.name}{" "}
+              </Link>
             </span>
             <span>
               <Text> / </Text>
@@ -99,10 +102,21 @@ const ArticlePage: FC<ArticlePageProps> = ({ pageContext }) => {
                 borderBottomStyle: "solid",
               },
             }}
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(post.content.replace(/((http(s)?):\/\/)?youtube.com/g, "youtube-nocookie.com/"), {
+                ADD_TAGS: ["iframe"],
+                ADD_ATTR: [
+                  "frameborder",
+                  "allow",
+                  "allowfullscreen",
+                  "scrolling",
+                  "src",
+                ],
+              }),
+            }}
           />
         </section>
-        <section class="section-sub">
+        <section className="section-sub">
           <SubscribeMain />
         </section>
       </main>

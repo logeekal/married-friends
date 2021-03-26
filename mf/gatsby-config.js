@@ -5,9 +5,9 @@ module.exports = {
     title: "Welcome to the Kitchen of Married Friends",
     image: "https://backend.marriedfriends.in/wp-content/uploads/2021/03/mug_cake-scaled.jpg" ,
     canonicalUrl: "https://marriedfriends.in",
-    description: "We are married friends are making world food more tastier and more healthy. Healthy food will have never have to taste bad.",
+    description: "We at married friends are making world food more tastier and more healthy. Healthy food will have never have to taste bad.",
     social: {
-      twitter: "marriedfriends",
+      twitter: "marriedfriendss",
       fb: "marriedfriends",
       youtube: "marriedfriends",
     },

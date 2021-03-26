@@ -7,7 +7,7 @@ module.exports = {
     {
       resolve: "gatsby-source-graphql",
       options: {
-        typeName: "WPGraphql",
+        typeName: "WPGraphQL",
         fieldName: "wpgraphql",
         url: "https://backend.marriedfriends.in/graphql",
       },

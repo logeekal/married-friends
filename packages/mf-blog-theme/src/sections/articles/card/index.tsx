@@ -57,8 +57,8 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               width: "100%",
               height: "100%"
             }}
-            src={post.featuredImage.mediaItemUrl}
-            alt={post.featuredImage.altText}
+            src={post.featuredImage && post.featuredImage.node.mediaItemUrl}
+            alt={post.featuredImage && post.featuredImage.node.altText}
           />
         </div>
         <div
