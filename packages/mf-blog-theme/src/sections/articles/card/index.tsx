@@ -43,7 +43,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       }}
       {...restProps}
     >
-      <Link as={GatsbyLink} href={post.slug}>
+      <Link as={GatsbyLink} to={post.slug}>
         <div
           sx={{
             position: "relative",
@@ -87,7 +87,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             }}
           >
             <span>
-              <Link href={`/${categories.slug}`}>{categories.name} </Link>
+              <Link as={GatsbyLink} to={`/${categories.slug}`}>{categories.name} </Link>
             </span>
             <span>
               <Text> / </Text>

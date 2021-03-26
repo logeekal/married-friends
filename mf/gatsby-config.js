@@ -2,10 +2,10 @@ module.exports = {
   plugins: ["mf-blog-theme"],
   pathPrefix: "/marriedfriends",
   siteMetadata: {
-    title: "Married Friends",
-    image: "",
-    canonicalUrl: "",
-    description: "Test Description",
+    title: "Welcome to the Kitchen of Married Friends",
+    image: "http://backend.marriedfriends.in/wp-content/uploads/2021/03/mug_cake-scaled.jpg" ,
+    canonicalUrl: "https://marriedfriends.in",
+    description: "We are married friends are making world food more tastier and more healthy. Healthy food will have never have to taste bad.",
     social: {
       twitter: "marriedfriends",
       fb: "marriedfriends",
@@ -17,7 +17,7 @@ module.exports = {
     organization: {
       name: "Married Friends",
       url: "https://marriedfriends.in",
-      logo: "",
+      logo: "http://backend.marriedfriends.in/wp-content/uploads/2021/03/logo_transparent.png",
     },
   },
 };

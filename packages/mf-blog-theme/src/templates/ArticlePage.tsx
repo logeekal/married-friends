@@ -11,6 +11,7 @@ import { Text, AccentText } from "../components/Typography";
 import { getFormattedDate } from "../utils";
 import { SEOWithQuery } from "../components/SEO";
 import * as striptags from 'striptags'
+import { Link as GastbyLink } from 'gatsby';
 
 export interface ArticlePageProps {
   pageContext: {
@@ -67,7 +68,7 @@ const ArticlePage: FC<ArticlePageProps> = ({ pageContext }) => {
             }}
           >
             <span>
-              <Link href={`/${category.slug}`}>{category.name} </Link>
+              <Link as={GastbyLink} to={`/${category.slug}`}>{category.name} </Link>
             </span>
             <span>
               <Text> / </Text>

@@ -2,38 +2,62 @@ import Helmet from 'react-helmet';
 import React from 'react'
 import { useStaticQuery, graphql } from 'gatsby'
 
-export interface SEOProps {
-    title: string;
-    description: string;
-    image: string;
-    url: string;
+export interface SEOQueryProps {
+    title?: string;
+    description?: string;
+    image?: string;
+    url?: string;
     isArticle: boolean;
 }
 
-export function SEO({siteMetadata, title, description, image, isArticle, url  }) {
+
+type TSiteMeta = {
+    title: string;
+    image: string;
+    canonicalUrl: string;
+    description: string;
+    social: {
+        twitter: string;
+        fb:string;
+        youtube: string;
+    },
+    author: {
+        name: "Married Friends",
+    },
+    organization: {
+        name: string;
+    }
+}
+
+interface SEOProps extends SEOQueryProps {
+    siteMetadata: TSiteMeta
+}
+
+export function SEO({siteMetadata, title, description, image, isArticle, url  }:  SEOProps) {
 
     return (
         <>
             <Helmet>
                 {/* General Tags */}
-                <title>{title}</title>
-                <meta name="description" content={description}></meta>
-                <meta name="image" content={image} />
+                <title>{title || siteMetadata.title}</title>
+                <meta name="description" content={description || siteMetadata.description }></meta>
+                <meta name="image" content={image || siteMetadata.image} />
 
                 {/* Open Graph Tags */}
-                <meta property="og:url" content={url}/>
+                <meta property="og:url" content={url || siteMetadata.canonicalUrl}/>
                 {isArticle ? <meta property="og:type" content="article" /> : null}
-                <meta property="og:title" content={title} />
-                <meta property="og:description" content={description} />
-                <meta property="og:image" content={image} />
+                <meta property="og:title" content={title || siteMetadata.title} />
+                <meta property="og:description" content={description || siteMetadata.description} />
+                <meta property="og:image" content={image || siteMetadata.image} />
+                <meta property="og:image:alt" content={title || siteMetadata.title} />
                 <meta property="fb:app_id" content={siteMetadata.social.fb} />
 
                 {/* Twitter Card Tags  */}
                 <meta name="twitter:card" content="summary_large_image"/>
                 <meta name="twitter:creator" content={siteMetadata.social.twitter}/>
-                <meta name="twitter:title" content={title}/>
-                <meta name="twitter:description" content={description}/>
-                <meta name="twitter:image" content={image}/>
+                <meta name="twitter:title" content={title || siteMetadata.title}/>
+                <meta name="twitter:description" content={description || siteMetadata.description}/>
+                <meta name="twitter:image" content={image || siteMetadata.image}/>
             </Helmet>
         </>
     )

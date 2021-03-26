@@ -4,6 +4,7 @@ import React, { FC } from "react";
 import Card from "../components/Card";
 import { jsx } from "theme-ui";
 import { Link } from '@theme-ui/components'
+import  { Link as GatsbyLink} from 'gatsby'
 
 import { alpha } from "@theme-ui/color";
 
@@ -23,7 +24,7 @@ const AboutFooter: React.FC<{}> = props => {
         paddingY: 1
       }}
     >
-      <Link href="#" sx={{color: 'secondary'}}>Read More</Link>
+      <Link as={GatsbyLink} to="#" sx={{color: 'secondary'}}>Read More</Link>
       <span>icons </span>
     </div>
   );
