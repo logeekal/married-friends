@@ -4,7 +4,6 @@ import axios from "axios";
 
 const host = `https://backend.marriedfriends.in`;
 
-
 export default class RecipeService {
   graphql: any;
   actions: any;
@@ -19,24 +18,23 @@ export default class RecipeService {
       query GET_RECIPE_POSTS {
         wpgraphql {
           recipes {
-            edges {
-              node {
-                id
-                content
-                uri
-                slug
-                link
-                excerpt
-                date
-                recipeCuisines {
-                  nodes {
-                    name
-                    link
-                    id
-                    uri
-                    slug
-                    parentId
-                  }
+            nodes {
+              id
+              content
+              uri
+              slug
+              link
+              excerpt
+              date
+              recipeId
+              recipeCuisines {
+                nodes {
+                  name
+                  link
+                  id
+                  uri
+                  slug
+                  parentId
                 }
               }
             }
@@ -44,25 +42,26 @@ export default class RecipeService {
         }
       }
     `;
-    const response: IWPGraphQL<Array<Recipe>> = await this.graphql(
-      GET_RECIPE_POSTS
-    );
-    return response.data.wpgraphql;
+    const response: IWPGraphQL<{
+      recipes: { nodes: Array<Recipe> };
+    }> = await this.graphql(GET_RECIPE_POSTS);
+    return response.data.wpgraphql.recipes.nodes;
   };
 
   getAllRecipesData = async (): Promise<IRecipeContent> => {
-
-    console.log({
-      "process-env": process.env,
-      user: process.env.USERNAME,
-      pass: process.env.TOKEN
-    });
+    /*
+     *console.log({
+     *  "process-env": process.env,
+     *  user: process.env.USERNAME,
+     *  pass: process.env.TOKEN,
+     *});
+     */
     const response = await axios.get(
       `${host}/wp-json/deliciousrecipe/v1/recipe`,
       {
         auth: {
           username: process.env.USERNAME,
-          password: process.env.TOKEN
+          password: process.env.TOKEN,
         },
       }
     );
@@ -82,12 +81,15 @@ export default class RecipeService {
           recipeCuisines {
             nodes {
               name
+              id
               uri
               slug
               recipes {
                 nodes {
                   id
                   recipeId
+                  excerpt
+                  uri
                 }
               }
             }
@@ -96,10 +98,12 @@ export default class RecipeService {
       }
     `;
 
-    const response: IWPGraphQL<Array<RecipeCuisine>> = await this.graphql(
-      GET_CUISINES
-    );
+    const response: IWPGraphQL<{
+      recipeCuisines: {
+        nodes: Array<RecipeCuisine>;
+      };
+    }> = await this.graphql(GET_CUISINES);
 
-    return response.data.wpgraphql;
+    return response.data.wpgraphql.recipeCuisines.nodes;
   };
 }

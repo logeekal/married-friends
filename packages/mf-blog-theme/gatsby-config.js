@@ -3,7 +3,8 @@ const path = require("path");
 module.exports = {
   plugins: [
     "gatsby-plugin-theme-ui",
-   "gatsby-plugin-react-helmet",
+    "gatsby-plugin-react-helmet",
+    "gatsby-plugin-sitemap",
     {
       resolve: "gatsby-source-graphql",
       options: {

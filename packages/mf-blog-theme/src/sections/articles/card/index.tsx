@@ -2,7 +2,7 @@
 
 import React from "react";
 import { jsx, Styled, Link, SxStyleProp } from "theme-ui";
-import { Post } from "../../../types/wp-graphql.types";
+import { Post, Recipe } from "../../../types/wp-graphql.types";
 import {
   extractTextfromHTML,
   getFormattedDate,
@@ -14,7 +14,7 @@ import SocialIcons from "../../../components/SocialIcons";
 import useWindow from "../../../hooks/useWindow";
 
 interface CardProps extends React.HTMLProps<HTMLDivElement> {
-  post: Post;
+  post: Post | Recipe;
   type: "major" | "minor";
   sx?: SxStyleProp;
   articleStyle?: React.CSSProperties;
@@ -24,7 +24,7 @@ interface CardProps extends React.HTMLProps<HTMLDivElement> {
 const Card: React.FC<CardProps> = (props: CardProps) => {
   let { post, type, articleStyle, sx, className, ...restProps } = props;
   let date = getFormattedDate(post.date);
-  const categories = post.categories.nodes[0];
+  const categories = (post as Post).categories.nodes[0] || (post as Recipe).recipeCuisines.nodes[0];
 
   const [, hasDocument] = useWindow();
   return (
