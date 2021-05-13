@@ -4,28 +4,38 @@ import { jsx, SxStyleProp, Link } from "theme-ui";
 import React, { FC } from "react";
 import { Post, Recipe } from "../types/wp-graphql.types";
 import Layout from "../components/layout";
-import SearchIndexContext from "../providers/IndexProvider";
 import { FLEX_CONFIG } from "../utils/style";
 import SubscribeMain from "../sections/subscribe/SubscribeMain";
 import { Text, AccentText } from "../components/Typography";
 import { getFormattedDate } from "../utils";
 import { SEOWithQuery } from "../components/SEO";
+import genRecipeSchema from "../components/SEO/utils/genRecipeSchema";
 import * as striptags from "striptags";
 import { Link as GastbyLink } from "gatsby";
 import DOMPurify from "dompurify";
-import { ICompleteRecipe } from "../../utils/types";
+import { ICompleteRecipe, IFAQObj } from "../../utils/types";
+import RecipeCard from "../sections/RecipeCard";
+import {getFAQs, stripFAQSection} from "../utils/modHTMLContent";
+import FAQ from "../sections/FAQ";
 
 export interface RecipePageProps {
   pageContext: {
     data: ICompleteRecipe[number];
+    faqs: IFAQObj
   };
 }
 
 const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
-  console.log(JSON.stringify(pageContext))
-  const { post } = pageContext.data;
+  console.log(JSON.stringify(pageContext));
+  const { post, content: recipe } = pageContext.data;
 
-  console.log(post)
+  const {faqs : allFAQObject } = pageContext
+
+  const faqIds = getFAQs(post.content)
+
+  const postContent =  stripFAQSection(post.content)
+
+  console.log({postContent})
 
   let date = getFormattedDate(post.date);
   const category = post.recipeCuisines.nodes[0];
@@ -37,12 +47,18 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
         image={post.featuredImage?.node?.mediaItemUrl}
         isArticle={true}
         url=""
+        schemas={[
+          {
+            type: "recipe",
+            schema: genRecipeSchema(post as Recipe, recipe),
+          },
+        ]}
       />
       <main
         sx={
           {
             ...FLEX_CONFIG("flex", "column"),
-            paddingX: 2,
+            paddingX: [1, 1, 2],
             maxWidth: "1000px",
             width: "100%",
             margin: "0 auto",
@@ -106,25 +122,18 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
                 borderBottomStyle: "solid",
               },
             }}
-            dangerouslySetInnerHTML={{
-              __html: post.content
-                ? post.content.replace(
-                    /((http(s)?):\/\/)?youtube.com/g,
-                    "youtube-nocookie.com/"
-                  )
-                : // DOMPurify.sanitize(post.content.replace(/((http(s)?):\/\/)?youtube.com/g, "youtube-nocookie.com/"), {
-                  //   ADD_TAGS: ["iframe"],
-                  //   ADD_ATTR: [
-                  //     "frameborder",
-                  //     "allow",
-                  //     "allowfullscreen",
-                  //     "scrolling",
-                  //     "src",
-                  //   ],
-                  // })
-                  "",
-            }}
-          />
+          >
+            <div
+              dangerouslySetInnerHTML={{
+                __html: postContent
+              }}
+            ></div>
+            <RecipeCard recipe={recipe} />
+            {
+
+              faqIds.length > 0 &&  <FAQ faqs={allFAQObject} faqIds={faqIds} />
+            }
+          </article>
         </section>
         <section className="section-sub">
           <SubscribeMain />

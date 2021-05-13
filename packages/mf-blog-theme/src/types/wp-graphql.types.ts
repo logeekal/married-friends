@@ -33,6 +33,15 @@ export type RootQuery = {
   /** Connection between the RootQuery type and the ContentType type */
   contentTypes?: Maybe<RootQueryToContentTypeConnection>;
   discussionSettings?: Maybe<DiscussionSettings>;
+  /** An object of the faq Type.  */
+  faq?: Maybe<Faq>;
+  /**
+   * A faq object
+   * @deprecated Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)
+   */
+  faqBy?: Maybe<Faq>;
+  /** Connection between the RootQuery type and the faq type */
+  faqs?: Maybe<RootQueryToFaqConnection>;
   generalSettings?: Maybe<GeneralSettings>;
   /** An object of the mediaItem Type.  */
   mediaItem?: Maybe<MediaItem>;
@@ -200,6 +209,33 @@ export type RootQueryContentTypesArgs = {
   last?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryFaqArgs = {
+  id: Scalars['ID'];
+  idType?: Maybe<FaqIdType>;
+  asPreview?: Maybe<Scalars['Boolean']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryFaqByArgs = {
+  id?: Maybe<Scalars['ID']>;
+  faqId?: Maybe<Scalars['Int']>;
+  uri?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+};
+
+
+/** The root entry point into the Graph */
+export type RootQueryFaqsArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  where?: Maybe<RootQueryToFaqConnectionWhereArgs>;
 };
 
 
@@ -1812,6 +1848,8 @@ export type User = Node & UniformResourceIdentifiable & Commenter & DatabaseIden
   enqueuedStylesheets?: Maybe<UserToEnqueuedStylesheetConnection>;
   /** A complete list of capabilities including capabilities inherited from a role. This is equivalent to the array keys of WP_User-&gt;allcaps. */
   extraCapabilities?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** Connection between the User type and the faq type */
+  faqs?: Maybe<UserToFaqConnection>;
   /** First name of the user. This is equivalent to the WP_User-&gt;user_first_name property. */
   firstName?: Maybe<Scalars['String']>;
   /** The globally unique identifier for the user object. */
@@ -1891,6 +1929,16 @@ export type UserEnqueuedStylesheetsArgs = {
   last?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
+};
+
+
+/** A User object */
+export type UserFaqsArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  where?: Maybe<UserToFaqConnectionWhereArgs>;
 };
 
 
@@ -2073,6 +2121,8 @@ export type UserToCommentConnectionWhereArgs = {
 export enum ContentTypeEnum {
   /** The Type of Content object */
   Attachment = 'ATTACHMENT',
+  /** The Type of Content object */
+  HelpieFaq = 'HELPIE_FAQ',
   /** The Type of Content object */
   Page = 'PAGE',
   /** The Type of Content object */
@@ -2416,8 +2466,8 @@ export type UserToEnqueuedStylesheetConnectionEdge = {
   node?: Maybe<EnqueuedStylesheet>;
 };
 
-/** Arguments for filtering the UserToMediaItemConnection connection */
-export type UserToMediaItemConnectionWhereArgs = {
+/** Arguments for filtering the UserToFaqConnection connection */
+export type UserToFaqConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
   author?: Maybe<Scalars['Int']>;
   /** Find objects connected to author(s) in the array of author's userIds */
@@ -2462,23 +2512,251 @@ export type UserToMediaItemConnectionWhereArgs = {
   title?: Maybe<Scalars['String']>;
 };
 
-/** Connection between the User type and the mediaItem type */
-export type UserToMediaItemConnection = {
-  __typename?: 'UserToMediaItemConnection';
-  /** Edges for the UserToMediaItemConnection connection */
-  edges?: Maybe<Array<Maybe<UserToMediaItemConnectionEdge>>>;
+/** Connection between the User type and the faq type */
+export type UserToFaqConnection = {
+  __typename?: 'UserToFaqConnection';
+  /** Edges for the UserToFaqConnection connection */
+  edges?: Maybe<Array<Maybe<UserToFaqConnectionEdge>>>;
   /** The nodes of the connection, without the edges */
-  nodes?: Maybe<Array<Maybe<MediaItem>>>;
+  nodes?: Maybe<Array<Maybe<Faq>>>;
   /** Information about pagination in a connection. */
   pageInfo?: Maybe<WpPageInfo>;
 };
 
 /** An edge in a connection */
-export type UserToMediaItemConnectionEdge = {
-  __typename?: 'UserToMediaItemConnectionEdge';
+export type UserToFaqConnectionEdge = {
+  __typename?: 'UserToFaqConnectionEdge';
   /** A cursor for use in pagination */
   cursor?: Maybe<Scalars['String']>;
   /** The item at the end of the edge */
+  node?: Maybe<Faq>;
+};
+
+/** The faq type */
+export type Faq = Node & ContentNode & DatabaseIdentifier & NodeWithTemplate & UniformResourceIdentifiable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithExcerpt & NodeWithComments & NodeWithRevisions & NodeWithPageAttributes & {
+  __typename?: 'Faq';
+  /** Connection between the NodeWithAuthor type and the User type */
+  author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
+  /** The database identifier of the author of the node */
+  authorDatabaseId?: Maybe<Scalars['Int']>;
+  /** The globally unique identifier of the author of the node */
+  authorId?: Maybe<Scalars['ID']>;
+  /** The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility. */
+  commentCount?: Maybe<Scalars['Int']>;
+  /** Whether the comments are open or closed for this particular post. */
+  commentStatus?: Maybe<Scalars['String']>;
+  /** Connection between the faq type and the Comment type */
+  comments?: Maybe<FaqToCommentConnection>;
+  /** The content of the post. */
+  content?: Maybe<Scalars['String']>;
+  /** Connection between the ContentNode type and the ContentType type */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /** The ID of the node in the database. */
+  databaseId: Scalars['Int'];
+  /** Post publishing date. */
+  date?: Maybe<Scalars['String']>;
+  /** The publishing date set in GMT. */
+  dateGmt?: Maybe<Scalars['String']>;
+  /** The desired slug of the post */
+  desiredSlug?: Maybe<Scalars['String']>;
+  /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /** The RSS enclosure for the object */
+  enclosure?: Maybe<Scalars['String']>;
+  /** Connection between the ContentNode type and the EnqueuedScript type */
+  enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /** Connection between the ContentNode type and the EnqueuedStylesheet type */
+  enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** The excerpt of the post. */
+  excerpt?: Maybe<Scalars['String']>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  faqId: Scalars['Int'];
+  /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /** The database identifier for the featured image node assigned to the content node */
+  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
+  /** Globally unique ID of the featured image assigned to the node */
+  featuredImageId?: Maybe<Scalars['ID']>;
+  /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
+  guid?: Maybe<Scalars['String']>;
+  /** The globally unique identifier of the helpie_faq object. */
+  id: Scalars['ID'];
+  /** Whether the object is a node in the preview state */
+  isPreview?: Maybe<Scalars['Boolean']>;
+  /** Whether the object is restricted from the current viewer */
+  isRestricted?: Maybe<Scalars['Boolean']>;
+  /** True if the node is a revision of another node */
+  isRevision?: Maybe<Scalars['Boolean']>;
+  /** The user that most recently edited the node */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /** The permalink of the post */
+  link?: Maybe<Scalars['String']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: Maybe<Scalars['Int']>;
+  /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
+  modified?: Maybe<Scalars['String']>;
+  /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
+  modifiedGmt?: Maybe<Scalars['String']>;
+  /** Connection between the faq type and the faq type */
+  preview?: Maybe<FaqToPreviewConnectionEdge>;
+  /** The database id of the preview node */
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  /** Whether the object is a node in the preview state */
+  previewRevisionId?: Maybe<Scalars['ID']>;
+  /** If the current node is a revision, this field exposes the node this is a revision of. Returns null if the node is not a revision of another node. */
+  revisionOf?: Maybe<NodeWithRevisionsToContentNodeConnectionEdge>;
+  /** Connection between the faq type and the faq type */
+  revisions?: Maybe<FaqToRevisionConnection>;
+  /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
+  slug?: Maybe<Scalars['String']>;
+  /** The current status of the object */
+  status?: Maybe<Scalars['String']>;
+  /** The template assigned to a node of content */
+  template?: Maybe<ContentTemplate>;
+  /** Connection between the faq type and the TermNode type */
+  terms?: Maybe<FaqToTermNodeConnection>;
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+  title?: Maybe<Scalars['String']>;
+  /** URI path for the resource */
+  uri: Scalars['String'];
+};
+
+
+/** The faq type */
+export type FaqCommentsArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  where?: Maybe<FaqToCommentConnectionWhereArgs>;
+};
+
+
+/** The faq type */
+export type FaqContentArgs = {
+  format?: Maybe<PostObjectFieldFormatEnum>;
+};
+
+
+/** The faq type */
+export type FaqEnqueuedScriptsArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+};
+
+
+/** The faq type */
+export type FaqEnqueuedStylesheetsArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+};
+
+
+/** The faq type */
+export type FaqExcerptArgs = {
+  format?: Maybe<PostObjectFieldFormatEnum>;
+};
+
+
+/** The faq type */
+export type FaqRevisionsArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  where?: Maybe<FaqToRevisionConnectionWhereArgs>;
+};
+
+
+/** The faq type */
+export type FaqTermsArgs = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  where?: Maybe<FaqToTermNodeConnectionWhereArgs>;
+};
+
+
+/** The faq type */
+export type FaqTitleArgs = {
+  format?: Maybe<PostObjectFieldFormatEnum>;
+};
+
+/** A node that can have a template associated with it */
+export type NodeWithTemplate = {
+  /** The template assigned to the node */
+  template?: Maybe<ContentTemplate>;
+};
+
+/** The template assigned to a node of content */
+export type ContentTemplate = {
+  /** The name of the template */
+  templateName?: Maybe<Scalars['String']>;
+};
+
+/** A node that NodeWith a title */
+export type NodeWithTitle = {
+  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
+  title?: Maybe<Scalars['String']>;
+};
+
+
+/** A node that NodeWith a title */
+export type NodeWithTitleTitleArgs = {
+  format?: Maybe<PostObjectFieldFormatEnum>;
+};
+
+/** A node that supports the content editor */
+export type NodeWithContentEditor = {
+  /** The content of the post. */
+  content?: Maybe<Scalars['String']>;
+};
+
+
+/** A node that supports the content editor */
+export type NodeWithContentEditorContentArgs = {
+  format?: Maybe<PostObjectFieldFormatEnum>;
+};
+
+/** A node that can have an author assigned to it */
+export type NodeWithAuthor = {
+  /** Connection between the NodeWithAuthor type and the User type */
+  author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
+  /** The database identifier of the author of the node */
+  authorDatabaseId?: Maybe<Scalars['Int']>;
+  /** The globally unique identifier of the author of the node */
+  authorId?: Maybe<Scalars['ID']>;
+};
+
+/** Connection between the NodeWithAuthor type and the User type */
+export type NodeWithAuthorToUserConnectionEdge = {
+  __typename?: 'NodeWithAuthorToUserConnectionEdge';
+  /** The nodes of the connection, without the edges */
+  node?: Maybe<User>;
+};
+
+/** A node that can have a featured image set */
+export type NodeWithFeaturedImage = {
+  /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /** The database identifier for the featured image node assigned to the content node */
+  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
+  /** Globally unique ID of the featured image assigned to the node */
+  featuredImageId?: Maybe<Scalars['ID']>;
+};
+
+/** Connection between the NodeWithFeaturedImage type and the MediaItem type */
+export type NodeWithFeaturedImageToMediaItemConnectionEdge = {
+  __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge';
+  /** The nodes of the connection, without the edges */
   node?: Maybe<MediaItem>;
 };
 
@@ -2672,47 +2950,6 @@ export type MediaItemSrcSetArgs = {
 /** The mediaItem type */
 export type MediaItemTitleArgs = {
   format?: Maybe<PostObjectFieldFormatEnum>;
-};
-
-/** A node that can have a template associated with it */
-export type NodeWithTemplate = {
-  /** The template assigned to the node */
-  template?: Maybe<ContentTemplate>;
-};
-
-/** The template assigned to a node of content */
-export type ContentTemplate = {
-  /** The name of the template */
-  templateName?: Maybe<Scalars['String']>;
-};
-
-/** A node that NodeWith a title */
-export type NodeWithTitle = {
-  /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
-  title?: Maybe<Scalars['String']>;
-};
-
-
-/** A node that NodeWith a title */
-export type NodeWithTitleTitleArgs = {
-  format?: Maybe<PostObjectFieldFormatEnum>;
-};
-
-/** A node that can have an author assigned to it */
-export type NodeWithAuthor = {
-  /** Connection between the NodeWithAuthor type and the User type */
-  author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
-  /** The database identifier of the author of the node */
-  authorDatabaseId?: Maybe<Scalars['Int']>;
-  /** The globally unique identifier of the author of the node */
-  authorId?: Maybe<Scalars['ID']>;
-};
-
-/** Connection between the NodeWithAuthor type and the User type */
-export type NodeWithAuthorToUserConnectionEdge = {
-  __typename?: 'NodeWithAuthorToUserConnectionEdge';
-  /** The nodes of the connection, without the edges */
-  node?: Maybe<User>;
 };
 
 /** A node that can have comments associated with it */
@@ -3120,6 +3357,340 @@ export type MediaSize = {
   width?: Maybe<Scalars['String']>;
 };
 
+/** A node that can have an excerpt */
+export type NodeWithExcerpt = {
+  /** The excerpt of the post. */
+  excerpt?: Maybe<Scalars['String']>;
+};
+
+
+/** A node that can have an excerpt */
+export type NodeWithExcerptExcerptArgs = {
+  format?: Maybe<PostObjectFieldFormatEnum>;
+};
+
+/** A node that can have revisions */
+export type NodeWithRevisions = {
+  /** True if the node is a revision of another node */
+  isRevision?: Maybe<Scalars['Boolean']>;
+  /** If the current node is a revision, this field exposes the node this is a revision of. Returns null if the node is not a revision of another node. */
+  revisionOf?: Maybe<NodeWithRevisionsToContentNodeConnectionEdge>;
+};
+
+/** Connection between the NodeWithRevisions type and the ContentNode type */
+export type NodeWithRevisionsToContentNodeConnectionEdge = {
+  __typename?: 'NodeWithRevisionsToContentNodeConnectionEdge';
+  /** The nodes of the connection, without the edges */
+  node?: Maybe<ContentNode>;
+};
+
+/** A node that can have page attributes */
+export type NodeWithPageAttributes = {
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: Maybe<Scalars['Int']>;
+};
+
+/** Arguments for filtering the FaqToCommentConnection connection */
+export type FaqToCommentConnectionWhereArgs = {
+  /** Comment author email address. */
+  authorEmail?: Maybe<Scalars['String']>;
+  /** Array of author IDs to include comments for. */
+  authorIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Array of author IDs to exclude comments for. */
+  authorNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Comment author URL. */
+  authorUrl?: Maybe<Scalars['String']>;
+  /** Array of comment IDs to include. */
+  commentIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
+  commentNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Include comments of a given type. */
+  commentType?: Maybe<Scalars['String']>;
+  /** Include comments from a given array of comment types. */
+  commentTypeIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** Exclude comments from a given array of comment types. */
+  commentTypeNotIn?: Maybe<Scalars['String']>;
+  /** Content object author ID to limit results by. */
+  contentAuthor?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Array of author IDs to retrieve comments for. */
+  contentAuthorIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Array of author IDs *not* to retrieve comments for. */
+  contentAuthorNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Limit results to those affiliated with a given content object ID. */
+  contentId?: Maybe<Scalars['ID']>;
+  /** Array of content object IDs to include affiliated comments for. */
+  contentIdIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Array of content object IDs to exclude affiliated comments for. */
+  contentIdNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Content object name to retrieve affiliated comments for. */
+  contentName?: Maybe<Scalars['String']>;
+  /** Content Object parent ID to retrieve affiliated comments for. */
+  contentParent?: Maybe<Scalars['Int']>;
+  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  contentStatus?: Maybe<Array<Maybe<PostStatusEnum>>>;
+  /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
+  contentType?: Maybe<Array<Maybe<ContentTypeEnum>>>;
+  /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
+  includeUnapproved?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Karma score to retrieve matching comments for. */
+  karma?: Maybe<Scalars['Int']>;
+  /** The cardinality of the order of the connection */
+  order?: Maybe<OrderEnum>;
+  /** Field to order the comments by. */
+  orderby?: Maybe<CommentsConnectionOrderbyEnum>;
+  /** Parent ID of comment to retrieve children of. */
+  parent?: Maybe<Scalars['Int']>;
+  /** Array of parent IDs of comments to retrieve children for. */
+  parentIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Array of parent IDs of comments *not* to retrieve children for. */
+  parentNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Search term(s) to retrieve matching comments for. */
+  search?: Maybe<Scalars['String']>;
+  /** Comment status to limit results by. */
+  status?: Maybe<Scalars['String']>;
+  /** Include comments for a specific user ID. */
+  userId?: Maybe<Scalars['ID']>;
+};
+
+/** Connection between the faq type and the Comment type */
+export type FaqToCommentConnection = {
+  __typename?: 'FaqToCommentConnection';
+  /** Edges for the FaqToCommentConnection connection */
+  edges?: Maybe<Array<Maybe<FaqToCommentConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<Comment>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type FaqToCommentConnectionEdge = {
+  __typename?: 'FaqToCommentConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<Comment>;
+};
+
+/** Connection between the faq type and the faq type */
+export type FaqToPreviewConnectionEdge = {
+  __typename?: 'FaqToPreviewConnectionEdge';
+  /** The nodes of the connection, without the edges */
+  node?: Maybe<Faq>;
+};
+
+/** Arguments for filtering the faqToRevisionConnection connection */
+export type FaqToRevisionConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: Maybe<Scalars['Int']>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: Maybe<Scalars['String']>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: Maybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: Maybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: Maybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: Maybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: Maybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: Maybe<Array<Maybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: Maybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: Maybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: Maybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: Maybe<Array<Maybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: Maybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: Maybe<Scalars['String']>;
+};
+
+/** Connection between the faq type and the faq type */
+export type FaqToRevisionConnection = {
+  __typename?: 'FaqToRevisionConnection';
+  /** Edges for the faqToRevisionConnection connection */
+  edges?: Maybe<Array<Maybe<FaqToRevisionConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<Faq>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type FaqToRevisionConnectionEdge = {
+  __typename?: 'FaqToRevisionConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<Faq>;
+};
+
+/** Arguments for filtering the FaqToTermNodeConnection connection */
+export type FaqToTermNodeConnectionWhereArgs = {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: Maybe<Scalars['String']>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: Maybe<Scalars['Int']>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: Maybe<Scalars['Boolean']>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: Maybe<Scalars['String']>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: Maybe<Scalars['Boolean']>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: Maybe<Scalars['Boolean']>;
+  /** Array of term ids to include. Default empty array. */
+  include?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: Maybe<Scalars['String']>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Direction the connection should be ordered in */
+  order?: Maybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: Maybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: Maybe<Scalars['Boolean']>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: Maybe<Scalars['Int']>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: Maybe<Scalars['String']>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** The Taxonomy to filter terms by */
+  taxonomies?: Maybe<Array<Maybe<TaxonomyEnum>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: Maybe<Scalars['Boolean']>;
+};
+
+/** Allowed taxonomies */
+export enum TaxonomyEnum {
+  /** Taxonomy enum category */
+  Category = 'CATEGORY',
+  /** Taxonomy enum post_format */
+  Postformat = 'POSTFORMAT',
+  /** Taxonomy enum recipe-course */
+  Recipecourse = 'RECIPECOURSE',
+  /** Taxonomy enum recipe-cuisine */
+  Recipecuisine = 'RECIPECUISINE',
+  /** Taxonomy enum post_tag */
+  Tag = 'TAG'
+}
+
+/** Connection between the faq type and the TermNode type */
+export type FaqToTermNodeConnection = {
+  __typename?: 'FaqToTermNodeConnection';
+  /** Edges for the FaqToTermNodeConnection connection */
+  edges?: Maybe<Array<Maybe<FaqToTermNodeConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<TermNode>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type FaqToTermNodeConnectionEdge = {
+  __typename?: 'FaqToTermNodeConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<TermNode>;
+};
+
+/** Arguments for filtering the UserToMediaItemConnection connection */
+export type UserToMediaItemConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: Maybe<Scalars['Int']>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: Maybe<Scalars['String']>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: Maybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: Maybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: Maybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: Maybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: Maybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: Maybe<Array<Maybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: Maybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: Maybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: Maybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: Maybe<Array<Maybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: Maybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: Maybe<Scalars['String']>;
+};
+
+/** Connection between the User type and the mediaItem type */
+export type UserToMediaItemConnection = {
+  __typename?: 'UserToMediaItemConnection';
+  /** Edges for the UserToMediaItemConnection connection */
+  edges?: Maybe<Array<Maybe<UserToMediaItemConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<MediaItem>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type UserToMediaItemConnectionEdge = {
+  __typename?: 'UserToMediaItemConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<MediaItem>;
+};
+
 /** Arguments for filtering the UserToPageConnection connection */
 export type UserToPageConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
@@ -3358,56 +3929,6 @@ export type PageRevisionsArgs = {
 /** The page type */
 export type PageTitleArgs = {
   format?: Maybe<PostObjectFieldFormatEnum>;
-};
-
-/** A node that supports the content editor */
-export type NodeWithContentEditor = {
-  /** The content of the post. */
-  content?: Maybe<Scalars['String']>;
-};
-
-
-/** A node that supports the content editor */
-export type NodeWithContentEditorContentArgs = {
-  format?: Maybe<PostObjectFieldFormatEnum>;
-};
-
-/** A node that can have a featured image set */
-export type NodeWithFeaturedImage = {
-  /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
-  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
-  /** The database identifier for the featured image node assigned to the content node */
-  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
-  /** Globally unique ID of the featured image assigned to the node */
-  featuredImageId?: Maybe<Scalars['ID']>;
-};
-
-/** Connection between the NodeWithFeaturedImage type and the MediaItem type */
-export type NodeWithFeaturedImageToMediaItemConnectionEdge = {
-  __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge';
-  /** The nodes of the connection, without the edges */
-  node?: Maybe<MediaItem>;
-};
-
-/** A node that can have revisions */
-export type NodeWithRevisions = {
-  /** True if the node is a revision of another node */
-  isRevision?: Maybe<Scalars['Boolean']>;
-  /** If the current node is a revision, this field exposes the node this is a revision of. Returns null if the node is not a revision of another node. */
-  revisionOf?: Maybe<NodeWithRevisionsToContentNodeConnectionEdge>;
-};
-
-/** Connection between the NodeWithRevisions type and the ContentNode type */
-export type NodeWithRevisionsToContentNodeConnectionEdge = {
-  __typename?: 'NodeWithRevisionsToContentNodeConnectionEdge';
-  /** The nodes of the connection, without the edges */
-  node?: Maybe<ContentNode>;
-};
-
-/** A node that can have page attributes */
-export type NodeWithPageAttributes = {
-  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: Maybe<Scalars['Int']>;
 };
 
 /** Arguments for filtering the PageToCommentConnection connection */
@@ -3848,18 +4369,6 @@ export type PostTermsArgs = {
 
 /** The post type */
 export type PostTitleArgs = {
-  format?: Maybe<PostObjectFieldFormatEnum>;
-};
-
-/** A node that can have an excerpt */
-export type NodeWithExcerpt = {
-  /** The excerpt of the post. */
-  excerpt?: Maybe<Scalars['String']>;
-};
-
-
-/** A node that can have an excerpt */
-export type NodeWithExcerptExcerptArgs = {
   format?: Maybe<PostObjectFieldFormatEnum>;
 };
 
@@ -4747,20 +5256,6 @@ export type PostToTermNodeConnectionWhereArgs = {
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: Maybe<Scalars['Boolean']>;
 };
-
-/** Allowed taxonomies */
-export enum TaxonomyEnum {
-  /** Taxonomy enum category */
-  Category = 'CATEGORY',
-  /** Taxonomy enum post_format */
-  Postformat = 'POSTFORMAT',
-  /** Taxonomy enum recipe-course */
-  Recipecourse = 'RECIPECOURSE',
-  /** Taxonomy enum recipe-cuisine */
-  Recipecuisine = 'RECIPECUISINE',
-  /** Taxonomy enum post_tag */
-  Tag = 'TAG'
-}
 
 /** Connection between the post type and the TermNode type */
 export type PostToTermNodeConnection = {
@@ -6016,7 +6511,7 @@ export type UserToContentRevisionUnionConnectionEdge = {
 };
 
 /** A union of Content Node Types that support revisions */
-export type ContentRevisionUnion = Post | Page;
+export type ContentRevisionUnion = Post | Page | Faq;
 
 /** Connection between the User type and the UserRole type */
 export type UserToUserRoleConnection = {
@@ -6354,6 +6849,84 @@ export type DiscussionSettings = {
   defaultCommentStatus?: Maybe<Scalars['String']>;
   /** Allow link notifications from other blogs (pingbacks and trackbacks) on new articles. */
   defaultPingStatus?: Maybe<Scalars['String']>;
+};
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum FaqIdType {
+  /** Identify a resource by the Database ID. */
+  DatabaseId = 'DATABASE_ID',
+  /** Identify a resource by the (hashed) Global ID. */
+  Id = 'ID',
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  Slug = 'SLUG',
+  /** Identify a resource by the URI. */
+  Uri = 'URI'
+}
+
+/** Arguments for filtering the RootQueryToFaqConnection connection */
+export type RootQueryToFaqConnectionWhereArgs = {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: Maybe<Scalars['Int']>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: Maybe<Scalars['String']>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: Maybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: Maybe<Scalars['Boolean']>;
+  /** Specific ID of the object */
+  id?: Maybe<Scalars['Int']>;
+  /** Array of IDs for the objects to retrieve */
+  in?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: Maybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: Maybe<Scalars['String']>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: Maybe<Array<Maybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: Maybe<Scalars['ID']>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  /** Show posts with a specific password. */
+  password?: Maybe<Scalars['String']>;
+  /** Show Posts based on a keyword search */
+  search?: Maybe<Scalars['String']>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: Maybe<Array<Maybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: Maybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: Maybe<Scalars['String']>;
+};
+
+/** Connection between the RootQuery type and the faq type */
+export type RootQueryToFaqConnection = {
+  __typename?: 'RootQueryToFaqConnection';
+  /** Edges for the RootQueryToFaqConnection connection */
+  edges?: Maybe<Array<Maybe<RootQueryToFaqConnectionEdge>>>;
+  /** The nodes of the connection, without the edges */
+  nodes?: Maybe<Array<Maybe<Faq>>>;
+  /** Information about pagination in a connection. */
+  pageInfo?: Maybe<WpPageInfo>;
+};
+
+/** An edge in a connection */
+export type RootQueryToFaqConnectionEdge = {
+  __typename?: 'RootQueryToFaqConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node?: Maybe<Faq>;
 };
 
 /** The general setting type */
@@ -7772,6 +8345,8 @@ export type RootMutation = {
   createCategory?: Maybe<CreateCategoryPayload>;
   /** The payload for the createComment mutation */
   createComment?: Maybe<CreateCommentPayload>;
+  /** The payload for the createFaq mutation */
+  createFaq?: Maybe<CreateFaqPayload>;
   /** The payload for the createMediaItem mutation */
   createMediaItem?: Maybe<CreateMediaItemPayload>;
   /** The payload for the createPage mutation */
@@ -7794,6 +8369,8 @@ export type RootMutation = {
   deleteCategory?: Maybe<DeleteCategoryPayload>;
   /** The payload for the deleteComment mutation */
   deleteComment?: Maybe<DeleteCommentPayload>;
+  /** The payload for the deleteFaq mutation */
+  deleteFaq?: Maybe<DeleteFaqPayload>;
   /** The payload for the deleteMediaItem mutation */
   deleteMediaItem?: Maybe<DeleteMediaItemPayload>;
   /** The payload for the deletePage mutation */
@@ -7824,6 +8401,8 @@ export type RootMutation = {
   sendPasswordResetEmail?: Maybe<SendPasswordResetEmailPayload>;
   /** The payload for the updateComment mutation */
   updateComment?: Maybe<UpdateCommentPayload>;
+  /** The payload for the updateFaq mutation */
+  updateFaq?: Maybe<UpdateFaqPayload>;
   /** The payload for the updateMediaItem mutation */
   updateMediaItem?: Maybe<UpdateMediaItemPayload>;
   /** The payload for the updatePage mutation */
@@ -7878,6 +8457,12 @@ export type RootMutationCreateCategoryArgs = {
 /** The root mutation */
 export type RootMutationCreateCommentArgs = {
   input: CreateCommentInput;
+};
+
+
+/** The root mutation */
+export type RootMutationCreateFaqArgs = {
+  input: CreateFaqInput;
 };
 
 
@@ -7944,6 +8529,12 @@ export type RootMutationDeleteCategoryArgs = {
 /** The root mutation */
 export type RootMutationDeleteCommentArgs = {
   input: DeleteCommentInput;
+};
+
+
+/** The root mutation */
+export type RootMutationDeleteFaqArgs = {
+  input: DeleteFaqInput;
 };
 
 
@@ -8034,6 +8625,12 @@ export type RootMutationSendPasswordResetEmailArgs = {
 /** The root mutation */
 export type RootMutationUpdateCommentArgs = {
   input: UpdateCommentInput;
+};
+
+
+/** The root mutation */
+export type RootMutationUpdateFaqArgs = {
+  input: UpdateFaqInput;
 };
 
 
@@ -8261,6 +8858,41 @@ export type CreateCommentPayload = {
   comment?: Maybe<Comment>;
   /** Whether the mutation succeeded. If the comment is not approved, the server will not return the comment to a non authenticated user, but a success message can be returned if the create succeeded, and the client can optimistically add the comment to the client cache */
   success?: Maybe<Scalars['Boolean']>;
+};
+
+/** Input for the createFaq mutation */
+export type CreateFaqInput = {
+  /** The userId to assign as the author of the object */
+  authorId?: Maybe<Scalars['ID']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The comment status for the object */
+  commentStatus?: Maybe<Scalars['String']>;
+  /** The content of the object */
+  content?: Maybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: Maybe<Scalars['String']>;
+  /** The excerpt of the object */
+  excerpt?: Maybe<Scalars['String']>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: Maybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: Maybe<Scalars['String']>;
+  /** The slug of the object */
+  slug?: Maybe<Scalars['String']>;
+  /** The status of the object */
+  status?: Maybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: Maybe<Scalars['String']>;
+};
+
+/** The payload for the createFaq mutation */
+export type CreateFaqPayload = {
+  __typename?: 'CreateFaqPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  faq?: Maybe<Faq>;
 };
 
 /** Input for the createMediaItem mutation */
@@ -8724,6 +9356,27 @@ export type DeleteCommentPayload = {
   deletedId?: Maybe<Scalars['ID']>;
 };
 
+/** Input for the deleteFaq mutation */
+export type DeleteFaqInput = {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: Maybe<Scalars['Boolean']>;
+  /** The ID of the faq to delete */
+  id: Scalars['ID'];
+};
+
+/** The payload for the deleteFaq mutation */
+export type DeleteFaqPayload = {
+  __typename?: 'DeleteFaqPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The ID of the deleted object */
+  deletedId?: Maybe<Scalars['ID']>;
+  /** The object before it was deleted */
+  faq?: Maybe<Faq>;
+};
+
 /** Input for the deleteMediaItem mutation */
 export type DeleteMediaItemInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -9044,6 +9697,43 @@ export type UpdateCommentPayload = {
   comment?: Maybe<Comment>;
   /** Whether the mutation succeeded. If the comment is not approved, the server will not return the comment to a non authenticated user, but a success message can be returned if the create succeeded, and the client can optimistically add the comment to the client cache */
   success?: Maybe<Scalars['Boolean']>;
+};
+
+/** Input for the updateFaq mutation */
+export type UpdateFaqInput = {
+  /** The userId to assign as the author of the object */
+  authorId?: Maybe<Scalars['ID']>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The comment status for the object */
+  commentStatus?: Maybe<Scalars['String']>;
+  /** The content of the object */
+  content?: Maybe<Scalars['String']>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: Maybe<Scalars['String']>;
+  /** The excerpt of the object */
+  excerpt?: Maybe<Scalars['String']>;
+  /** The ID of the faq object */
+  id: Scalars['ID'];
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: Maybe<Scalars['Int']>;
+  /** The password used to protect the content of the object */
+  password?: Maybe<Scalars['String']>;
+  /** The slug of the object */
+  slug?: Maybe<Scalars['String']>;
+  /** The status of the object */
+  status?: Maybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: Maybe<Scalars['String']>;
+};
+
+/** The payload for the updateFaq mutation */
+export type UpdateFaqPayload = {
+  __typename?: 'UpdateFaqPayload';
+  /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: Maybe<Scalars['String']>;
+  /** The Post object mutation type. */
+  faq?: Maybe<Faq>;
 };
 
 /** Input for the updateMediaItem mutation */
@@ -10262,7 +10952,7 @@ export type MenuItemsWhereArgs = {
 };
 
 /** Union between the post, page and media item types */
-export type PostObjectUnion = Post | Page | MediaItem | Recipe;
+export type PostObjectUnion = Post | Page | MediaItem | Recipe | Faq;
 
 /** Union between the Category, Tag and PostFormatPost types */
 export type TermObjectUnion = Category | Tag | PostFormat | RecipeCourse | RecipeCuisine;

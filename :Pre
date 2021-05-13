@@ -1,0 +1,120 @@
+/* @jsx jsx */
+
+import React from "react";
+import { Box, Flex, Heading, jsx, Text } from "theme-ui";
+import { ICompleteRecipe } from "../../utils/types";
+import RecipeCardHeader from "../components/RecipeCardHeader";
+import striptags from "striptags";
+
+interface RecipeCardProps {
+  recipe: ICompleteRecipe[number]["content"];
+}
+
+const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
+  return (
+    <div
+      className="recipe-card"
+      sx={{
+        width: "100%",
+        borderTopLeftRadius: "10px",
+        borderTopRightRadius: "10px",
+        backgroundColor: "white",
+        fontWeight: 400,
+      }}
+    >
+      <RecipeCardHeader />
+      <Box className="recipe-card__body">
+        <Flex
+          dir="row"
+          sx={{
+            flex: "1 1 auto",
+          }}
+        >
+          <Box
+            className="recipe-card__ingredients"
+            sx={{
+              flex: "0.35",
+              padding: [1, 1, 2],
+              fontFeatureSettings : "'cv05' on, 'cv06' on, 'kern' off",
+            }}
+          >
+            {recipe.recipeIngredients.map((ingredientSection, index) => {
+              return (
+                <Box key={index}>
+                  <h3 >{ingredientSection.sectionTitle}</h3>
+                  <ul>
+                    {ingredientSection.ingredients.map((ingredient, index) => {
+                      return (
+                        <li
+                          key={index}
+                          sx={{
+                            lineHeight: "1.65rem",
+                          }}
+                        >
+                          <Text as="span">{`${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredient}`}</Text>
+                          <i
+                            sx={{
+                              color: "secondary",
+                            }}
+                          >{` ${ingredient.notes}`}</i>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </Box>
+              );
+            })}
+          </Box>
+          <Box
+            className="recipe-card__instructions"
+            sx={{
+              flex: "0.65",
+              border: "0px solid black",
+              padding: [1, 1, 2],
+            }}
+          >
+            <h2 style={{
+              fontFamily: "cursive",
+              fontSize: 3
+              }}> 
+              </h2>
+            {recipe.recipeInstructions.map((instructionSection, index) => {
+              return (
+                <Box
+                  key={index}
+                >
+                  <h3>{instructionSection.sectionTitle}</h3>
+                  <ol>
+                    {instructionSection.instruction.map(
+                      (instruction, index) => {
+                        return (
+                          <li
+                            key={index}
+                            sx={{
+                              lineHeight: "1.65rem",
+                            }}
+                          >
+                            {striptags(instruction.instruction)}
+                            {instruction.instructionNotes && (
+                              <Box>
+                                <blockquote>
+                                  {striptags(instruction.instructionNotes)}
+                                </blockquote>
+                              </Box>
+                            )}
+                          </li>
+                        );
+                      }
+                    )}
+                  </ol>
+                </Box>
+              );
+            })}
+          </Box>
+        </Flex>
+      </Box>
+    </div>
+  );
+};
+
+export default RecipeCard;

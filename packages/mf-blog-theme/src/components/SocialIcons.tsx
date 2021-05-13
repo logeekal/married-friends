@@ -141,7 +141,9 @@ const SocialIcons: FC<SocialIconsProps> = ({
         );
       })}
 
-      {includeSearch && <SearchPage size={size as number} color={color} />}
+      {/*
+        *{includeSearch && <SearchPage size={size as number} color={color} />}
+        */}
     </div>
   );
 };

@@ -27,6 +27,17 @@ export default class RecipeService {
               excerpt
               date
               recipeId
+              title
+              featuredImage{
+                node {
+                  mediaDetails {
+                    sizes{
+                      name
+                      sourceUrl
+                    }
+                  }
+                }
+              }
               recipeCuisines {
                 nodes {
                   name
@@ -90,6 +101,16 @@ export default class RecipeService {
                   recipeId
                   excerpt
                   uri
+                  recipeCuisines {
+                    nodes {
+                      name
+                      link
+                      id
+                      uri
+                      slug
+                      parentId
+                    }
+                  }
                 }
               }
             }

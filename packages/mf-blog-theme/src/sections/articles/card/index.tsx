@@ -6,9 +6,9 @@ import { Post, Recipe } from "../../../types/wp-graphql.types";
 import {
   extractTextfromHTML,
   getFormattedDate,
-  makePostSlug
+  makePostSlug,
 } from "../../../utils";
-import { Link as GatsbyLink } from 'gatsby'
+import { Link as GatsbyLink } from "gatsby";
 import { AccentText, Text } from "../../../components/Typography";
 import SocialIcons from "../../../components/SocialIcons";
 import useWindow from "../../../hooks/useWindow";
@@ -23,8 +23,15 @@ interface CardProps extends React.HTMLProps<HTMLDivElement> {
 
 const Card: React.FC<CardProps> = (props: CardProps) => {
   let { post, type, articleStyle, sx, className, ...restProps } = props;
+
   let date = getFormattedDate(post.date);
-  const categories = (post as Post).categories.nodes[0] || (post as Recipe).recipeCuisines.nodes[0];
+
+  console.log(post)
+
+  const categories =
+    "recipeCuisines" in post
+      ? (post as Recipe).recipeCuisines.nodes[0]
+      : (post as Post).categories.nodes[0];
 
   const [, hasDocument] = useWindow();
   return (
@@ -39,23 +46,23 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
         backgroundColor: "bgCard",
         margin: 1,
         cursor: "pointer",
-        ...sx
+        ...sx,
       }}
       {...restProps}
     >
-      <Link as={GatsbyLink} to={post.slug}>
+      <Link as={GatsbyLink} to={post.uri}>
         <div
           sx={{
             position: "relative",
             paddingBottom: "56.25%",
-            width: "100%"
+            width: "100%",
           }}
         >
           <img
             sx={{
               position: "absolute",
               width: "100%",
-              height: "100%"
+              height: "100%",
             }}
             src={post.featuredImage && post.featuredImage.node.mediaItemUrl}
             alt={post.featuredImage && post.featuredImage.node.altText}
@@ -65,7 +72,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
           className="card__article"
           sx={{
             backgroundColor: "bgCard",
-            padding: type === "major" ? 2 : 1
+            padding: type === "major" ? 2 : 1,
           }}
         >
           <Styled.h2
@@ -73,7 +80,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               padding: "0px",
               margin: "0px",
               marginBottom: 0,
-              color: "primary"
+              color: "primary",
             }}
             dangerouslySetInnerHTML={{ __html: post.title }}
           />
@@ -83,11 +90,13 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               fontSize: 0,
               textTransform: "uppercase",
               fontWeight: 500,
-              paddingTop: 0
+              paddingTop: 0,
             }}
           >
             <span>
-              <Link as={GatsbyLink} to={`/${categories.slug}`}>{categories.name} </Link>
+              <Link as={GatsbyLink} to={`/${categories.slug}`}>
+                {categories.name}{" "}
+              </Link>
             </span>
             <span>
               <Text> / </Text>
@@ -97,18 +106,18 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
           <article
             sx={{
               ".heateor_sss_sharing_container": {
-                display: "none"
+                display: "none",
               },
               br: {
-                display: "none"
+                display: "none",
               },
-              ...articleStyle
+              ...articleStyle,
             }}
           >
             <p>
               <Text
                 spanProps={{
-                  dangerouslySetInnerHTML: { __html: post.excerpt }
+                  dangerouslySetInnerHTML: { __html: post.excerpt },
                 }}
               ></Text>
             </p>
@@ -126,7 +135,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               <SocialIcons
                 includeSearch={false}
                 socialProfiles={[
-                  { type: "share", name: "share", target: "http://google.com" }
+                  { type: "share", name: "share", target: "http://google.com" },
                 ]}
                 width="20px"
               />

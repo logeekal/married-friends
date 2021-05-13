@@ -1,7 +1,9 @@
-import createRecipes from './utils/createRecipes'
+import createRecipes, {getAllFAQs} from './utils/createRecipes'
+import {IFAQObj} from './utils/types';
 
 exports.createPages = async ({ actions, graphql }) => {
-  await createRecipes({ actions, graphql });
+  const allFAQs: IFAQObj = await getAllFAQs({graphql, actions })
+  await createRecipes({ actions, graphql }, allFAQs);
 };
 
 exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {

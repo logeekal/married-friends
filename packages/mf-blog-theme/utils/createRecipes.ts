@@ -1,9 +1,10 @@
 import RecipeService from "../services/RecipeService";
 import { Recipe } from "../src/types/wp-graphql.types";
-import { ICompleteRecipe, IRecipeContent } from "./types";
+import { ICompleteRecipe, IFAQObj, IRecipeContent } from "./types";
 const path = require("path");
 import { Actions } from "gatsby";
 import { log } from "./utils";
+import FAQService from "../services/FAQService";
 
 console.log("Loading Evn file");
 require("dotenv").config({
@@ -15,8 +16,25 @@ interface CustomCreatePageArgs {
   graphql: (query: TemplateStringsArray) => void;
 }
 
-const createRecipes = async ({ actions, graphql }: CustomCreatePageArgs) => {
-  await generateRecipePages({ actions, graphql });
+export const getAllFAQs = async ({ graphql, actions }: CustomCreatePageArgs) => {
+  log("Getting all FAQs")
+  const faqService = new FAQService(graphql, actions);
+
+  const allFAQs = await faqService.getAllFAQs();
+
+  const allFAQObject: IFAQObj = {};
+
+  allFAQs.forEach((faq) => {
+    allFAQObject[faq.faqId] = faq;
+  });
+
+  console.log(`Found ${allFAQs.length} FAQs` )
+
+  return allFAQObject;
+};
+
+const createRecipes = async ({ actions, graphql }: CustomCreatePageArgs, allFAQs :IFAQObj) => {
+  await generateRecipePages({ actions, graphql }, allFAQs);
 
   await generateAllCuisinePages({ actions, graphql });
 };
@@ -24,7 +42,7 @@ const createRecipes = async ({ actions, graphql }: CustomCreatePageArgs) => {
 const generateRecipePages = async ({
   actions,
   graphql,
-}: CustomCreatePageArgs) => {
+}: CustomCreatePageArgs, allFAQs: IFAQObj) => {
   log("Creating Recipe Pages");
   const recipeService = new RecipeService(graphql, actions);
 
@@ -39,7 +57,7 @@ const generateRecipePages = async ({
 
   allRecipesPosts.forEach((recipe) => {
     const id = recipe.recipeId;
-    completeRecipe[id] = <ICompleteRecipe[number]>{ post:  recipe }
+    completeRecipe[id] = <ICompleteRecipe[number]>{ post: recipe };
   });
 
   const allRecipesData = await recipeService.getAllRecipesData();
@@ -51,7 +69,6 @@ const generateRecipePages = async ({
       completeRecipe[recipeData.id].content = recipeData.recipe_metas;
     }
   });
-
 
   const { createPage } = actions;
 
@@ -71,6 +88,7 @@ const generateRecipePages = async ({
       component: template,
       context: {
         data: recipeContent,
+        faqs: allFAQs
       },
     });
   }
