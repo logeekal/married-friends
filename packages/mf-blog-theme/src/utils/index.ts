@@ -4,7 +4,7 @@ import { document } from "browser-monads";
 let defaultDateFormatOption = {
   day: "2-digit",
   year: "numeric",
-  month: "long"
+  month: "long",
 };
 
 interface IFormattedDate {
@@ -42,7 +42,7 @@ export function getFormattedDate(
   let result: IFormattedDate = {
     day: 0,
     month: "",
-    year: 0
+    year: 0,
   };
   for (let part of formattedParts) {
     if (part.type in result) {
@@ -63,4 +63,24 @@ export function makePostSlug(post: Post): string {
   }
 
   return `${slug}/${post.slug}`;
+}
+
+export function genCompleteURL(
+  URLWithPath: string,
+  params: Record<string, string>
+) {
+  let qs: string = "";
+  for (let key in params) {
+    let ampersand = "&";
+    if (qs.length == 0) {
+      ampersand = "?";
+    }
+
+    qs =
+      qs +
+      ampersand +
+      `${encodeURIComponent(key)}=${encodeURIComponent(params[key])} `;
+  }
+
+  return `${URLWithPath}${qs}`;
 }

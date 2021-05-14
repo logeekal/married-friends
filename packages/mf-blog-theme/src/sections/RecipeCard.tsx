@@ -5,6 +5,7 @@ import { Box, Flex, Heading, jsx, Text } from "theme-ui";
 import { ICompleteRecipe } from "../../utils/types";
 import RecipeCardHeader from "../components/RecipeCardHeader";
 import striptags from "striptags";
+import SocialShare from "../components/SocialShare";
 
 interface RecipeCardProps {
   recipe: ICompleteRecipe[number]["content"];
@@ -36,7 +37,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
           <Box
             className="recipe-card__ingredients"
             sx={{
-              flex: "1 1 35%",
+              flex: "1 1 30%",
               marginLeft: [2,2,3],
               marginY: 1,
               fontFeatureSettings: "'cv05' on, 'cv06' on, 'kern' off",
@@ -99,7 +100,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
           <Box
             className="recipe-card__instructions"
             sx={{
-              flex: "1 1 65%",
+              flex: "1 1 55%",
               border: "0px solid black",
               marginLeft: [2,2,3],
               marginY: 1,
@@ -171,7 +172,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
           padding: [1,1,2]
           }}>
           <Box> Reactions</Box>
-          <Box> Sharing </Box>
+          <Box> <SocialShare /> </Box>
         </Flex>
       </Box>
     </div>
