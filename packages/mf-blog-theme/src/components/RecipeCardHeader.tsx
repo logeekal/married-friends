@@ -17,7 +17,7 @@ const RecipeCardHeader: React.FC<{}> = (props) => {
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
       }}
     >
@@ -30,18 +30,20 @@ const RecipeCardHeader: React.FC<{}> = (props) => {
           backgroundColor: "bgCard",
           fontWeight: 600,
           fontSize: [1,3],
-          left: ["50px", "50px", "100px"],
-          top: ["50px", "50px", "100px"],
+          left: "0px",
+          top: "0px",
           width: "100%",
           display: "block",
           margin: "0 auto",
           textAlign: "center",
           transformOrigin: "center",
-          transform: "rotateZ(-45deg)"
+          transform: "translate(-40%, 50%) rotate(-45deg)",
+          boxShadow: "1px 1px 10px 2px rgba(0,0,0,0.3) "
         }}
       >
         Recipe
       </Box>
+      {props.children}
     </div>
   );
 };

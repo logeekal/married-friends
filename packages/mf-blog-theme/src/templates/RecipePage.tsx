@@ -101,6 +101,12 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
 
           <article
             sx={{
+              "figure.wp-block-embed.is-type-video.is-provider-youtube": {
+                width: "100%",
+                padding:"0px",
+                margin: "0px",
+
+            },
               ".embed-youtube": {
                 display: "block",
                 position: "relative",
@@ -110,8 +116,8 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
                   position: "absolute",
                   width: "100%",
                   height: "100%",
-                  top: 0,
-                  left: 0,
+                  top: "0px",
+                  left: "0px",
                 },
               },
               a: {
@@ -128,7 +134,7 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
                 __html: postContent
               }}
             ></div>
-            <RecipeCard recipe={recipe} />
+            <RecipeCard recipe={recipe} recipePost={post}/>
             {
 
               faqIds.length > 0 &&  <FAQ faqs={allFAQObject} faqIds={faqIds} />
