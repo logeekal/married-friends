@@ -22,6 +22,6 @@ export const onClientEntry = () => {
     //});
 };
 
-export const wrapRootElement = ({ element }) => {
-  return <DataProvider className="data-provider">{element}</DataProvider>;
-};
+//export const wrapRootElement = ({ element }) => {
+  //return <DataProvider className="data-provider">{element}</DataProvider>;
+//};

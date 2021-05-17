@@ -8,6 +8,7 @@ import striptags from "striptags";
 import SocialShare from "../components/SocialShare";
 import { Recipe } from "../types/wp-graphql.types";
 import RecipeCardDetailBlock from "../components/RecipeCardDetailBlock";
+import {getStepURL} from "../utils";
 
 interface RecipeCardProps {
   recipe: ICompleteRecipe[number]["content"];
@@ -246,6 +247,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
                       (instruction, index) => {
                         return (
                           <li
+                            id={getStepURL(instructionSection.sectionTitle, instruction.instructionTitle, index+1)}
                             key={index}
                             sx={{
                               lineHeight: "1.65rem",

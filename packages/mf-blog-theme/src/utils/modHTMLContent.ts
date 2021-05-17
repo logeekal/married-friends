@@ -21,13 +21,35 @@ export function getFAQs(htmlString: string): number[] {
 }
 
 export function stripFAQSection(htmlString: string) {
-
-  console.log('=== stripping')
+  console.log("=== stripping");
   const $ = Cheerio.load(htmlString);
 
   $("section.helpie-faq").remove();
 
-  console.log($.html())
+  console.log($.html());
 
-  return $.html()
+  return $.html();
+}
+
+export function getYoutubeVideoId(htmlString: string) {
+  console.log("Getting video id")
+  const $ = Cheerio.load(htmlString);
+
+  const ytIframe = $("iframe.youtube-player").toArray();
+  console.log({ytIframe})
+
+  if (!ytIframe) {
+    return null;
+  }
+
+
+
+  if (ytIframe[0] && ytIframe[0].type === "tag") {
+    let ytEmbedURL = new URL(ytIframe[0].attribs["src"]);
+    console.log({ytEmbedURL})
+
+    let vidId = ytEmbedURL.pathname.split("/")[2];
+    console.log(`Found video ID: ${vidId}`);
+    return vidId;
+  }
 }

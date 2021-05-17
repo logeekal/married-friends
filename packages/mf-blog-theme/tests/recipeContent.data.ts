@@ -164,7 +164,11 @@ export const RECIPE_SAMPLE_CONTENT = {
           },
         ],
         imageGalleryImages: [],
-        videoGalleryVids: [],
+        videoGalleryVids: [{
+            "vidID": "N4KPG68GFxY",
+            "vidType": "youtube",
+            "vidThumb": "//img.youtube.com/vi/N4KPG68GFxY/hqdefault.jpg"
+        }],
         servingSize: "5",
         servings: "8",
         calories: "730",

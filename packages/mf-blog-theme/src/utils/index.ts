@@ -85,7 +85,31 @@ export function genCompleteURL(
   return `${URLWithPath}${qs}`;
 }
 
-
 export const ifWindow = () => {
-  return typeof window !== 'undefined'
-}
+  return typeof window !== "undefined";
+};
+
+export const getStepURL = (
+  sectionTitle: string,
+  stepTitle: string,
+  stepCounter: number
+) => {
+  let stepURL = "";
+  if (sectionTitle) {
+    stepURL = stepURL + sectionTitle.toLowerCase().replace(" ", "-");
+    stepURL += "-";
+  } else {
+    stepURL += "";
+  }
+
+  if (stepTitle) {
+    stepURL += stepTitle.toLowerCase().replace(" ", "-");
+    stepURL += "-";
+  } else {
+    stepURL += "";
+  }
+
+  stepURL += `step-${stepCounter}`;
+
+  return stepURL;
+};

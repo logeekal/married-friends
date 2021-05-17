@@ -16,9 +16,9 @@
   "scripts": {
     "start": "gatsby develop",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
-    "build": "gatsby build",
+    "build:gatsby": "gatsby build",
     "serve": "gatsby build && serve -s public",
-    "dev": "netlify dev"
+    "build": "netlify build"
   },
   "devDependencies": {
     "gh-pages": "^2.2.0"
