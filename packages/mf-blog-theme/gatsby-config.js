@@ -48,5 +48,12 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: "gatsby-plugin-mailchimp",
+      options: {
+        endpoint: "https://marriedfriends.us19.list-manage.com/subscribe/post?u=63563726bccf3fd0787d6c23b&amp;id=1e903186f7",
+        timeout:3500
+      }
+    }
   ],
 };

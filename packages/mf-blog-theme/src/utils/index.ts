@@ -84,3 +84,8 @@ export function genCompleteURL(
 
   return `${URLWithPath}${qs}`;
 }
+
+
+export const ifWindow = () => {
+  return typeof window !== 'undefined'
+}

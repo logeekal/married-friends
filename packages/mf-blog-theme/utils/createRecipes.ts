@@ -36,7 +36,7 @@ export const getAllFAQs = async ({ graphql, actions }: CustomCreatePageArgs) => 
 const createRecipes = async ({ actions, graphql }: CustomCreatePageArgs, allFAQs :IFAQObj) => {
   await generateRecipePages({ actions, graphql }, allFAQs);
 
-  await generateAllCuisinePages({ actions, graphql });
+  //await generateAllCuisinePages({ actions, graphql });
 };
 
 const generateRecipePages = async ({

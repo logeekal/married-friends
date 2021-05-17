@@ -13,7 +13,7 @@ import {
   FaTwitterSquare,
   FaCopy,
 } from "react-icons/fa";
-import { genCompleteURL } from "../utils";
+import { genCompleteURL, ifWindow } from "../utils";
 import Copy from "copy-to-clipboard";
 import useWindowClick from "../hooks/useWindowClicks";
 
@@ -39,7 +39,7 @@ const SocialShare: React.FC<{}> = () => {
   const [popperEl, setPopperEl] = useState(null);
   const [arrowEl, setArrowEl] = useState(null);
 
-  const [copiedMessage, setCopiedMessage] = useState("Copy link")
+  const [copiedMessage, setCopiedMessage] = useState("Copy link");
 
   const { styles, attributes, update } = usePopper(shareButtonEl, popperEl, {
     modifiers: [
@@ -53,16 +53,14 @@ const SocialShare: React.FC<{}> = () => {
     ],
   });
 
-
   const onCopy = (text: string) => {
-    Copy(text)
-    setCopiedMessage('Copied...')
+    Copy(text);
+    setCopiedMessage("Copied...");
 
-    setTimeout(()=> {
-      setCopiedMessage("Copy link")
-    },4000)
-  }
-
+    setTimeout(() => {
+      setCopiedMessage("Copy link");
+    }, 4000);
+  };
 
   const handleShare = async () => {
     if (typeof window === "undefined") {
@@ -77,9 +75,9 @@ const SocialShare: React.FC<{}> = () => {
       // navigator share is enabled.
       navigator
         .share({
-          title: window.document.title,
-          text: window.document.title,
-          url: window.location.href,
+          title: ifWindow() && window.document.title,
+          text: ifWindow() && window.document.title,
+          url: ifWindow() && window.location.href,
         })
         .then(() => console.log("Shared successfully."))
         .catch((err) => console.error(err));
@@ -102,15 +100,19 @@ const SocialShare: React.FC<{}> = () => {
   const tweetLink = genCompleteURL("https://twitter.com/intent/tweet", {
     hashtags: "kithcenofmarriedfriends,marriedfriends",
     original_referer: "https://marriedfriends.in",
-    text: window.document.title,
+    text: ifWindow() && window.document.title,
     url:
       process.env.NODE_ENV === "development"
         ? "https://marriedfriends.in"
-        : window.location.href,
+        : ifWindow() && window.location.href,
     via: "marriedfriendss",
   });
 
-  const whatsappLink = `whatsapp://send?Enjoy ${window.document.title} from the kitchen of married friends. \n\n Read complete recipe:${window.location.href} `;
+  const whatsappLink = `whatsapp://send?Enjoy ${
+    ifWindow() && window.document.title
+  } from the kitchen of married friends. \n\n Read complete recipe:${
+    ifWindow() && window.location.href
+  } `;
 
   return (
     <>
@@ -196,7 +198,7 @@ const SocialShare: React.FC<{}> = () => {
               href={fbLink}
               target="popup"
               onClick={() =>
-                window.open(fbLink, "popup", "width=600,height=600")
+                ifWindow() && window.open(fbLink, "popup", "width=600,height=600")
               }
             >
               <FaFacebookSquare /> Facebook
@@ -207,7 +209,7 @@ const SocialShare: React.FC<{}> = () => {
               href={tweetLink}
               target="popup"
               onClick={() =>
-                window.open(tweetLink, "popup", "width=600,height=600")
+                ifWindow() && window.open(tweetLink, "popup", "width=600,height=600")
               }
             >
               <FaTwitterSquare /> Twitter
@@ -245,7 +247,7 @@ const SocialShare: React.FC<{}> = () => {
               boxShadow: "2px 2px 20px 2px rgba(0,0,0,0.2)",
               border: "0px solid black",
               visibility: "visible",
-              zIndex:999,
+              zIndex: 999,
               content: '""',
               transform: "rotate(45deg)",
             },

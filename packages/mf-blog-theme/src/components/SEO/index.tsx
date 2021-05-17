@@ -107,7 +107,7 @@ export function SEO({
                     name="twitter:image"
                     content={image || siteMetadata.image}
                 />
-                {schemas.map((schemaObj) => (<script type="application/ld+json">
+                {schemas && schemas.map((schemaObj) => (<script type="application/ld+json">
                         {JSON.stringify(schemaObj.schema,null,2)}
                     </script>
                 ))}
