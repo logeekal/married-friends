@@ -126,7 +126,7 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
         >
           <Box className="recipe__reactions"> </Box>
           <Box>
-            <SocialShare pageTitle={post.title} pageURI={`https://marriedfriends.in${post.uri}`}  />
+            <SocialShare pageTitle={post.title} pageURI={`${post.uri}`}  />
           </Box>
         </Flex>
       </Box>

@@ -68,7 +68,8 @@ const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
   };
 
   const getWindow = () => {
-    return ifWindow() && window
+     if(ifWindow())
+     return window
   }
   const handleShare = async () => {
     if (typeof window === "undefined") {
@@ -102,23 +103,29 @@ const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
     isShareDialogVisible,
   });
 
+  const getPageURL = () => {
+    
+    if(process.env.NODE_ENV === "development") {
+      return  "https://marriedfriends.in"
+    }else{
+      return getWindow() && getWindow().location.href
+
+    }
+  }
+
   const fbLink = `https://facebook.com/sharer/sharer.php?u=${encodeURI(
-    `https://marriedfriends.in/${pageURI}`
-  )}`;
+    getPageURL())}`;
   const tweetLink = genCompleteURL("https://twitter.com/intent/tweet", {
     hashtags: "kitchenofmarriedfriends,marriedfriends",
     original_referer: "https://marriedfriends.in",
     text: pageTitle,
-    url:
-      process.env.NODE_ENV === "development"
-        ? "https://marriedfriends.in"
-        : pageURI,
+    url: getPageURL(),
     via: "marriedfriendss",
   });
 
 
   const pinLink = genCompleteURL("https://pinterest.com/pin/create/button",{ 
-    url: getWindow() && getWindow().location.href,
+    url: getPageURL(),
     title: getWindow() && getWindow().location.href 
   })
 
