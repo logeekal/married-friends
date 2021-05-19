@@ -1,5 +1,9 @@
 const path = require("path");
 
+require("dotenv").config({
+    path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   plugins: [
     "gatsby-plugin-theme-ui",
@@ -14,13 +18,7 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-source-instagram",
-      options: {
-        username: "marriedfriends",
-      },
-    },
-    {
-      resolve: "gatsby-plugin-google-fonts",
+      resolve: "gatsby-plugin-google-fonts-with-attributes",
       options: {
         fonts: [
           "Fredericka+the+Great",
@@ -29,6 +27,11 @@ module.exports = {
         ],
       },
       display: "swap",
+      preconnect: true,
+      attributes: {
+        rel: 'stylesheet preload prefetch',
+        as : 'style'
+      }
     },
     {
       resolve: "gatsby-plugin-typescript",

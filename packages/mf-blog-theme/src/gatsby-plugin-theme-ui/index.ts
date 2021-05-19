@@ -15,9 +15,9 @@ const colors = {
 };
 
 const fonts = {
-  special: "Fredericka the Great",
-  normal: "Inter",
-  cursive: "Sacramento"
+  special: "Fredericka the Great, sans-serif",
+  normal: "Inter, sans-serif",
+  cursive: "Sacramento, sans-serif"
 };
 
 const fontWeights = {
