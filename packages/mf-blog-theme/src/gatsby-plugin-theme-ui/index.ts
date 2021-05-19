@@ -45,9 +45,9 @@ const styles = {
   "*": {
     boxSizing: "border-box",
     padding: "0px",
-    margin: "0px"
-
-  },
+    margin: "0px",
+    "font-display": "swap",
+  } as SxStyleProp,
   root: {
     backgroundColor: "bgPrimary",
     fontFamily: "normal",

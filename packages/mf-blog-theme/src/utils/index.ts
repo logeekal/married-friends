@@ -1,5 +1,6 @@
 import { Post } from "../types/wp-graphql.types";
 import { document } from "browser-monads";
+import { IDuration } from '../types/common'
 
 let defaultDateFormatOption = {
   day: "2-digit",
@@ -113,3 +114,60 @@ export const getStepURL = (
 
   return stepURL;
 };
+
+
+export const addDurations = (durations: IDuration[])  => {
+
+  const totalDuration : IDuration = {
+    hours: 0,
+    minutes: 0
+ 
+  }
+
+  console.log('Adding durations : ', durations)
+
+  durations.forEach(duration => {
+    totalDuration.hours += duration.hours;
+    totalDuration.minutes += duration.minutes;
+  })
+
+
+  return convertTimeToHighestUnit(totalDuration)
+
+}
+
+
+export const convertTimeToHighestUnit = (duration :IDuration): IDuration  => {
+  let additionalHours : number = 0
+  let leftoverMinutes: number = 0
+  if(duration.minutes  > 60){
+    additionalHours = parseInt(duration.minutes/60);
+    leftoverMinutes = duration.minutes % 60;
+  }
+
+  return {
+    hours: duration.hours + additionalHours,
+    minutes: leftoverMinutes || duration.minutes
+  }
+}
+
+export const convertDurationToISO8601 = (duration: IDuration): string => {
+  let result = "PT";
+
+  if(!duration.hours && !duration.minutes){
+    throw new Error(`Invalid Duration value :${JSON.stringify(duration) }`)
+  }
+
+  if(duration.hours > 0){
+    result += duration.hours + "H"  
+  }
+
+  if(duration.minutes > 0) {
+    result += duration.minutes + "M"
+  }
+
+  return result
+}
+
+
+

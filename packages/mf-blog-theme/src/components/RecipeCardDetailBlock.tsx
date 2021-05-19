@@ -4,8 +4,8 @@ import React, { FC } from "react";
 
 interface RecipeCardDetailBlockProps {
   detailType: string;
-  detailValue: string;
-  detailUnit: string;
+  detailValue: string[];
+  detailUnit: string[];
 }
 
 const RecipeCardDetailBlock: FC<RecipeCardDetailBlockProps> = ({
@@ -24,20 +24,18 @@ const RecipeCardDetailBlock: FC<RecipeCardDetailBlockProps> = ({
         paddingX: 1,
         paddingY: 0,
         boxShadow: "1px 1px 5px 1px rgba(0,0,0,0.3)",
-        textShadow:  "1px 1px rgba(0,0,0,0.3)",
-        position: "relative"
+        textShadow: "1px 1px rgba(0,0,0,0.3)",
+        position: "relative",
       }}
     >
-
       <Box
         sx={{
-
           position: "absolute",
-          top:"0",
-          left:"0",
+          top: "0",
+          left: "0",
           width: "100%",
           height: "100%",
-        filter: "blur(10px)"
+          filter: "blur(10px)",
         }}
       ></Box>
       <p
@@ -50,16 +48,38 @@ const RecipeCardDetailBlock: FC<RecipeCardDetailBlockProps> = ({
         {detailType}
       </p>
 
+      {detailValue.length == 1 && !detailValue[0] && (
+        <span
+          sx={{
+            fontSize: "1.5rem",
+          }}
+        >
+          N/A
+        </span>
+      )}
+
       <Box
         sx={{
           margin: "0px",
           fontWeight: 200,
         }}
       >
-        <span sx={{
-          fontSize: "1.5rem",
-        }}>{detailValue || 2}</span>
-        <span>{` ${detailUnit || "min"}`}</span>
+        {detailValue.map((val, index) => {
+          if (val && (val !== "0")) {
+            return (
+              <>
+                <span
+                  sx={{
+                    fontSize: "1.5rem",
+                  }}
+                >
+                  {val || 2}
+                </span>
+                <span>{` ${detailUnit[index] || ""}`}</span>
+              </>
+            );
+          }
+        })}
       </Box>
     </Box>
   );

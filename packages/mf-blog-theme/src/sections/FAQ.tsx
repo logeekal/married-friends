@@ -27,6 +27,8 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
 
   return (
     <Box
+      itemScope
+      itemType="https://schema.org/FAQPage"
       sx={{
         width: "100%",
         backgroundColor: "accentSecondary",
@@ -47,9 +49,10 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
           zIndex: "1",
         }}
       >
-        <img src="/fork_white.png" 
+        <img
+          src="/fork_white.png"
           sx={{
-            width: "100%"
+            width: "100%",
           }}
         />
       </Box>
@@ -78,6 +81,9 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
             <div
               className={`qna_container ${isExpanded(index) ? "expanded" : ""}`}
               key={index}
+              itemScope
+              itemProp="mainEntity"
+              itemType="https://schema.org/Question"
               sx={{
                 ".qna__answer": {
                   maxHeight: "0px",
@@ -97,10 +103,12 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
                   fontWeight: 600,
                   justifyContent: "space-between",
                   cursor: "pointer",
-                  gap: 0
+                  gap: 0,
                 }}
               >
-                <div className="qna__question">{faqs[faqId].title}</div>
+                <div className="qna__question" itemProp="name">
+                  {faqs[faqId].title}
+                </div>
                 <div
                   className="qna_expander"
                   sx={{
@@ -113,17 +121,25 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
                 </div>
               </Flex>
               <div
-                className="qna__answer"
-                dangerouslySetInnerHTML={{ __html: faqs[faqId].content }}
-                sx={{
-                  fontWeight: 200,
-                  marginBottom: "0px",
-                  "p:first-child": {
+                itemScope
+                itemProp="acceptedAnswer"
+                itemType="https://schema.org/Answer"
+              >
+                <div
+                  className="qna__answer"
+                  itemProp="text"
+                  dangerouslySetInnerHTML={{ __html: faqs[faqId].content }}
+                  sx={{
+                    fontWeight: 200,
+                    marginTop: "0px",
                     marginBottom: "0px",
-                    marginTop: [0,1,1]
-                  },
-                }}
-              ></div>
+                    "p:first-child": {
+                      marginBottom: "0px",
+                      marginTop: [0, 1, 1],
+                    },
+                  }}
+                />
+              </div>
               <Divider
                 sx={{
                   bg: "bgCard",

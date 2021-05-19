@@ -12,6 +12,7 @@
     "codegen": "graphql-codegen --config ./wpgraphql_codegen.config.yaml"
   },
   "dependencies": {
+    "@justinribeiro/lite-youtube": "^0.9.1",
     "@popperjs/core": "^2.9.2",
     "@theme-ui/color": "^0.3.1",
     "@types/cheerio": "^0.22.28",

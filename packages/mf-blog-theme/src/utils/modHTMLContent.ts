@@ -1,4 +1,5 @@
 import * as Cheerio from "cheerio";
+import '@justinribeiro/lite-youtube';
 
 export function getFAQs(htmlString: string): number[] {
   const $ = Cheerio.load(htmlString);
@@ -29,6 +30,23 @@ export function stripFAQSection(htmlString: string) {
   console.log($.html());
 
   return $.html();
+}
+
+export function replaceYTwithLiteTY(htmlString: string) {
+  let videoId = getYoutubeVideoId(htmlString)
+  if(!videoId){
+    // means there is no iframe and video in the article
+    return htmlString;
+  }
+
+  const $ = Cheerio.load(htmlString)
+
+  $("iframe.youtube-player").remove()
+
+  $("span.embed-youtube").append(`<lite-youtube videoid=${videoId} />`)
+
+  return $.html()
+
 }
 
 export function getYoutubeVideoId(htmlString: string) {

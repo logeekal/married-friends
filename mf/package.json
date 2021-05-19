@@ -9,7 +9,7 @@
     "gatsby": "3.1.2",
     "global": "^4.4.0",
     "mf-blog-theme": "*",
-    "netlify-cli": "^3.29.15",
+    "netlify-cli": "^3.29.17",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

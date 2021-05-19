@@ -8,7 +8,8 @@ import striptags from "striptags";
 import SocialShare from "../components/SocialShare";
 import { Recipe } from "../types/wp-graphql.types";
 import RecipeCardDetailBlock from "../components/RecipeCardDetailBlock";
-import {getStepURL} from "../utils";
+import { addDurations, getStepURL } from "../utils";
+import {IDuration} from "../types/common";
 
 interface RecipeCardProps {
   recipe: ICompleteRecipe[number]["content"];
@@ -16,6 +17,30 @@ interface RecipeCardProps {
 }
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
+
+  const getTimeUnitName = (unit: string) => {
+    if(unit.toLowerCase().startsWith("m")) return "minutes";
+    if(unit.toLowerCase().startsWith("h")) return "hours";
+  }
+
+  let defaultDuration :IDuration  = {hours: 0, minutes: 0};
+
+  if(!recipe.prepTime || !recipe.cookTime || !recipe.prepTime){
+    console.warn("Prep time or cook time is missing")
+  }
+
+  let totalTime = addDurations([
+    {
+      ...defaultDuration,
+      [getTimeUnitName(recipe.cookTimeUnit)] : parseInt(recipe.cookTime) || 2
+    },
+    {
+      ...defaultDuration,
+      [getTimeUnitName(recipe.prepTimeUnit)]: parseInt(recipe.prepTime) || 5
+    }
+  ])
+
+  console.log({totalTime, cook: recipe.cookTimeUnit, prep: recipe.prepTimeUnit})
   return (
     <div
       className="recipe-card"
@@ -82,8 +107,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
             >
               <RecipeCardDetailBlock
                 detailType="Servings"
-                detailValue={recipe.servings}
-                detailUnit={null}
+                detailValue={[recipe.servings || "2"]}
+                detailUnit={[null]}
               />
             </Box>
 
@@ -97,8 +122,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
             >
               <RecipeCardDetailBlock
                 detailType="Prep Time"
-                detailValue={recipe.prepTime}
-                detailUnit={recipe.prepTimeUnit}
+                detailValue={[recipe.prepTime]}
+                detailUnit={[recipe.prepTimeUnit]}
               />
             </Box>
             <Box
@@ -111,8 +136,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
             >
               <RecipeCardDetailBlock
                 detailType="Cook Time"
-                detailValue={recipe.cookTime}
-                detailUnit={recipe.cookTimeUnit}
+                detailValue={[recipe.cookTime]}
+                detailUnit={[recipe.cookTimeUnit]}
               />
             </Box>
             <Box
@@ -125,8 +150,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
             >
               <RecipeCardDetailBlock
                 detailType="Total Time"
-                detailValue={recipe.totalDuration}
-                detailUnit={recipe.totalDurationUnit}
+                detailValue={[totalTime.hours && totalTime.hours.toString(), totalTime.minutes.toString()]}
+                detailUnit={["h", "m"]}
               />
             </Box>
           </Flex>
@@ -247,7 +272,11 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
                       (instruction, index) => {
                         return (
                           <li
-                            id={getStepURL(instructionSection.sectionTitle, instruction.instructionTitle, index+1)}
+                            id={getStepURL(
+                              instructionSection.sectionTitle,
+                              instruction.instructionTitle,
+                              index + 1
+                            )}
                             key={index}
                             sx={{
                               lineHeight: "1.65rem",
@@ -255,6 +284,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
                               paddingInlineStart: "5px",
                               WebkitPaddingStart: "5px",
                               MozPaddingStart: "5px",
+                              scrollMarginTop: "100px",
                             }}
                           >
                             {striptags(instruction.instruction)}
@@ -285,10 +315,9 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
             padding: [1, 1, 2],
           }}
         >
-          <Box> Reactions</Box>
+          <Box className="recipe-card__reactions"> </Box>
           <Box>
-            {" "}
-            <SocialShare />{" "}
+            <SocialShare />
           </Box>
         </Flex>
       </Box>

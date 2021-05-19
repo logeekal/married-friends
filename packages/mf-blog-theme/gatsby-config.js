@@ -22,9 +22,11 @@ module.exports = {
     {
       resolve: "gatsby-plugin-google-fonts",
       options: {
-        fonts: ["Fredericka+the+Great",
-        "Sacramento", "IBM Plex Sans", 
-          "Inter\:100,200,300,400,500,600,700,800,900"],
+        fonts: [
+          "Fredericka+the+Great",
+          "Sacramento",
+          "Inter:100,200,300,400,500,600,700,800,900",
+        ],
       },
       display: "swap",
     },
@@ -51,9 +53,10 @@ module.exports = {
     {
       resolve: "gatsby-plugin-mailchimp",
       options: {
-        endpoint: "https://marriedfriends.us19.list-manage.com/subscribe/post?u=63563726bccf3fd0787d6c23b&amp;id=1e903186f7",
-        timeout:3500
-      }
-    }
+        endpoint:
+          "https://marriedfriends.us19.list-manage.com/subscribe/post?u=63563726bccf3fd0787d6c23b&amp;id=1e903186f7",
+        timeout: 3500,
+      },
+    },
   ],
 };
