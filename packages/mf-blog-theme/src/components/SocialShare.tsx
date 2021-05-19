@@ -1,6 +1,6 @@
 /* @jsx jsx */
 
-import { Box, jsx } from "theme-ui";
+import { Box, jsx, Link } from "theme-ui";
 import React, { FC, useEffect, useState } from "react";
 
 import { usePopper } from "react-popper";
@@ -206,7 +206,7 @@ const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
           }}
         >
           <li>
-            <a
+            <Link
               href={fbLink}
               target="popup"
               onClick={() =>
@@ -214,10 +214,10 @@ const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
               }
             >
               <FaFacebookSquare /> Facebook
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href={tweetLink}
               target="popup"
               onClick={() =>
@@ -225,17 +225,17 @@ const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
               }
             >
               <FaTwitterSquare /> Twitter
-            </a>
+            </Link>
           </li>
           <li>
-            <a href={linkedInLink} target="_blank">
+            <Link href={linkedInLink} target="_blank">
               <FaLinkedinIn /> LinkedIn
-            </a>
+            </Link>
           </li>
           <li>
-            <a href={pinLink} target="_blank">
+            <Link href={pinLink} target="_blank">
               <FaPinterestSquare /> Pin it
-            </a>
+            </Link>
           </li>
           <li>
             <div onClick={() => onCopy(window.location.href)}>

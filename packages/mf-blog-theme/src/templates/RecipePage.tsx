@@ -1,6 +1,6 @@
 /* @jsx jsx */
 
-import { jsx, SxStyleProp, Link } from "theme-ui";
+import { jsx, SxStyleProp, Link, Box, Flex } from "theme-ui";
 import React, { FC, useEffect } from "react";
 import { Post, Recipe } from "../types/wp-graphql.types";
 import Layout from "../components/layout";
@@ -21,6 +21,7 @@ import {
 } from "../utils/modHTMLContent";
 import FAQ from "../sections/FAQ";
 import useWindow from "../hooks/useWindow";
+import SocialShare from "../components/SocialShare";
 
 export interface RecipePageProps {
   pageContext: {
@@ -30,14 +31,13 @@ export interface RecipePageProps {
 }
 
 const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
-  
-  const [hasWindow] = useWindow()
+  const [hasWindow] = useWindow();
 
-  useEffect(()=> {
-    if(hasWindow){
-      import("@justinribeiro/lite-youtube")
+  useEffect(() => {
+    if (hasWindow) {
+      import("@justinribeiro/lite-youtube");
     }
-  },[hasWindow])
+  }, [hasWindow]);
 
   //console.log(JSON.stringify(pageContext));
   const { post, content: recipe } = pageContext.data;
@@ -47,7 +47,7 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
   const faqIds = getFAQs(post.content);
 
   const postContent = replaceYTwithLiteTY(stripFAQSection(post.content));
-  
+
   //console.log({ postContent });
 
   let date = getFormattedDate(post.date);
@@ -77,6 +77,9 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
             margin: "0 auto",
           } as SxStyleProp
         }
+
+        itemScope
+        itemType="https://schema.org/Article"
       >
         <section
           sx={{
@@ -91,6 +94,7 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
               marginBottom: 1,
               marginTop: "0px",
             }}
+            itemProp="name"
             dangerouslySetInnerHTML={{ __html: post.title }}
           />
           <div
@@ -111,23 +115,42 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
               <AccentText>{`${date.day}.${date.month}.${date.year}`}</AccentText>
             </span>
           </div>
-          <div className="recipe__featured-image" sx={{
-            width: "100%",
-            marginTop: 1,
-            paddingBottom: "calc(100% / (16/9))",
-            position: "relative"
-            }}>
-            <img sx={{
-              position: "absolute",
-              top: "0px",
-              left: "0px",
+      <Box className="recipe__extra">
+        <Flex
+          className="recipe__social"
+          sx={{
+            justifyContent: "space-between",
+            paddingY: [1, 1, 2],
+            paddingX: "0px"
+          }}
+        >
+          <Box className="recipe__reactions"> </Box>
+          <Box>
+            <SocialShare pageTitle={post.title} pageURI={`https://marriedfriends.in${post.uri}`}  />
+          </Box>
+        </Flex>
+      </Box>
+          <div
+            className="recipe__featured-image"
+            sx={{
               width: "100%",
-              height: "100%",
-              objectFit: "cover"
-            }} src={post.featuredImage.node.mediaItemUrl} 
-            alt={`Image of ${post.title}`}
+              marginTop: 1,
+              paddingBottom: "calc(100% / (16/9))",
+              position: "relative",
+            }}
+          >
+            <img
+              sx={{
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+              src={post.featuredImage.node.mediaItemUrl}
+              alt={`Image of ${post.title}`}
             />
-
           </div>
 
           <article
