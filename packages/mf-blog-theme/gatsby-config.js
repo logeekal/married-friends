@@ -18,22 +18,6 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-plugin-google-fonts-with-attributes",
-      options: {
-        fonts: [
-          "Fredericka+the+Great",
-          "Sacramento",
-          "Inter:100,200,300,400,500,600,700,800,900",
-        ],
-      },
-      display: "swap",
-      preconnect: true,
-      attributes: {
-        rel: 'stylesheet preload prefetch',
-        as : 'style'
-      }
-    },
-    {
       resolve: "gatsby-plugin-typescript",
       options: {
         isTSX: true,
