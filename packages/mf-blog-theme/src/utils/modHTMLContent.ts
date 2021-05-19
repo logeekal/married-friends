@@ -1,5 +1,4 @@
 import * as Cheerio from "cheerio";
-import '@justinribeiro/lite-youtube';
 
 export function getFAQs(htmlString: string): number[] {
   const $ = Cheerio.load(htmlString);

@@ -6,6 +6,7 @@
   "dependencies": {
     "@netlify/functions": "^0.7.2",
     "axios": "^0.21.1",
+    "babel-preset-gatsby": "^1.5.0",
     "gatsby": "3.1.2",
     "global": "^4.4.0",
     "mf-blog-theme": "*",

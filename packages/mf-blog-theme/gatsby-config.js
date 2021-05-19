@@ -51,6 +51,14 @@ module.exports = {
       },
     },
     {
+      resolve: "gatsby-source-youtube-v3",
+      options: {
+        channelId: ["UCnuR03UvNf4t3WQosG1qPAA"],
+        apiKey: process.env.YT_API_KEY,
+        maxVideos: 20
+      }
+    },
+    {
       resolve: "gatsby-plugin-mailchimp",
       options: {
         endpoint:

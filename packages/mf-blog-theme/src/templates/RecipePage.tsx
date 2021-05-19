@@ -1,7 +1,7 @@
 /* @jsx jsx */
 
 import { jsx, SxStyleProp, Link } from "theme-ui";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Post, Recipe } from "../types/wp-graphql.types";
 import Layout from "../components/layout";
 import { FLEX_CONFIG } from "../utils/style";
@@ -12,7 +12,6 @@ import { SEOWithQuery } from "../components/SEO";
 import genRecipeSchema from "../components/SEO/utils/genRecipeSchema";
 import * as striptags from "striptags";
 import { Link as GastbyLink } from "gatsby";
-import DOMPurify from "dompurify";
 import { ICompleteRecipe, IFAQObj } from "../../utils/types";
 import RecipeCard from "../sections/RecipeCard";
 import {
@@ -21,6 +20,7 @@ import {
   stripFAQSection,
 } from "../utils/modHTMLContent";
 import FAQ from "../sections/FAQ";
+import useWindow from "../hooks/useWindow";
 
 export interface RecipePageProps {
   pageContext: {
@@ -30,7 +30,16 @@ export interface RecipePageProps {
 }
 
 const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
-  console.log(JSON.stringify(pageContext));
+  
+  const [hasWindow] = useWindow()
+
+  useEffect(()=> {
+    if(hasWindow){
+      import("@justinribeiro/lite-youtube")
+    }
+  },[hasWindow])
+
+  //console.log(JSON.stringify(pageContext));
   const { post, content: recipe } = pageContext.data;
 
   const { faqs: allFAQObject } = pageContext;
@@ -38,8 +47,8 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
   const faqIds = getFAQs(post.content);
 
   const postContent = replaceYTwithLiteTY(stripFAQSection(post.content));
-
-  console.log({ postContent });
+  
+  //console.log({ postContent });
 
   let date = getFormattedDate(post.date);
   const category = post.recipeCuisines.nodes[0];

@@ -30,6 +30,7 @@ export default class RecipeService {
               title
               featuredImage{
                 node {
+                  mediaItemUrl
                   mediaDetails {
                     sizes{
                       name
@@ -53,6 +54,7 @@ export default class RecipeService {
         }
       }
     `;
+
     const response: IWPGraphQL<{
       recipes: { nodes: Array<Recipe> };
     }> = await this.graphql(GET_RECIPE_POSTS);

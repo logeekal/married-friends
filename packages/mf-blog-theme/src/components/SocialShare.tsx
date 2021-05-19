@@ -8,16 +8,21 @@ import { usePopper } from "react-popper";
 import { MdShare } from "react-icons/md";
 import {
   FaFacebookSquare,
-  FaFacebookMessenger,
-  FaWhatsappSquare,
   FaTwitterSquare,
   FaCopy,
+  FaLinkedinIn,
+  FaPinterestSquare
 } from "react-icons/fa";
 import { genCompleteURL, ifWindow } from "../utils";
 import Copy from "copy-to-clipboard";
 import useWindowClick from "../hooks/useWindowClicks";
 
-const SocialShare: React.FC<{}> = () => {
+interface SocialShareProps {
+  pageTitle: string;
+  pageURI: string;
+}
+
+const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
   const clickTarget: Element = useWindowClick();
 
   useEffect(() => {
@@ -62,6 +67,9 @@ const SocialShare: React.FC<{}> = () => {
     }, 4000);
   };
 
+  const getWindow = () => {
+    return ifWindow() && window
+  }
   const handleShare = async () => {
     if (typeof window === "undefined") {
       return;
@@ -75,9 +83,9 @@ const SocialShare: React.FC<{}> = () => {
       // navigator share is enabled.
       navigator
         .share({
-          title: ifWindow() && window.document.title,
-          text: ifWindow() && window.document.title,
-          url: ifWindow() && window.location.href,
+          title: pageTitle,
+          text: pageTitle,
+          url: pageURI,
         })
         .then(() => console.log("Shared successfully."))
         .catch((err) => console.error(err));
@@ -95,25 +103,29 @@ const SocialShare: React.FC<{}> = () => {
   });
 
   const fbLink = `https://facebook.com/sharer/sharer.php?u=${encodeURI(
-    "https://marriedfriends.in"
+    `https://marriedfriends.in/${pageURI}`
   )}`;
   const tweetLink = genCompleteURL("https://twitter.com/intent/tweet", {
-    hashtags: "kithcenofmarriedfriends,marriedfriends",
+    hashtags: "kitchenofmarriedfriends,marriedfriends",
     original_referer: "https://marriedfriends.in",
-    text: ifWindow() && window.document.title,
+    text: pageTitle,
     url:
       process.env.NODE_ENV === "development"
         ? "https://marriedfriends.in"
-        : ifWindow() && window.location.href,
+        : pageURI,
     via: "marriedfriendss",
   });
 
-  const whatsappLink = `whatsapp://send?Enjoy ${
-    ifWindow() && window.document.title
-  } from the kitchen of married friends. \n\n Read complete recipe:${
-    ifWindow() && window.location.href
-  } `;
 
+  const pinLink = genCompleteURL("https://pinterest.com/pin/create/button",{ 
+    url: getWindow() && getWindow().location.href,
+    title: getWindow() && getWindow().location.href 
+  })
+
+  const linkedInLink = genCompleteURL("https://www.linkedin.com/sharing/share-offsite",{
+    url: pageURI,
+    title: pageTitle
+  })
   return (
     <>
       <Box
@@ -216,8 +228,13 @@ const SocialShare: React.FC<{}> = () => {
             </a>
           </li>
           <li>
-            <a href={whatsappLink} target="_blank">
-              <FaWhatsappSquare /> Whatsapp
+            <a href={linkedInLink} target="_blank">
+              <FaLinkedinIn /> LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href={pinLink} target="_blank">
+              <FaPinterestSquare /> Pin it
             </a>
           </li>
           <li>
