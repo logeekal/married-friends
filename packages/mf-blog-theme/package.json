@@ -25,6 +25,7 @@
     "dotenv": "^8.2.0",
     "gatsby-plugin-emotion": "^4.3.10",
     "gatsby-plugin-google-fonts-with-attributes": "^1.0.8",
+    "gatsby-plugin-google-gtag": "^3.5.0",
     "gatsby-plugin-mailchimp": "^5.2.2",
     "gatsby-plugin-react-helmet": "3.2.1",
     "gatsby-plugin-react-svg": "^3.0.0",
