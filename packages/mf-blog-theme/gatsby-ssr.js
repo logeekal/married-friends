@@ -17,5 +17,16 @@ export const onRenderBody = ({ setPostBodyComponents }) => {
       src="https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@0.6.2/lite-youtube.js"
       async
     />,
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-24329901-2"
+    />,
+
+    <script>
+      window.dataLayer = window.dataLayer || []; function gtag()
+      {dataLayer.push(arguments)}
+      gtag('js', new Date()); gtag('config', 'UA-24329901-2');
+    </script>,
   ]);
 };
