@@ -23,6 +23,7 @@ const useForm: useFormHandler = (onSubmit) => {
 
   const handleSubmission: React.FormEventHandler<HTMLFormElement> = (e) => {
     console.log(`Submitting`);
+    e.preventDefault();
     /*
      *
      *    for (let element of (e.target as HTMLFormElement).elements) {

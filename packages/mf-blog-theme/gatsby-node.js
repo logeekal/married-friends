@@ -1,18 +1,12 @@
-const createPages = require("./utils/createPages");
+'use strict';
 
-exports.createPages = async ({ actions, graphql }) => {
-  await createPages({ actions, graphql });
-};
+require('source-map-support').install();
+try{
 
-exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
-  if (stage === "build-html") {
-    console.log("Ignoring Carousel");
-    actions.setWebpackConfig({
-      module: {
-        rules: [
-          { test: /responsive-react-image-carousel/, use: loaders.null() }
-        ]
-      }
-    });
-  }
-};
+require('ts-node').register();
+}catch(err){
+  console.error(err)
+}
+
+
+module.exports= require('./gatsby-node.ts');

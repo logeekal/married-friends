@@ -62,7 +62,7 @@ export const Text: React.FC<TextProps> = ({
       className={`article-normal-text ${className}`}
       sx={{
         color: "secondary",
-        fontSize: 20,
+        fontSize: 0,
         ...sx
       }}
       {...spanProps}

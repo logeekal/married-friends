@@ -1,6 +1,7 @@
 /* @jsx jsx */
 
-import React, { useState, useEffect } from "react";
+import { graphql, useStaticQuery } from "gatsby";
+import React, { useState, useEffect, FC } from "react";
 import { jsx, useThemeUI } from "theme-ui";
 import useWindowDims from "../hooks/useWindowDims";
 
@@ -12,6 +13,26 @@ export interface YoutubeFeedProps {
 }
 
 const YoutubeFeed: FC<YoutubeFeedProps> = ({ videos }) => {
+  const data = useStaticQuery(graphql`
+    query GET_YT_FEED {
+      allYoutubeVideo(filter: {title: {regex: "/^((?!#shorts).)*$/"}}) {
+        edges {
+          node {
+            id
+            title
+            description
+            videoId
+            publishedAt
+            privacyStatus
+            channelTitle
+          }
+        }
+      }
+    }
+  `);
+
+  
+
   const { width, height } = useWindowDims();
 
   let effectiveWidth = width - 120 - 60;
@@ -38,13 +59,13 @@ const YoutubeFeed: FC<YoutubeFeedProps> = ({ videos }) => {
         paddingTop: 1,
         "@media only screen and (max-width: 650px)": {
           ".video-wrapper": {
-            flex: "100%"
-          }
+            flex: "100%",
+          },
         },
         "@media only screen and (min-width: 650px)": {
           ".video-wrapper": {
-            flex: "20%"
-          }
+            flex: "20%",
+          },
         },
 
         ".video-wrapper": {
@@ -55,29 +76,23 @@ const YoutubeFeed: FC<YoutubeFeedProps> = ({ videos }) => {
           ".video": {
             position: "relative",
             width: "100%",
-            paddingTop: "56.25%",
             iframe: {
               position: "absolute",
               top: "0px",
               left: "0px",
               width: "100%",
-              height: "100%"
-            }
-          }
-        }
+              height: "100%",
+            },
+          },
+        },
       }}
     >
-      {videos.map((vid, index) => {
+      {data.allYoutubeVideo.edges.slice(0,3).map((vid, index) => {
+        const currentVideo = vid.node;
         return (
           <div key={index} className="video-wrapper">
             <div className="video">
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube-nocookie.com/embed/cVDASbWZ_KI"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen="true"
-              ></iframe>
+              <lite-youtube videoid={currentVideo.videoId} videotitle={currentVideo.title}></lite-youtube>
             </div>
           </div>
         );
@@ -88,7 +103,7 @@ const YoutubeFeed: FC<YoutubeFeedProps> = ({ videos }) => {
 
 let sampleVideos: any = new Array(3).fill(0).map((vid, index) => ({
   title: `title-${index + 1}`,
-  thumbnail: `https://picsum.photos/seed/${index}photo/280/157`
+  thumbnail: `https://picsum.photos/seed/${index}photo/280/157`,
 }));
 
 YoutubeFeed.defaultProps = { videos: sampleVideos };

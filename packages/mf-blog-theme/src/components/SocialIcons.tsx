@@ -132,7 +132,7 @@ const SocialIcons: FC<SocialIconsProps> = ({
                 onFocus={toggleFocusMod}
                 onBlur={toggleFocusMod}
               >
-                <a href={socialProfile.target}>
+                <a href={socialProfile.target} target="_blank" rel="noopener noreferrer">
                   {ICON_COMPONENTS(iconProps)[socialProfile.type]}
                 </a>
               </div>
@@ -141,7 +141,9 @@ const SocialIcons: FC<SocialIconsProps> = ({
         );
       })}
 
-      {includeSearch && <SearchPage size={size as number} color={color} />}
+      {/*
+        *{includeSearch && <SearchPage size={size as number} color={color} />}
+        */}
     </div>
   );
 };
@@ -150,14 +152,19 @@ SocialIcons.defaultProps = {
   includeSearch: true,
   socialProfiles: [
     {
-      name: "Mail",
-      type: "mail",
+      name: "Twitter",
+      type: "twitter",
+      target: "https://www.twitter.com/marriedfriendss/"
+    },
+    {
+      name: "Facebook",
+      type: "facebook",
       target: "https://www.facebook.com/marriedfriendss/"
     },
     {
       name: "Youtube",
       type: "youtube",
-      target: "https://www.facebook.com/marriedfriendss/"
+      target: "https://www.youtube.com/c/marriedfriends"
     }
   ]
 };
