@@ -51,6 +51,7 @@ export function SEO({
             <Helmet>
                 {/* General Tags */}
                 <title>{title || siteMetadata.title}</title>
+                <meta name="google-site-verification" content="yCe73Z8VUJVnF41KE21Jt7W44RD1ACHXqFHKzDpF2io" />
                 <meta
                     name="description"
                     content={description || siteMetadata.description}
