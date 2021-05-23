@@ -1,8 +1,8 @@
 /* @jsx jsx */
 
-import { jsx, Styled } from "theme-ui";
+import { jsx, Styled, Box } from "theme-ui";
 import Caraousel from "responsive-react-image-carousel";
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/layout";
 import Instagram from "../sections/instagram";
 import Inspiration from "../sections/Inspiration";
@@ -21,53 +21,79 @@ import CategoryCard from "../sections/CategoryCard";
 import SearchIndexContext from "../providers/IndexProvider";
 import useWindow from "../hooks/useWindow";
 import { SEO, SEOWithQuery } from "../components/SEO";
+import { IRecipeObject } from "../../utils/types";
 
 interface CategoryProps {
   pageContext: {
-    type: "recipe" | "post";
-    category: Category | RecipeCuisine | RecipeCourse;
+    type?: "category" | "home";
+    tagLine: string;
+    category: RecipeCuisine | RecipeCourse;
+    postObj: IRecipeObject;
   };
 }
 
 console.log(`Carousel is ${Caraousel}`);
 
-function CategoryPage({ pageContext }: CategoryProps): React.ReactFragment {
+function RecipeCategoryPage({
+  pageContext,
+}: CategoryProps): React.ReactFragment {
   //const { postObj, catObj } = pageContext;
   //console.log(postIndex);
-  let category: RecipeCuisine | RecipeCourse | Category;
-  if (pageContext.type === "post") {
-    category = pageContext.category as Category;
-  }
+  //
+  //
+  //
 
-  let posts: Post[] | Recipe[];
+  const { postObj, tagLine, category } = pageContext;
 
-  if (pageContext.type === "post") {
-    posts = (pageContext.category as Category).posts.nodes;
+  const isHomePage = category == undefined || category == null;
+
+  let postIds: number[];
+
+  if (pageContext.category && Object.keys(pageContext.category).length > 0) {
+    console.log(" ***** ", pageContext.category);
+    postIds = (pageContext.category as RecipeCuisine).recipes.nodes.map(
+      (node) => node.recipeId
+    );
   } else {
-    posts = (pageContext.category as RecipeCuisine).recipes.nodes;
+    console.log("type of: ", pageContext.type);
+    if (pageContext.type === "home") {
+      postIds = Object.values(pageContext.postObj).map((post) => post.recipeId);
+      console.log({ postIds });
+    } else {
+      postIds = [];
+    }
   }
+
+  console.log("PostIds for category:", postIds);
 
   const minMargin = 0;
 
   const [hasWindow, hasDocument] = useWindow();
+  const [filteredPosts, setFilteredPosts] = useState<Array<string>>([]);
+
   return (
     <Layout>
       <GoToTop />
-      <SEOWithQuery isArticle={false} />
+      <SEOWithQuery
+        title={`${tagLine} | Kitchen of Married Friends`}
+        description={
+          pageContext.type === "home" ? null : pageContext.category.description
+        }
+        image={null}
+        isArticle={false}
+        url=""
+      />
       <div
-        className="home__carousel"
-        sx={{ margin: minMargin + 1, height: "400px" }}
-      >
-        {hasWindow && hasDocument && <Caraousel />}
-      </div>
-      <div
-        className="home__container"
+        className="home__container "
         sx={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           flexWrap: "wrap",
+          maxWidth: "1000px",
+          margin: "0 auto",
         }}
       >
+        <Box className={`home__search ${isHomePage ? "" : "category"}`}></Box>
         <div
           className="home-left__container"
           sx={{
@@ -81,26 +107,7 @@ function CategoryPage({ pageContext }: CategoryProps): React.ReactFragment {
             },
           }}
         >
-          <Grid articles={posts} />
-        </div>
-        <div
-          className="home-right__container"
-          sx={{
-            border: "0px solid green",
-            marginTop: 0,
-            marginBottom: 0,
-            maxWidth: "400px",
-            flex: 0.3,
-            "@media only screen and (max-width: 768px)": {
-              flex: 1,
-              maxWidth: "100%",
-              width: "100%",
-            },
-          }}
-        >
-          <Instagram />
-          <About />
-          <Inspiration />
+          <Grid postIds={postIds} postObj={postObj} />
         </div>
       </div>
       <SubscribeMain />
@@ -108,4 +115,4 @@ function CategoryPage({ pageContext }: CategoryProps): React.ReactFragment {
   );
 }
 
-export default CategoryPage;
+export default RecipeCategoryPage;

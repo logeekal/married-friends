@@ -1,4 +1,8 @@
-import { Recipe, RecipeCuisine } from "../src/types/wp-graphql.types";
+import {
+  Recipe,
+  RecipeCourse,
+  RecipeCuisine,
+} from "../src/types/wp-graphql.types";
 import { IRecipeContent, IWPGraphQL } from "../utils/types";
 import axios from "axios";
 
@@ -26,13 +30,14 @@ export default class RecipeService {
               link
               excerpt
               date
+              dateGmt
               recipeId
               title
-              featuredImage{
+              featuredImage {
                 node {
                   mediaItemUrl
                   mediaDetails {
-                    sizes{
+                    sizes {
                       name
                       sourceUrl
                     }
@@ -40,6 +45,16 @@ export default class RecipeService {
                 }
               }
               recipeCuisines {
+                nodes {
+                  name
+                  link
+                  id
+                  uri
+                  slug
+                  parentId
+                }
+              }
+              recipeCourses {
                 nodes {
                   name
                   link
@@ -97,22 +112,11 @@ export default class RecipeService {
               id
               uri
               slug
+              description
               recipes {
                 nodes {
                   id
                   recipeId
-                  excerpt
-                  uri
-                  recipeCuisines {
-                    nodes {
-                      name
-                      link
-                      id
-                      uri
-                      slug
-                      parentId
-                    }
-                  }
                 }
               }
             }
@@ -128,5 +132,42 @@ export default class RecipeService {
     }> = await this.graphql(GET_CUISINES);
 
     return response.data.wpgraphql.recipeCuisines.nodes;
+  };
+
+  getAllCourses = async (): Promise<Array<RecipeCourse>> => {
+    const GET_COURSES = `
+      query GET_COURSES {
+        wpgraphql {
+          recipeCourses {
+            nodes {
+              name
+              id
+              uri
+              slug
+              description
+              recipes {
+                nodes {
+                  id
+                  recipeId
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    const response: IWPGraphQL<{
+      recipeCourses: {
+        nodes: Array<RecipeCourse>;
+      };
+    }> = await this.graphql(GET_COURSES);
+
+    if (!response.data.wpgraphql.recipeCourses) {
+      console.log("No Course found");
+      return [];
+    }
+
+    return response.data.wpgraphql.recipeCourses.nodes;
   };
 }

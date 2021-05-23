@@ -11,35 +11,35 @@ const colors = {
   primary: "#000000",
   accent: "#FF035E",
   secondary: "#6C6666",
-  accentSecondary: "rgba(51, 126, 255, 0.66)"
+  accentSecondary: "rgba(51, 126, 255, 0.66)",
 };
 
 const fonts = {
   special: "Fredericka the Great, sans-serif",
   normal: "Inter, sans-serif",
-  cursive: "Sacramento, sans-serif"
+  cursive: "Sacramento, sans-serif",
 };
 
 const fontWeights = {
   light: 200,
   regular: 400,
-  bold: 600
+  bold: 600,
 };
 
 const forms = {
   input: {
     ...input.primary,
     accented: {
-      ...input.secondary
-    }
-  }
+      ...input.secondary,
+    },
+  },
 };
 
 const fontSizes = [14, 20, 32, 42, 52, 104];
 
 const space = [7.5, 15, 30, 60, 120];
 
-const breakpoints = ['40em', '52em', '64em'];
+const breakpoints = ["40em", "52em", "64em"];
 
 const styles = {
   "*": {
@@ -62,14 +62,14 @@ const styles = {
       borderRight: "1px solid",
       borderRightColor: lighten("secondary", 0.5),
       borderBottom: "1px solid ",
-      borderBottomColor:lighten("secondary", 0.5),
+      borderBottomColor: lighten("secondary", 0.5),
       borderRadius: "5px",
       width: "100%",
       marginBlockStart: 1,
       marginBlockEnd: 1,
       marginX: "0px",
       paddingX: "1rem",
-      color:"secondary",
+      color: "secondary",
       fontKerning: "normal",
       paddingY: 1,
       fontStyle: "normal",
@@ -79,9 +79,10 @@ const styles = {
         display: "block",
         content: '""',
         position: "absolute",
-        background: "linear-gradient(180deg, rgba(51, 126, 255, 0.56) 0%, rgba(187, 44, 147, 0.522608) 99.99%, rgba(255, 3, 94, 0.504) 100%)",
-        top:"0px",
-        left:"0px",
+        background:
+          "linear-gradient(180deg, rgba(51, 126, 255, 0.56) 0%, rgba(187, 44, 147, 0.522608) 99.99%, rgba(255, 3, 94, 0.504) 100%)",
+        top: "0px",
+        left: "0px",
         height: "100%",
         width: "0.5rem",
         borderTopLeftRadius: "5px",
@@ -89,33 +90,33 @@ const styles = {
       },
       "*": {
         fontStyle: "normal",
-        fontWeight: 3
-      }
-    } as SxStyleProp
+        fontWeight: 3,
+      },
+    } as SxStyleProp,
+    h2: {
+      fontFamily: "normal",
+      fontSize: 2,
+    },
   },
   body: {
     margin: "0px !important",
-    padding: "0px !important"
+    padding: "0px !important",
   },
   h1: {
     fontFamily: "normal",
-    fontSize: 3
-  },
-  h2: {
-    fontFamily: "normal",
-    fontSize: 2
+    fontSize: 3,
   },
   h3: {
     fontFamily: "normal",
-    fontSize: 1
+    fontSize: 1,
   },
   a: {
     color: "accent",
-    textDecoration: "none"
+    textDecoration: "none",
   },
-  p: { 
+  p: {
     margin: "0px",
-    padding: "0px"
+    padding: "0px",
   },
   hr: {
     width: "100px",
@@ -123,18 +124,16 @@ const styles = {
     border: "transparent",
     backgroundColor: "accent",
     marginBlockEnd: "30px",
-    borderRadius: "2px"
+    borderRadius: "2px",
   },
   li: {
     marginBottom: "4rem",
   },
   ul: {
     "-webkit-padding-start": "1rem",
-    "-moz-padding-start": "1rem"
-  }
+    "-moz-padding-start": "1rem",
+  },
 };
-
-
 
 export default merge(
   {},
@@ -149,6 +148,6 @@ export default merge(
     buttons,
     forms,
     space,
-    breakpoints
+    breakpoints,
   }
 );

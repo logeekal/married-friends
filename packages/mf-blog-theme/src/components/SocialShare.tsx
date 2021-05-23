@@ -1,7 +1,8 @@
 /* @jsx jsx */
 
 import { Box, jsx, Link } from "theme-ui";
-import React, { FC, useEffect, useState } from "react";
+import React, { CSSProperties, FC, useEffect, useState } from "react";
+import useWindow from "../hooks/useWindow";
 
 import { usePopper } from "react-popper";
 
@@ -11,7 +12,7 @@ import {
   FaTwitterSquare,
   FaCopy,
   FaLinkedinIn,
-  FaPinterestSquare
+  FaPinterestSquare,
 } from "react-icons/fa";
 import { genCompleteURL, ifWindow } from "../utils";
 import Copy from "copy-to-clipboard";
@@ -22,8 +23,16 @@ interface SocialShareProps {
   pageURI: string;
 }
 
-const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
+const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
   const clickTarget: Element = useWindowClick();
+  const [shareLinks, setShareLinks] = useState({
+    fb: "",
+    twitter: "",
+    pinterest: "",
+    linkedIn: "",
+  });
+
+  const { hasWindow } = useWindow();
 
   useEffect(() => {
     //console.log(clickTarget)
@@ -58,6 +67,35 @@ const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
     ],
   });
 
+  useEffect(() => {
+    if (isShareDialogVisible && !shareLinks.fb) {
+      setShareLinks({
+        fb: `https://facebook.com/sharer/sharer.php?u=${encodeURI(
+          window.location.href
+        )}`,
+        twitter: genCompleteURL("https://twitter.com/intent/tweet", {
+          hashtags: "kitchenofmarriedfriends,marriedfriends",
+          original_referer: "https://marriedfriends.in",
+          text: pageTitle,
+          url: window.location.href,
+          via: "marriedfriendss",
+        }),
+        pinterest: genCompleteURL("https://pinterest.com/pin/create/button", {
+          url: window.location.href,
+          title: window.document.title,
+        }),
+
+        linkedIn: genCompleteURL(
+          "https://www.linkedin.com/sharing/share-offsite",
+          {
+            url: pageURI,
+            title: pageTitle,
+          }
+        ),
+      });
+    }
+  }, [isShareDialogVisible]);
+
   const onCopy = (text: string) => {
     Copy(text);
     setCopiedMessage("Copied...");
@@ -68,9 +106,8 @@ const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
   };
 
   const getWindow = () => {
-     if(ifWindow())
-     return window
-  }
+    if (ifWindow()) return window;
+  };
   const handleShare = async () => {
     if (typeof window === "undefined") {
       return;
@@ -103,36 +140,6 @@ const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
     isShareDialogVisible,
   });
 
-  const getPageURL = () => {
-    
-    if(process.env.NODE_ENV === "development") {
-      return  "https://marriedfriends.in"
-    }else{
-      return getWindow() && getWindow().location.href
-
-    }
-  }
-
-  const fbLink = `https://facebook.com/sharer/sharer.php?u=${encodeURI(
-    getPageURL())}`;
-  const tweetLink = genCompleteURL("https://twitter.com/intent/tweet", {
-    hashtags: "kitchenofmarriedfriends,marriedfriends",
-    original_referer: "https://marriedfriends.in",
-    text: pageTitle,
-    url: getPageURL(),
-    via: "marriedfriendss",
-  });
-
-
-  const pinLink = genCompleteURL("https://pinterest.com/pin/create/button",{ 
-    url: getPageURL(),
-    title: getWindow() && getWindow().location.href 
-  })
-
-  const linkedInLink = genCompleteURL("https://www.linkedin.com/sharing/share-offsite",{
-    url: pageURI,
-    title: pageTitle
-  })
   return (
     <>
       <Box
@@ -214,10 +221,10 @@ const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
         >
           <li>
             <Link
-              href={fbLink}
+              href={shareLinks.fb}
               target="popup"
               onClick={() =>
-                ifWindow() && window.open(fbLink, "popup", "width=600,height=600")
+                window.open(shareLinks.fb, "popup", "width=600,height=600")
               }
             >
               <FaFacebookSquare /> Facebook
@@ -225,28 +232,60 @@ const SocialShare: React.FC<SocialShareProps> = ({pageTitle, pageURI}) => {
           </li>
           <li>
             <Link
-              href={tweetLink}
+              href={shareLinks.twitter}
               target="popup"
+              rel="noopener noreferrer"
               onClick={() =>
-                ifWindow() && window.open(tweetLink, "popup", "width=600,height=600")
+                window.open(shareLinks.twitter, "popup", "width=600,height=600")
               }
             >
               <FaTwitterSquare /> Twitter
             </Link>
           </li>
           <li>
-            <Link href={linkedInLink} target="_blank">
+            <Link
+              href={shareLinks.linkedIn}
+              target="popup"
+              rel="noopener noreferrer"
+              onClick={() =>
+                window.open(
+                  shareLinks.linkedIn,
+                  "popup",
+                  "width=600,height=600"
+                )
+              }
+            >
               <FaLinkedinIn /> LinkedIn
             </Link>
           </li>
           <li>
-            <Link href={pinLink} target="_blank">
+            <Link
+              href={shareLinks.pinterest}
+              target="popup"
+              rel="noopener noreferrer"
+              onClick={() =>
+                window.open(
+                  shareLinks.pinterest,
+                  "popup",
+                  "width=600,height=600"
+                )
+              }
+            >
               <FaPinterestSquare /> Pin it
             </Link>
           </li>
           <li>
             <div onClick={() => onCopy(window.location.href)}>
-              <FaCopy /> {copiedMessage}
+              <FaCopy
+                style={
+                  {
+                    ":hover": {
+                      cursor: "no-drop",
+                    },
+                  } as CSSProperties
+                }
+              />{" "}
+              {copiedMessage}
             </div>
           </li>
         </ul>

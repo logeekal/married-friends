@@ -22,6 +22,7 @@ import {
 import FAQ from "../sections/FAQ";
 import useWindow from "../hooks/useWindow";
 import SocialShare from "../components/SocialShare";
+import Tag from "../components/Tag";
 
 export interface RecipePageProps {
   pageContext: {
@@ -52,6 +53,49 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
 
   let date = getFormattedDate(post.date);
   const category = post.recipeCuisines.nodes[0];
+  const cuisines = post.recipeCuisines.nodes;
+  const courses = post.recipeCourses.nodes;
+
+  const getTags = () => {
+    const cuisineTags = cuisines.map((cuisine, index) => {
+      return (
+        <span key={`cuisine-${index}`} className={`cuisine-${index}`}>
+          <Tag>
+            <Link
+              as={GastbyLink}
+              to={`${cuisine.uri}`}
+              sx={{
+                color: "primary",
+              }}
+            >
+              {cuisine.name}
+            </Link>
+          </Tag>
+        </span>
+      );
+    });
+
+    const courseTags = courses.map((course, index) => {
+      return (
+        <span key={`course-${index}`} className={`course-${index}`}>
+          <Tag>
+            <Link
+              as={GastbyLink}
+              to={`${course.uri}`}
+              sx={{
+                color: "primary",
+              }}
+            >
+              {course.name}
+            </Link>
+          </Tag>
+        </span>
+      );
+    });
+
+    return [...courseTags, ...cuisineTags];
+  };
+
   return (
     <Layout>
       <SEOWithQuery
@@ -77,7 +121,6 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
             margin: "0 auto",
           } as SxStyleProp
         }
-
         itemScope
         itemType="https://schema.org/Article"
       >
@@ -101,57 +144,55 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
             className="card__date"
             sx={{
               fontSize: 0,
-              textTransform: "uppercase",
-              fontWeight: 700,
-            }}
-          >
-            <span>
-              <Link as={GastbyLink} to={`/${category.uri}`}>
-                {category.name}
-              </Link>
-            </span>
-            <span>
-              <Text> / </Text>
-              <AccentText>{`${date.day}.${date.month}.${date.year}`}</AccentText>
-            </span>
-          </div>
-      <Box className="recipe__extra">
-        <Flex
-          className="recipe__social"
-          sx={{
-            justifyContent: "space-between",
-            paddingY: [1, 1, 2],
-            paddingX: "0px"
-          }}
-        >
-          <Box className="recipe__reactions"> </Box>
-          <Box>
-            <SocialShare pageTitle={post.title} pageURI={`${post.uri}`}  />
-          </Box>
-        </Flex>
-      </Box>
-          <div
-            className="recipe__featured-image"
-            sx={{
+              display: "flex",
               width: "100%",
-              marginTop: 1,
-              paddingBottom: "calc(100% / (16/9))",
-              position: "relative",
+              justifyContent: "space-between",
             }}
           >
-            <img
+            <Box
+              className="tags"
               sx={{
-                position: "absolute",
-                top: "0px",
-                left: "0px",
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
+                display: "flex",
+                gap: 0,
+                alignItems: "center"
               }}
-              src={post.featuredImage.node.mediaItemUrl}
-              alt={`Image of ${post.title}`}
-            />
+            >
+              {getTags()}
+            </Box>
+            <Box>
+              <SocialShare pageTitle={post.title} pageURI={`${post.uri}`} />
+            </Box>
+            {/*
+             *<span>
+             *  <Text> / </Text>
+             *  <AccentText>{`${date.day}.${date.month}.${date.year}`}</AccentText>
+             *</span>
+             */}
           </div>
+          {post.featuredImage && (
+            <div
+              className="recipe__featured-image"
+              sx={{
+                width: "100%",
+                marginTop: 1,
+                paddingBottom: "calc(100% / (16/9))",
+                position: "relative",
+              }}
+            >
+              <img
+                sx={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+                src={post.featuredImage.node.mediaItemUrl}
+                alt={`Image of ${post.title}`}
+              />
+            </div>
+          )}
 
           <article
             sx={{

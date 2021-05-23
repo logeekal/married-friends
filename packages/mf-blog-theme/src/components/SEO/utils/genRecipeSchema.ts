@@ -28,7 +28,7 @@ const genRecipeSchema = (
     "@context": "https://schema.org/",
     "@type": "Recipe",
     "name": post.title,
-    image: post.featuredImage.node.mediaDetails.sizes.map(
+    image: post.featuredImage && post.featuredImage.node.mediaDetails.sizes.map(
       (size) => size.sourceUrl
     ),
     author: {

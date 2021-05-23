@@ -9,23 +9,24 @@ import Inspiration from "../sections/Inspiration";
 import About from "../sections/About";
 import Grid from "../sections/articles/grid";
 import SubscribeMain from "../sections/subscribe/SubscribeMain";
-import { Post, Category } from "../types/wp-graphql.types";
+import { Post, Category, Recipe } from "../types/wp-graphql.types";
 import GoToTop from "../components/GoToTop";
 import CategoryCard from "../sections/CategoryCard";
-import SearchIndexContext from "../providers/IndexProvider";
 import useWindow from "../hooks/useWindow";
-import { SEO, SEOWithQuery } from "../components/SEO";
+import { SEOWithQuery } from "../components/SEO";
 
 interface HomeProps {
   pageContext: {
-    posts: Post[];
+    categoryName: string,
+    tagLine: string,
+    posts: Array<Post|Recipe>;
   };
 }
 
-console.log(`Carousel is ${Caraousel}`);
 
-function Home({ pageContext }): React.ReactFragment {
-  const { postObj, catObj } = pageContext;
+function Home({ pageContext } as HomeProps): React.ReactFragment {
+
+  const {categoryName, tagLine, posts } = pageContext;
   //console.log(postIndex);
   const posts = Object.values(postObj);
   console.log("Recieved posts : ", posts.length);
@@ -37,7 +38,19 @@ function Home({ pageContext }): React.ReactFragment {
   return (
     <Layout>
       <GoToTop />
-      <SEOWithQuery isArticle={false} />
+      <SEOWithQuery
+        title={tagLine}
+        description={tagLine}
+        image={null}
+        isArticle={true}
+        url=""
+        schemas={[
+          {
+            type: "recipe",
+            schema: genRecipeSchema(post as Recipe, recipe),
+          },
+        ]}
+      />
       <div
         className="home__carousel"
         sx={{ margin: minMargin + 1, height: "400px" }}

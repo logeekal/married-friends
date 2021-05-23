@@ -2,16 +2,32 @@
 
 import React from "react";
 import Card from "../card";
-import { Post } from "../../../types/wp-graphql.types";
+import { Post, Recipe } from "../../../types/wp-graphql.types";
 import { jsx } from "theme-ui";
 import { useGridRef } from "../../../hooks/useGridRef";
+import { IPostObject, IRecipeObject } from "../../../../utils/types";
 
 interface ArticleGridProps {
-  articles: Post[];
+  postIds: number[];
+  postObj: IRecipeObject | IPostObject;
 }
 
-const ArticleGrid: React.FC<ArticleGridProps> = props => {
-  const relevantArticles = props.articles.slice(0, 7);
+const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
+  console.log("==============", props);
+  let relevantArticles: Array<Post | Recipe>;
+  if (props.postIds.length > 0) {
+    relevantArticles = props.postIds.map((id) => {
+      return props.postObj[id];
+    });
+  } else {
+
+    return <h1> Nothing found </h1>;
+  }
+
+  console.log({ relevantArticlesBefore: relevantArticles });
+  relevantArticles.sort((a, b) => new Date(b.dateGmt).getTime() - new Date(a.dateGmt).getTime());
+
+
   const [maxCardHeight, setMaxCardHeight] = React.useState(0);
   const [articleHeights, setArticleHeights] = React.useState<Array<number>>([]);
   const [heights, setHeight] = React.useState<Array<number>>([]);
@@ -19,7 +35,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
   //const gridRef = useGridRef;
   //
   const gridRef = React.useRef<HTMLDivElement | any>({
-    current: { clientHeight: 0 }
+    current: { clientHeight: 0 },
   });
 
   const onThumbnailLoad = () => {
@@ -31,7 +47,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
   React.useEffect(() => {
     //update original article heights
     let minorCards: NodeList = gridRef.current.querySelectorAll(".card-minor");
-    let originalArticleHeigts = Array.from(minorCards).map(card => {
+    let originalArticleHeigts = Array.from(minorCards).map((card) => {
       let article = card.firstChild.parentElement.querySelector("article");
       return article.clientHeight;
     });
@@ -53,7 +69,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
     );
 
     console.log(`===Max Height is : `, maxHeight);
-    let cardHeights = Array.from(minorCards).map(card => {
+    let cardHeights = Array.from(minorCards).map((card) => {
       //console.log("===", card, card.firstChild.parentElement.clientHeight);
       return card.firstChild.parentElement.clientHeight;
     });
@@ -82,13 +98,15 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
       className="article-grid"
       sx={{ display: "flex", flexDirection: "column" }}
     >
-      <div className="first-article" sx={{ flex: 1 }}>
-        <Card
-          post={relevantArticles[0]}
-          type={"major"}
-          thumbnailLoadHandler={() => null}
-        />
-      </div>
+      {/*
+       *<div className="first-article" sx={{ flex: 1 }}>
+       *  <Card
+       *    post={relevantArticles[0]}
+       *    type={"major"}
+       *    thumbnailLoadHandler={() => null}
+       *  />
+       *</div>
+       */}
       <div
         className="rest-grid"
         ref={gridRef}
@@ -97,19 +115,16 @@ const ArticleGrid: React.FC<ArticleGridProps> = props => {
           //gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
           //alignItems: "flex-start",
           display: "flex",
-          flexWrap: "wrap"
+          flexWrap: "wrap",
         }}
       >
         {relevantArticles.map((article, index) => {
           return (
-            index > 0 && (
-              <Card
-                key={index}
-                sx={{ flex: "1 1 300px" }}
-                post={article}
-                type={index === 0 ? "major" : "minor"}
-              />
-            )
+            <Card
+              key={index}
+              post={article}
+              type={"minor"}
+            />
           );
         })}
       </div>

@@ -2,7 +2,13 @@
 
 import React from "react";
 import { jsx, Styled, Link, SxStyleProp } from "theme-ui";
-import { Post, Recipe } from "../../../types/wp-graphql.types";
+import {
+  Category,
+  Post,
+  Recipe,
+  RecipeCourse,
+  RecipeCuisine,
+} from "../../../types/wp-graphql.types";
 import {
   extractTextfromHTML,
   getFormattedDate,
@@ -10,8 +16,9 @@ import {
 } from "../../../utils";
 import { Link as GatsbyLink } from "gatsby";
 import { AccentText, Text } from "../../../components/Typography";
-import SocialIcons from "../../../components/SocialIcons";
 import useWindow from "../../../hooks/useWindow";
+import SocialShare from "../../../components/SocialShare.tsx";
+import Tag from "../../../components/Tag";
 
 interface CardProps extends React.HTMLProps<HTMLDivElement> {
   post: Post | Recipe;
@@ -26,12 +33,16 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
 
   let date = getFormattedDate(post.date);
 
-  console.log(post)
+  console.log(post);
 
-  const categories =
+  const categories: Array<RecipeCourse | RecipeCuisine | Category> =
     "recipeCuisines" in post
-      ? (post as Recipe).recipeCuisines.nodes[0]
-      : (post as Post).categories.nodes[0];
+      ? [(post as Recipe).recipeCuisines.nodes[0]]
+      : [(post as Post).categories.nodes[0]];
+
+  if ("recipeCourses" in post) {
+    categories.push((post as Recipe).recipeCourses.nodes[0]);
+  }
 
   const [, hasDocument] = useWindow();
   return (
@@ -41,11 +52,21 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
         display: "flex",
         flexDirection: "column",
         height: "100%",
-        flex: type === "major" ? "100%" : "1 1 300px",
+        flex: "1 1 300px",
         minWidth: "100px",
         backgroundColor: "bgCard",
         margin: 1,
         cursor: "pointer",
+        borderRadius: "50px",
+        fontSize: 0,
+        "@media only screen and (max-width: 800px)": {
+          maxWidth: "100%",
+        },
+
+        "@media only screen and (min-width: 800px)": {
+          maxWidth: "300px",
+        },
+
         ...sx,
       }}
       {...restProps}
@@ -63,6 +84,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               position: "absolute",
               width: "100%",
               height: "100%",
+              objectFit: "cover",
             }}
             src={post.featuredImage && post.featuredImage.node.mediaItemUrl}
             alt={post.featuredImage && post.featuredImage.node.altText}
@@ -75,12 +97,14 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             padding: type === "major" ? 2 : 1,
           }}
         >
-          <Styled.h2
+          <h2
             sx={{
               padding: "0px",
               margin: "0px",
               marginBottom: 0,
               color: "primary",
+              fontWeight: 600,
+              fontSize: 1,
             }}
             dangerouslySetInnerHTML={{ __html: post.title }}
           />
@@ -88,20 +112,36 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             className="card__date"
             sx={{
               fontSize: 0,
-              textTransform: "uppercase",
+              //textTransform: "uppercase",
               fontWeight: 500,
               paddingTop: 0,
             }}
           >
-            <span>
-              <Link as={GatsbyLink} to={`/${categories.slug}`}>
-                {categories.name}{" "}
-              </Link>
-            </span>
-            <span>
-              <Text> / </Text>
-              {`${date.day}.${date.month}.${date.year}`}{" "}
-            </span>
+            {categories.map((cat) => {
+              return (
+                <Tag
+                  sx={{
+                    marginRight: "3px",
+                  }}
+                >
+                  <Link
+                    as={GatsbyLink}
+                    to={cat.uri}
+                    sx={{
+                      color: "primary",
+                    }}
+                  >
+                    {cat.name}
+                  </Link>
+                </Tag>
+              );
+            })}
+            {/*
+             *<span>
+             *  <Text sx={{fontSize: 0}}> / </Text>
+             *  {`${date.day}.${date.month}.${date.year}`}{" "}
+             *</span>
+             */}
           </div>
           <article
             sx={{
@@ -119,26 +159,25 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
                 spanProps={{
                   dangerouslySetInnerHTML: { __html: post.excerpt },
                 }}
+                sx={{}}
               ></Text>
             </p>
           </article>
           <div
             className="card-footer"
-            sx={{ display: "flex", justifyContent: "space-between" }}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "0px",
+            }}
           >
             <span className="footer-left">
               <AccentText sx={{ cursor: "pointer", fontSize: 0 }}>
-                READ MORE
+                Read More
               </AccentText>
             </span>
             <span className="footer-social">
-              <SocialIcons
-                includeSearch={false}
-                socialProfiles={[
-                  { type: "share", name: "share", target: "http://google.com" },
-                ]}
-                width="20px"
-              />
+              <SocialShare />
             </span>
           </div>
         </div>

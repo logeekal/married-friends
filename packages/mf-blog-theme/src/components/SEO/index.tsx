@@ -9,7 +9,7 @@ export interface SEOQueryProps {
     image?: string;
     url?: string;
     isArticle: boolean;
-    schemas: Array<{
+    schemas?: Array<{
         type: "recipe" | "articles" | "list";
         schema: any;
     }>;
