@@ -36,6 +36,8 @@ export default class RecipeService {
               featuredImage {
                 node {
                   mediaItemUrl
+                  srcSet
+                  sourceUrl
                   mediaDetails {
                     sizes {
                       name

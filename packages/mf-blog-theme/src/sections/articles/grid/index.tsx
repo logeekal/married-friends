@@ -20,13 +20,13 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
       return props.postObj[id];
     });
   } else {
-
     return <h1> Nothing found </h1>;
   }
 
   console.log({ relevantArticlesBefore: relevantArticles });
-  relevantArticles.sort((a, b) => new Date(b.dateGmt).getTime() - new Date(a.dateGmt).getTime());
-
+  relevantArticles.sort(
+    (a, b) => new Date(b.dateGmt).getTime() - new Date(a.dateGmt).getTime()
+  );
 
   const [maxCardHeight, setMaxCardHeight] = React.useState(0);
   const [articleHeights, setArticleHeights] = React.useState<Array<number>>([]);
@@ -124,6 +124,8 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
               key={index}
               post={article}
               type={"minor"}
+              itemProp="itemListElement"
+              index={index + 1}
             />
           );
         })}

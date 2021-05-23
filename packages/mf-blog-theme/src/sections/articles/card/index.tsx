@@ -19,6 +19,7 @@ import { AccentText, Text } from "../../../components/Typography";
 import useWindow from "../../../hooks/useWindow";
 import SocialShare from "../../../components/SocialShare.tsx";
 import Tag from "../../../components/Tag";
+import {index} from "cheerio/lib/api/traversing";
 
 interface CardProps extends React.HTMLProps<HTMLDivElement> {
   post: Post | Recipe;
@@ -26,6 +27,7 @@ interface CardProps extends React.HTMLProps<HTMLDivElement> {
   sx?: SxStyleProp;
   articleStyle?: React.CSSProperties;
   className?: string;
+  index: number
 }
 
 const Card: React.FC<CardProps> = (props: CardProps) => {
@@ -57,8 +59,8 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
         backgroundColor: "bgCard",
         margin: 1,
         cursor: "pointer",
-        borderRadius: "50px",
         fontSize: 0,
+      
         "@media only screen and (max-width: 800px)": {
           maxWidth: "100%",
         },
@@ -71,7 +73,8 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       }}
       {...restProps}
     >
-      <Link as={GatsbyLink} to={post.uri}>
+      <span itemProp="position" sx={{display: "none"}}>{props.index + 1}</span>
+      <Link as={GatsbyLink} to={post.uri} >
         <div
           sx={{
             position: "relative",
@@ -86,8 +89,10 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               height: "100%",
               objectFit: "cover",
             }}
-            src={post.featuredImage && post.featuredImage.node.mediaItemUrl}
-            alt={post.featuredImage && post.featuredImage.node.altText}
+            srcSet={post.featuredImage.node.srcSet}
+            src={post.featuredImage.node.sourceUrl}
+            sizes="(max-width : 800px) 400px, 20vw"
+            alt={`image of ${post.title}`}
           />
         </div>
         <div
@@ -106,6 +111,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               fontWeight: 600,
               fontSize: 1,
             }}
+            itemProp="name"
             dangerouslySetInnerHTML={{ __html: post.title }}
           />
           <div
@@ -154,7 +160,9 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               ...articleStyle,
             }}
           >
-            <p>
+            <p
+              itemProp="description"
+            >
               <Text
                 spanProps={{
                   dangerouslySetInnerHTML: { __html: post.excerpt },

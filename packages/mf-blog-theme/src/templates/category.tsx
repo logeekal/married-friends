@@ -22,6 +22,7 @@ import SearchIndexContext from "../providers/IndexProvider";
 import useWindow from "../hooks/useWindow";
 import { SEO, SEOWithQuery } from "../components/SEO";
 import { IRecipeObject } from "../../utils/types";
+import genItemListSchema from "../components/SEO/utils/genItemListSchema";
 
 interface CategoryProps {
   pageContext: {
@@ -82,6 +83,12 @@ function RecipeCategoryPage({
         image={null}
         isArticle={false}
         url=""
+        schemas={[
+          {
+            type: "list",
+            schema: genItemListSchema(Object.values(postObj), tagLine)
+          }
+        ]}
       />
       <div
         className="home__container "
