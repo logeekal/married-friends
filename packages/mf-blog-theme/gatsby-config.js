@@ -10,6 +10,12 @@ module.exports = {
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sitemap",
     {
+      resolve: "gatsby-plugin-google-gtag",
+      options: {
+        trackingIds: ["UA-24329901-2"]
+      }
+    },
+    {
       resolve: "gatsby-source-graphql",
       options: {
         typeName: "WPGraphQL",

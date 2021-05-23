@@ -16,6 +16,6 @@ export const onRenderBody = ({ setPostBodyComponents }) => {
       type="module"
       src="https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@0.6.2/lite-youtube.js"
       async
-    />,
+    />
   ]);
 };

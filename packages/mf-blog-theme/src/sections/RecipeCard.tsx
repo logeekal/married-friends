@@ -102,7 +102,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
                 marginLeft: [1, 1, 2],
                 flex: "1 1 20%",
                 marginTop: [0, 0, 1],
-                minWidth: "125px",
+                minWidth: "130px",
               }}
             >
               <RecipeCardDetailBlock
@@ -116,7 +116,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
               sx={{
                 marginLeft: [1, 1, 2],
                 marginY: [0, 0, 1],
-                minWidth: "125px",
+                minWidth: "130px",
                 flex: "1 1 20%",
               }}
             >
@@ -129,7 +129,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
             <Box
               sx={{
                 marginLeft: [1, 1, 2],
-                minWidth: "125px",
+                minWidth: "130px",
                 marginTop: [0, 0, 1],
                 flex: "1 1 20%",
               }}
@@ -144,7 +144,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
               sx={{
                 marginLeft: [1, 1, 2],
                 flex: "1 1 20%",
-                minWidth: "125px",
+                minWidth: "130px",
                 marginTop: [0, 0, 1],
               }}
             >
