@@ -99,7 +99,7 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
   return (
     <Layout>
       <SEOWithQuery
-        title={post.title}
+        title={`${post.title} - Kitchen of Married Friends` }
         description={striptags(post.excerpt)}
         image={post.featuredImage?.node?.mediaItemUrl}
         isArticle={true}
@@ -189,6 +189,8 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
                   objectFit: "cover",
                 }}
                 src={post.featuredImage.node.mediaItemUrl}
+                srcSet={post.featuredImage.node.srcSet}
+                sizes="(max-width: 600px) 80vw, 50vw"
                 alt={`Image of ${post.title}`}
               />
             </div>
