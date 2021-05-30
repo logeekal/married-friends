@@ -11,6 +11,7 @@ interface FAQProps {
 
 const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
   // stores the indices of expanded QnAs
+  console.log({faqs, faqIds})
   const [expandedIdx, setExpandedIdx] = useState(
     new Array(faqIds.length).fill(false)
   );
@@ -51,8 +52,11 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
       >
         <img
           src="/fork_white.png"
-          sx={{
+          alt='frequently asked questions'
+          style={{
             width: "100%",
+            height: "auto",
+            aspectRatio: "unset",
           }}
         />
       </Box>
@@ -77,6 +81,8 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
         }}
       >
         {faqIds.map((faqId, index) => {
+
+          console.log(`Issue with faqid ${faqId} : ${faqId in faqs}`)
           return (
             <div
               className={`qna_container ${isExpanded(index) ? "expanded" : ""}`}
@@ -107,7 +113,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
                 }}
               >
                 <div className="qna__question" itemProp="name">
-                  {faqs[faqId].title}
+                  {faqs[faqId].title.rendered}
                 </div>
                 <div
                   className="qna_expander"
@@ -128,7 +134,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
                 <div
                   className="qna__answer"
                   itemProp="text"
-                  dangerouslySetInnerHTML={{ __html: faqs[faqId].content }}
+                  dangerouslySetInnerHTML={{ __html: faqs[faqId].content.rendered }}
                   sx={{
                     fontWeight: 200,
                     marginTop: "0px",

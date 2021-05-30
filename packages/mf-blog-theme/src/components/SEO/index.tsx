@@ -48,10 +48,17 @@ export function SEO({
 }: SEOProps) {
     return (
         <>
-            <Helmet>
+            <Helmet
+                htmlAttributes={{
+                    lang: "en",
+                }}
+            >
                 {/* General Tags */}
                 <title>{title || siteMetadata.title}</title>
-                <meta name="google-site-verification" content="yCe73Z8VUJVnF41KE21Jt7W44RD1ACHXqFHKzDpF2io" />
+                <meta
+                    name="google-site-verification"
+                    content="yCe73Z8VUJVnF41KE21Jt7W44RD1ACHXqFHKzDpF2io"
+                />
                 <meta
                     name="description"
                     content={description || siteMetadata.description}
@@ -108,10 +115,12 @@ export function SEO({
                     name="twitter:image"
                     content={image || siteMetadata.image}
                 />
-                {schemas && schemas.map((schemaObj) => (<script type="application/ld+json">
-                        {JSON.stringify(schemaObj.schema,null,2)}
-                    </script>
-                ))}
+                {schemas &&
+                    schemas.map((schemaObj) => (
+                        <script type="application/ld+json">
+                            {JSON.stringify(schemaObj.schema, null, 2)}
+                        </script>
+                    ))}
             </Helmet>
         </>
     );

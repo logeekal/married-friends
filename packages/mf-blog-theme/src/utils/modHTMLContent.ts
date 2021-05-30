@@ -31,10 +31,10 @@ export function stripFAQSection(htmlString: string) {
   return $.html();
 }
 
-export function replaceYTwithLiteTY(htmlString: string) {
+export function replaceYTwithLiteTY(htmlString: string, title: string) {
   let videoId = getYoutubeVideoId(htmlString)
   if(!videoId){
-    // means there is no iframe and video in the article
+    //  is no iframe and video in the article
     return htmlString;
   }
 
@@ -42,7 +42,7 @@ export function replaceYTwithLiteTY(htmlString: string) {
 
   $("iframe.youtube-player").remove()
 
-  $("span.embed-youtube").append(`<lite-youtube videoid=${videoId} />`)
+  $("span.embed-youtube").append(`<lite-youtube videoid=${videoId} title="${title}" videoTitle="${title}"/>`)
 
   return $.html()
 

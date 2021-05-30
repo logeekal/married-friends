@@ -34,11 +34,6 @@ export interface RecipePageProps {
 const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
   const [hasWindow] = useWindow();
 
-  useEffect(() => {
-    if (hasWindow) {
-      import("@justinribeiro/lite-youtube");
-    }
-  }, [hasWindow]);
 
   //console.log(JSON.stringify(pageContext));
   const { post, content: recipe } = pageContext.data;
@@ -47,7 +42,9 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
 
   const faqIds = getFAQs(post.content);
 
-  const postContent = replaceYTwithLiteTY(stripFAQSection(post.content));
+  const postContent = replaceYTwithLiteTY(stripFAQSection(post.content), post.title);
+
+  console.log({recipe, allFAQObject, post})
 
   //console.log({ postContent });
 
@@ -224,6 +221,16 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
                 borderBottomColor: "accent",
                 borderBottomStyle: "solid",
               },
+            figure: {
+              margin: "0px",
+            },
+            img: {
+              height: "auto",
+              maxWidth: "1000px",
+              width: "100%",
+              aspectRatio: "16/9",
+              objectFit: "cover"
+            }
             }}
           >
             <div

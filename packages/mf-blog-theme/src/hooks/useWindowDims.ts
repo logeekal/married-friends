@@ -16,7 +16,7 @@ const useWindowDims = () => {
 
   const [windowDim, setWindowDim] = useState(getWindowSize());
 
-  console.log(`hasWindow`, hasWindow, windowDim);
+  //console.log(`hasWindow`, hasWindow, windowDim);
   useEffect(() => {
     if (hasWindow) {
       const handleResize = () => {
