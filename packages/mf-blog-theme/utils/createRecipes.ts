@@ -38,12 +38,12 @@ export const getAllFAQs = async ({ graphql, actions }: CustomCreatePageArgs) => 
   log("Getting all FAQs")
   const faqService = new FAQService(graphql, actions);
 
-  const allFAQs = await faqService.getAllFAQs();
+  const allFAQs = await faqService.getAllFAQREST();
 
   const allFAQObject: IFAQObj = {};
 
   allFAQs.forEach((faq) => {
-    allFAQObject[faq.faqId] = faq;
+    allFAQObject[faq.id] = faq;
   });
 
   console.log(`Found ${allFAQs.length} FAQs` )

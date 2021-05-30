@@ -69,7 +69,6 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
             sx={{
               width: "60%",
               textAlign: "center",
-
               margin: "0 auto",
             }}
           >
@@ -78,7 +77,6 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
           <p
             sx={{
               color: "secondary",
-              textTransform: "lowercase",
               fontStyle: "italic",
               marginY: [0, 0, 1],
               margin: "0 auto",
@@ -107,7 +105,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
             >
               <RecipeCardDetailBlock
                 detailType="Servings"
-                detailValue={[recipe.servings || "2"]}
+                detailValue={[recipe.noOfServings || "2"]}
                 detailUnit={[null]}
               />
             </Box>
@@ -149,9 +147,9 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
               }}
             >
               <RecipeCardDetailBlock
-                detailType="Total Time"
-                detailValue={[totalTime.hours && totalTime.hours.toString(), totalTime.minutes.toString()]}
-                detailUnit={["h", "m"]}
+                detailType="Rest Time"
+                detailValue={[recipe.restTime || "0"]}
+                detailUnit={[recipe.restTimeUnit || "min"]}
               />
             </Box>
           </Flex>
@@ -214,6 +212,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
                             lineHeight: "2rem",
                             WebkitPaddingStart: 0,
                             MozPaddingStart: "5px",
+                            marginBottom: "0px"
                           }}
                         >
                           <Text as="span">{`${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredient}`}</Text>

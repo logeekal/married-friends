@@ -92,7 +92,7 @@ const YoutubeFeed: FC<YoutubeFeedProps> = ({ videos }) => {
         return (
           <div key={index} className="video-wrapper">
             <div className="video">
-              <lite-youtube videoid={currentVideo.videoId} videotitle={currentVideo.title}></lite-youtube>
+              <lite-youtube videoid={currentVideo.videoId} videotitle={currentVideo.title} title={currentVideo.title}></lite-youtube>
             </div>
           </div>
         );

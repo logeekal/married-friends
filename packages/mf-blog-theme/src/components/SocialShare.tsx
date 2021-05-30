@@ -134,12 +134,6 @@ const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
     }
   };
 
-  console.log({
-    styles,
-    attributes,
-    isShareDialogVisible,
-  });
-
   return (
     <>
       <Box
@@ -158,9 +152,6 @@ const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
         style={{
           ...styles.popper,
           display: isShareDialogVisible ? "block" : "none",
-        }}
-        onClick={(event) => {
-          console.log(event);
         }}
         sx={{
           bg: "bgCard",

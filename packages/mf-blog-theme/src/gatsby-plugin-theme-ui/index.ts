@@ -97,6 +97,9 @@ const styles = {
       fontFamily: "normal",
       fontSize: 2,
     },
+    li: {
+      marginBottom: "0.5rem"
+    }
   },
   body: {
     margin: "0px !important",

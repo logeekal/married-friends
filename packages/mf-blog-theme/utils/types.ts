@@ -1,5 +1,9 @@
 import {Faq, Post, Recipe} from "../src/types/wp-graphql.types";
+import {FAQ_REST_DATA} from "../tests/faqRestSample.data";
 import {RECIPE_SAMPLE_CONTENT} from "../tests/recipeContent.data";
+
+export type IRecipeContent =  typeof RECIPE_SAMPLE_CONTENT
+export type IFAQRestContent = typeof FAQ_REST_DATA
 
 export interface IWPGraphQL<T>{
   data: {
@@ -16,8 +20,10 @@ export interface ICompleteRecipe {
 }
 
 
+
+
 export interface IFAQObj {
-  [k:number]: Faq
+  [k:number]: IFAQRestContent
 }
 
 
@@ -30,4 +36,3 @@ export interface IPostObject {
 }
 
 
-export type IRecipeContent =  typeof RECIPE_SAMPLE_CONTENT

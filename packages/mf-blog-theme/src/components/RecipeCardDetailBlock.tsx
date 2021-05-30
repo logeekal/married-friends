@@ -65,7 +65,7 @@ const RecipeCardDetailBlock: FC<RecipeCardDetailBlockProps> = ({
         }}
       >
         {detailValue.map((val, index) => {
-          if (val && (val !== "0")) {
+          if (val) {
             return (
               <>
                 <span

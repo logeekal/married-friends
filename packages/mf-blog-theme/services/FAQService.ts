@@ -1,5 +1,8 @@
 import { Faq } from "../src/types/wp-graphql.types";
-import { IWPGraphQL } from '../utils/types'
+import { IFAQRestContent, IWPGraphQL } from '../utils/types'
+import axios from 'axios'
+
+const host = `https://backend.marriedfriends.in`;
 
 export default class FAQService {
   graphql: any;
@@ -32,6 +35,15 @@ export default class FAQService {
 
     return response.data.wpgraphql.faqs.nodes;
 
-
   };
+
+
+  getAllFAQREST =  async(): Promise<Array<IFAQRestContent>> => {
+    
+    const res = await axios.get<Array<IFAQRestContent>>(`${host}/wp-json/wp/v2/helpie_faq?per_page=100`);
+
+    const faqs = res.data
+    
+    return faqs
+  }
 }
