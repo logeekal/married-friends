@@ -87,7 +87,7 @@ export default class RecipeService {
      *});
      */
     const response = await axios.get(
-      `${host}/wp-json/deliciousrecipe/v1/recipe`,
+      `${host}/wp-json/deliciousrecipe/v1/recipe?per_page=100`,
       {
         auth: {
           username: process.env.USERNAME,
