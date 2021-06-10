@@ -2,6 +2,7 @@ import Helmet from "react-helmet";
 import React from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import genRecipeSchema from "./utils/genRecipeSchema";
+import {log} from "../../utils";
 
 export interface SEOQueryProps {
     title?: string;
@@ -152,7 +153,7 @@ export function SEOWithQuery(props: SEOQueryProps) {
             }
         }
     `);
-    console.log("site meta : ", siteMetadata);
+    log("site meta : ", siteMetadata);
 
     return <SEO siteMetadata={siteMetadata.siteMetadata} {...props} />;
 }

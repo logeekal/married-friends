@@ -8,7 +8,7 @@ import striptags from "striptags";
 import SocialShare from "../components/SocialShare";
 import { Recipe } from "../types/wp-graphql.types";
 import RecipeCardDetailBlock from "../components/RecipeCardDetailBlock";
-import { addDurations, getStepURL } from "../utils";
+import { addDurations, getStepURL, log } from "../utils";
 import {IDuration} from "../types/common";
 
 interface RecipeCardProps {
@@ -40,7 +40,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
     }
   ])
 
-  console.log({totalTime, cook: recipe.cookTimeUnit, prep: recipe.prepTimeUnit})
+  log({totalTime, cook: recipe.cookTimeUnit, prep: recipe.prepTimeUnit})
   return (
     <div
       className="recipe-card"

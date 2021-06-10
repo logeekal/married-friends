@@ -9,6 +9,7 @@ import SearchResultCard from "./SearchResultCard";
 import { FLEX_CONFIG } from "../utils/style";
 import { jsx, SxStyleProp } from "theme-ui";
 import useWindow from "../hooks/useWindow";
+import {log} from "../utils";
 
 export interface SearchResultsProps
   extends PropsWithChildren<{
@@ -32,13 +33,13 @@ const SearchResults: FC<SearchResultsProps> = props => {
     if (postObj) {
       setIsLoading(false);
     }
-    console.log("postObj", postObj);
+    log("postObj", postObj);
   }, [postObj]);
 
   //Set LUNR Data
   React.useEffect(() => {
     if (!hasWindow) return;
-    console.log("Window is here. Now loaded index");
+    log("Window is here. Now loaded index");
     setIsLoading(true);
     if (window.__LUNR__.loaded) {
       setSearchIndex(window.__LUNR__.index);
@@ -63,7 +64,7 @@ const SearchResults: FC<SearchResultsProps> = props => {
     }
     if (searchIndex) {
       let results = searchIndex.search(prepareQuery(props.searchQuery));
-      console.log(results);
+      log(results);
       setSearchResults(results);
     }
   }, [props.searchQuery]);

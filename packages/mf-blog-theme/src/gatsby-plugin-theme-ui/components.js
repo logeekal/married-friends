@@ -1,8 +1,9 @@
 import React from "react";
+import {log} from "../utils";
 
 export default {
   h1: (props) => {
-    console.log(props);
+    log(props);
     return (
       <h1
         sx={{

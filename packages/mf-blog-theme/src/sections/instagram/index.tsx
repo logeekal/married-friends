@@ -2,6 +2,7 @@
 import React from "react";
 import { jsx } from "theme-ui";
 import Card from "../../components/Card";
+import {log} from "../../utils";
 
 interface InstagramImageProps {
   id: string;
@@ -61,7 +62,7 @@ const dummyImageArray: any = new Array(9).fill(10).map((node, index) => {
     src: `https://picsum.photos/seed/${index}/90`
   };
 });
-console.log(dummyImageArray);
+log(dummyImageArray);
 
 Instagram.defaultProps = {
   data: dummyImageArray

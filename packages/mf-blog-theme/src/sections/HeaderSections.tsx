@@ -12,6 +12,7 @@ import Menu from "../components/Menu";
 import MenuIcon from "../components/MenuIcon";
 import useKeyCode from "../hooks/useKeyCode";
 import { Link as GatsbyLink } from 'gatsby';
+import {log} from "../utils";
 
 interface MenuShape {
   label: string;
@@ -34,7 +35,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
   const { width: windowWidth, height } = useWindowDims();
   const [menuVisible, setMenuVisible] = React.useState(false);
   const keyPressed = useKeyCode(menuVisible);
-  console.log(`windowwidth`, windowWidth);
+  log(`windowwidth`, windowWidth);
 
   React.useEffect(() => {
     const win = typeof window === "object" && window;
@@ -51,16 +52,16 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
   });
 
   React.useEffect(() => {
-    console.log("New Menu visbility: ", menuVisible);
+    log("New Menu visbility: ", menuVisible);
   }, [menuVisible]);
 
   const toggleMenu = () => {
-    console.log(`Toggling menu : `, menuVisible);
+    log(`Toggling menu : `, menuVisible);
     setMenuVisible(!menuVisible);
   };
 
   React.useEffect(() => {
-    console.log("Changing");
+    log("Changing");
     if (keyPressed.toLowerCase() === "escape") {
       toggleMenu();
     }

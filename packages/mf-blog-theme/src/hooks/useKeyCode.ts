@@ -1,4 +1,5 @@
 import React from "react";
+import {log} from "../utils";
 import useWindow from "./useWindow";
 
 export default function useKeyCode(switchCondition: boolean): string {
@@ -11,7 +12,7 @@ export default function useKeyCode(switchCondition: boolean): string {
     };
 
     const keyCodeListener = (e: KeyboardEvent) => {
-      console.log("Key Pressed ---", e.keyCode, e.key);
+      log("Key Pressed ---", e.keyCode, e.key);
       setKeyPressed(e.key);
     };
 

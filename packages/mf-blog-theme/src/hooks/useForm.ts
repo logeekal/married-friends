@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {log} from "../utils";
 
 interface useFormReturnInterface {
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -22,7 +23,7 @@ const useForm: useFormHandler = (onSubmit) => {
   };
 
   const handleSubmission: React.FormEventHandler<HTMLFormElement> = (e) => {
-    console.log(`Submitting`);
+    log(`Submitting`);
     e.preventDefault();
     /*
      *
