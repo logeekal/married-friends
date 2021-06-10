@@ -23,6 +23,7 @@ import useWindow from "../hooks/useWindow";
 import { SEO, SEOWithQuery } from "../components/SEO";
 import { IRecipeObject } from "../../utils/types";
 import genItemListSchema from "../components/SEO/utils/genItemListSchema";
+import {log} from "../utils";
 
 interface CategoryProps {
   pageContext: {
@@ -33,16 +34,11 @@ interface CategoryProps {
   };
 }
 
-console.log(`Carousel is ${Caraousel}`);
+log(`Carousel is ${Caraousel}`);
 
 function RecipeCategoryPage({
   pageContext,
 }: CategoryProps): React.ReactFragment {
-  //const { postObj, catObj } = pageContext;
-  //console.log(postIndex);
-  //
-  //
-  //
 
   const { postObj, tagLine, category } = pageContext;
 
@@ -51,21 +47,21 @@ function RecipeCategoryPage({
   let postIds: number[];
 
   if (pageContext.category && Object.keys(pageContext.category).length > 0) {
-    console.log(" ***** ", pageContext.category);
+    log(" ***** ", pageContext.category);
     postIds = (pageContext.category as RecipeCuisine).recipes.nodes.map(
       (node) => node.recipeId
     );
   } else {
-    console.log("type of: ", pageContext.type);
+    log("type of: ", pageContext.type);
     if (pageContext.type === "home") {
       postIds = Object.values(pageContext.postObj).map((post) => post.recipeId);
-      console.log({ postIds });
+      log({ postIds });
     } else {
       postIds = [];
     }
   }
 
-  console.log("PostIds for category:", postIds);
+  log("PostIds for category:", postIds);
 
   const minMargin = 0;
 

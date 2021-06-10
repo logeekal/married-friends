@@ -6,6 +6,7 @@ import { jsx, Input, Button, Divider, SxStyleProp, Spinner } from "theme-ui";
 import useForm from "../../hooks/useForm";
 import { FLEX_CONFIG } from "../../utils/style";
 import fetch from "isomorphic-fetch";
+import {log} from "../../utils";
 
 export interface SubscribeMainProps {
   title: string;
@@ -73,8 +74,8 @@ const SubscribeMain: FC<SubscribeMainProps> = (props) => {
     }
   };
 
-  console.log(values);
-  console.log(errFields);
+  log(values);
+  log(errFields);
 
   return (
     <div

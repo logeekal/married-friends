@@ -7,7 +7,7 @@ import Layout from "../components/layout";
 import { FLEX_CONFIG } from "../utils/style";
 import SubscribeMain from "../sections/subscribe/SubscribeMain";
 import { Text, AccentText } from "../components/Typography";
-import { getFormattedDate } from "../utils";
+import { getFormattedDate, log } from "../utils";
 import { SEOWithQuery } from "../components/SEO";
 import genRecipeSchema from "../components/SEO/utils/genRecipeSchema";
 import * as striptags from "striptags";
@@ -32,10 +32,11 @@ export interface RecipePageProps {
 }
 
 const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
+
   const [hasWindow] = useWindow();
 
 
-  //console.log(JSON.stringify(pageContext));
+  //log(JSON.stringify(pageContext));
   const { post, content: recipe } = pageContext.data;
 
   const { faqs: allFAQObject } = pageContext;
@@ -44,9 +45,9 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
 
   const postContent = replaceYTwithLiteTY(stripFAQSection(post.content), post.title);
 
-  console.log({recipe, allFAQObject, post})
+  log({recipe, allFAQObject, post})
 
-  //console.log({ postContent });
+  //log({ postContent });
 
   let date = getFormattedDate(post.date);
   const category = post.recipeCuisines.nodes[0];

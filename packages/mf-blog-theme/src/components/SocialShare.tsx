@@ -14,7 +14,7 @@ import {
   FaLinkedinIn,
   FaPinterestSquare,
 } from "react-icons/fa";
-import { genCompleteURL, ifWindow } from "../utils";
+import { genCompleteURL, ifWindow, log } from "../utils";
 import Copy from "copy-to-clipboard";
 import useWindowClick from "../hooks/useWindowClicks";
 
@@ -35,9 +35,9 @@ const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
   const { hasWindow } = useWindow();
 
   useEffect(() => {
-    //console.log(clickTarget)
-    //console.log('social -share - ', clickTarget.closest("#social-share"))
-    //console.log('social -share - ', clickTarget.closest("#tooltip"))
+    //log(clickTarget)
+    //log('social -share - ', clickTarget.closest("#social-share"))
+    //log('social -share - ', clickTarget.closest("#tooltip"))
     if (!clickTarget) return;
     if (
       !clickTarget.closest("#tooltip") &&
@@ -125,10 +125,10 @@ const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
           text: pageTitle,
           url: pageURI,
         })
-        .then(() => console.log("Shared successfully."))
+        .then(() => log("Shared successfully."))
         .catch((err) => console.error(err));
     } else {
-      console.log("native sharing not available, using in build option");
+      log("native sharing not available, using in build option");
       setIsShareDialogVisible(!isShareDialogVisible);
       await update();
     }

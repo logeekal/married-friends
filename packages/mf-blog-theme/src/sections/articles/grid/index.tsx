@@ -6,6 +6,7 @@ import { Post, Recipe } from "../../../types/wp-graphql.types";
 import { jsx } from "theme-ui";
 import { useGridRef } from "../../../hooks/useGridRef";
 import { IPostObject, IRecipeObject } from "../../../../utils/types";
+import {log} from "../../../utils";
 
 interface ArticleGridProps {
   postIds: number[];
@@ -13,7 +14,7 @@ interface ArticleGridProps {
 }
 
 const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
-  console.log("==============", props);
+  log("==============", props);
   let relevantArticles: Array<Post | Recipe>;
   if (props.postIds.length > 0) {
     relevantArticles = props.postIds.map((id) => {
@@ -23,7 +24,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
     return <h1> Nothing found </h1>;
   }
 
-  console.log({ relevantArticlesBefore: relevantArticles });
+  log({ relevantArticlesBefore: relevantArticles });
   relevantArticles.sort(
     (a, b) => new Date(b.dateGmt).getTime() - new Date(a.dateGmt).getTime()
   );
@@ -56,10 +57,10 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
   }, [gridRef]);
 
   React.useEffect(() => {
-    console.log("***", gridRef.current.clientHeight);
+    log("***", gridRef.current.clientHeight);
     if (articleHeights.length === 0) return;
     let minorCards: NodeList = gridRef.current.querySelectorAll(".card-minor");
-    console.log("===minorcard : ", minorCards);
+    log("===minorcard : ", minorCards);
     const maxHeight = Array.from(minorCards).reduce(
       (prevValue, currentElement) => {
         prevValue = Math.max(prevValue, currentElement.clientHeight);
@@ -68,9 +69,9 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
       0
     );
 
-    console.log(`===Max Height is : `, maxHeight);
+    log(`===Max Height is : `, maxHeight);
     let cardHeights = Array.from(minorCards).map((card) => {
-      //console.log("===", card, card.firstChild.parentElement.clientHeight);
+      //log("===", card, card.firstChild.parentElement.clientHeight);
       return card.firstChild.parentElement.clientHeight;
     });
 
@@ -81,16 +82,16 @@ const ArticleGrid: React.FC<ArticleGridProps> = (props) => {
           ? articleHeights[index]
           : article.clientHeight;
       const diff = maxHeight - cardHeights[index];
-      //console.log("===New Height articles : ", height, diff, height + diff);
+      //log("===New Height articles : ", height, diff, height + diff);
       if (diff > 0) {
         article.style.paddingBottom = `${diff}px`;
       }
       return diff;
     });
 
-    console.log("===card height: ", cardHeights);
-    console.log("===original Article Heights", articleHeights);
-    console.log("===article height :", localArticleHeights);
+    log("===card height: ", cardHeights);
+    log("===original Article Heights", articleHeights);
+    log("===article height :", localArticleHeights);
   }, [articleHeights, gridHeight]);
 
   return (

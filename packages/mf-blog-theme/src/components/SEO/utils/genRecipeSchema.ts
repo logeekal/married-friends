@@ -1,6 +1,6 @@
 import { IRecipeContent } from "../../../../utils/types";
 import { Recipe } from "../../../types/wp-graphql.types";
-import {getStepURL, ifWindow} from "../../../utils";
+import {getStepURL, ifWindow, log} from "../../../utils";
 import {getYoutubeVideoId} from "../../../utils/modHTMLContent";
 import striptags from 'striptags';
 
@@ -15,7 +15,7 @@ const genRecipeSchema = (
   post: Recipe,
   recipe: IRecipeContent["data"][number]["recipe_metas"]
 ) => {
-  console.log("Generating Recipe Schema for  :  " + post.title);
+  log("Generating Recipe Schema for  :  " + post.title);
   let videoId = null;
   let videoGallery = recipe.videoGalleryVids[0]
   if(videoGallery && videoGallery.vidID){
@@ -57,7 +57,7 @@ const genRecipeSchema = (
       ...getVideoSegment(videoId, post, recipe)
     },
   };
-  console.log(resultSchema)
+  log(resultSchema)
   return resultSchema
 };
 
@@ -87,7 +87,7 @@ const getRecipeIngredients = (
   recipeIng: IRecipeMeta["recipeIngredients"]
 ): string[] => {
   let totalIngredients: string[] = [];
-  console.log(recipeIng);
+  log(recipeIng);
   recipeIng.forEach((ingredientSection) => {
     const subIngredients = ingredientSection.ingredients.map((ingredient) => {
       return `${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredient}, ${ingredient.notes}`;

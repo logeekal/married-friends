@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Box, Divider, Flex, Heading, jsx, Text } from "theme-ui";
 import { IFAQObj } from "../../utils/types";
+import {log} from "../utils";
 
 interface FAQProps {
   faqs: IFAQObj;
@@ -11,7 +12,7 @@ interface FAQProps {
 
 const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
   // stores the indices of expanded QnAs
-  console.log({faqs, faqIds})
+  log({faqs, faqIds})
   const [expandedIdx, setExpandedIdx] = useState(
     new Array(faqIds.length).fill(false)
   );
@@ -82,7 +83,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
       >
         {faqIds.map((faqId, index) => {
 
-          console.log(`Issue with faqid ${faqId} : ${faqId in faqs}`)
+          log(`Issue with faqid ${faqId} : ${faqId in faqs}`)
           return (
             <div
               className={`qna_container ${isExpanded(index) ? "expanded" : ""}`}

@@ -6,6 +6,7 @@ import { SxStyleProp, jsx, Link } from "theme-ui";
 import { ICON_COMPONENTS } from "../utils/config";
 import { IconBaseProps } from "react-icons/lib/cjs";
 import SearchPage from "./SearchPage";
+import {log} from "../utils";
 
 export interface SocialProps {
   type: string;
@@ -34,12 +35,12 @@ const SocialIcons: FC<SocialIconsProps> = ({
   let toggleFocus: {
     (e: React.SyntheticEvent<HTMLDivElement>, index: number): void;
   } = (e, index) => {
-    console.log(e, index);
+    log(e, index);
     e.stopPropagation();
     if (["blur", "mouseleave"].includes(e.type)) {
       setVisibleIconLabelIndex(-1);
     } else {
-      console.log(`Setting up index  to ${index}`);
+      log(`Setting up index  to ${index}`);
       setVisibleIconLabelIndex(index);
     }
   };
@@ -113,7 +114,7 @@ const SocialIcons: FC<SocialIconsProps> = ({
            */
         }
         let toggleFocusMod = e => toggleFocus(e, index);
-        console.log(socialProfile.type);
+        log(socialProfile.type);
         return (
           <React.Fragment>
             <div key={socialProfile.type} className="social-icon__container">

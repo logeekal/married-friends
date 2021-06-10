@@ -1,4 +1,5 @@
 import * as Cheerio from "cheerio";
+import {log} from ".";
 
 export function getFAQs(htmlString: string): number[] {
   const $ = Cheerio.load(htmlString);
@@ -21,12 +22,12 @@ export function getFAQs(htmlString: string): number[] {
 }
 
 export function stripFAQSection(htmlString: string) {
-  console.log("=== stripping");
+  log("=== stripping");
   const $ = Cheerio.load(htmlString);
 
   $("section.helpie-faq").remove();
 
-  console.log($.html());
+  log($.html());
 
   return $.html();
 }
@@ -49,11 +50,11 @@ export function replaceYTwithLiteTY(htmlString: string, title: string) {
 }
 
 export function getYoutubeVideoId(htmlString: string) {
-  console.log("Getting video id")
+  log("Getting video id")
   const $ = Cheerio.load(htmlString);
 
   const ytIframe = $("iframe.youtube-player").toArray();
-  console.log({ytIframe})
+  log({ytIframe})
 
   if (!ytIframe) {
     return null;
@@ -63,10 +64,10 @@ export function getYoutubeVideoId(htmlString: string) {
 
   if (ytIframe[0] && ytIframe[0].type === "tag") {
     let ytEmbedURL = new URL(ytIframe[0].attribs["src"]);
-    console.log({ytEmbedURL})
+    log({ytEmbedURL})
 
     let vidId = ytEmbedURL.pathname.split("/")[2];
-    console.log(`Found video ID: ${vidId}`);
+    log(`Found video ID: ${vidId}`);
     return vidId;
   }
 }

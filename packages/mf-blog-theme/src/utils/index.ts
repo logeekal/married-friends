@@ -170,4 +170,8 @@ export const convertDurationToISO8601 = (duration: IDuration): string => {
 }
 
 
-
+export function log(...args){
+  if (process.env.NODE_ENV === 'development'){
+    console.log( new Date().toUTCString(),'---',...args)
+  }
+}

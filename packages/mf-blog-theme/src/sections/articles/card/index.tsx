@@ -12,6 +12,7 @@ import {
 import {
   extractTextfromHTML,
   getFormattedDate,
+  log,
   makePostSlug,
 } from "../../../utils";
 import { Link as GatsbyLink } from "gatsby";
@@ -35,7 +36,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
 
   let date = getFormattedDate(post.date);
 
-  console.log(post);
+  log(post);
 
   const categories: Array<RecipeCourse | RecipeCuisine | Category> =
     "recipeCuisines" in post
@@ -93,6 +94,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
             src={post.featuredImage.node.sourceUrl}
             sizes="(max-width : 800px) 400px, 20vw"
             alt={`image of ${post.title}`}
+            loading="lazy"
           />
         </div>
         <div

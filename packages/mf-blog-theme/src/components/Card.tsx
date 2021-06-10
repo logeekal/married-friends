@@ -3,6 +3,7 @@
 import { jsx, SxStyleProp, SxProps, Divider } from "theme-ui";
 import React from "react";
 import DecoratedHeading from "./DecoratedHeading";
+import {log} from "../utils";
 
 type CardProps = React.PropsWithChildren<{
   heading: string;
@@ -26,7 +27,7 @@ const Card: React.FC<CardProps> = ({
   headerStyle = {},
   ...restProps
 }) => {
-  console.log(cardStyle);
+  log(cardStyle);
   return (
     <div
       className={`card-container ${className}`}
