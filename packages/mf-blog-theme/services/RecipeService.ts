@@ -21,7 +21,7 @@ export default class RecipeService {
     const GET_RECIPE_POSTS = `
       query GET_RECIPE_POSTS {
         wpgraphql {
-          recipes {
+          recipes(first: 1000) {
             nodes {
               id
               content
@@ -108,7 +108,7 @@ export default class RecipeService {
     const GET_CUISINES = `
       query GET_CUISINES {
         wpgraphql {
-          recipeCuisines {
+          recipeCuisines(first: 1000) {
             nodes {
               name
               id
@@ -140,7 +140,7 @@ export default class RecipeService {
     const GET_COURSES = `
       query GET_COURSES {
         wpgraphql {
-          recipeCourses {
+          recipeCourses(first: 1000) {
             nodes {
               name
               id

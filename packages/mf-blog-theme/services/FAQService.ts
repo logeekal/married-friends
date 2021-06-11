@@ -17,7 +17,7 @@ export default class FAQService {
     const GET_ALL_FAQ = `
       query GET_ALL_FAQ {
         wpgraphql {
-          faqs {
+          faqs(first: 1000) {
             nodes {
               id
               title
