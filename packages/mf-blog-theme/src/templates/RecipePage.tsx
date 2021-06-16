@@ -229,7 +229,6 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
               height: "auto",
               maxWidth: "1000px",
               width: "100%",
-              aspectRatio: "16/9",
               objectFit: "cover"
             }
             }}
