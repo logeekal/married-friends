@@ -152,12 +152,20 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
               sx={{
                 display: "flex",
                 gap: 0,
-                alignItems: "center"
+                alignItems: "center",
+                flexWrap: "wrap",
+                paddingRight: 1
               }}
             >
               {getTags()}
             </Box>
-            <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+              >
               <SocialShare pageTitle={post.title} pageURI={`${post.uri}`} />
             </Box>
             {/*
