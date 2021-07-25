@@ -135,7 +135,7 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
               marginBottom: 1,
               marginTop: "0px",
             }}
-            itemProp="name"
+            itemProp="name headline"
             dangerouslySetInnerHTML={{ __html: post.title }}
           />
           <div
@@ -152,12 +152,20 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
               sx={{
                 display: "flex",
                 gap: 0,
-                alignItems: "center"
+                alignItems: "center",
+                flexWrap: "wrap",
+                paddingRight: 1
               }}
             >
               {getTags()}
             </Box>
-            <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+              >
               <SocialShare pageTitle={post.title} pageURI={`${post.uri}`} />
             </Box>
             {/*
@@ -186,6 +194,7 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
                   height: "100%",
                   objectFit: "cover",
                 }}
+                itemProp="image"
                 src={post.featuredImage.node.mediaItemUrl}
                 srcSet={post.featuredImage.node.srcSet}
                 sizes="(max-width: 600px) 80vw, 50vw"
