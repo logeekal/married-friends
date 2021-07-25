@@ -9,12 +9,14 @@
     "react-dom": "^16.13.1"
   },
   "scripts": {
-    "codegen": "graphql-codegen --config ./wpgraphql_codegen.config.yaml"
+    "codegen": "graphql-codegen --config ./wpgraphql_codegen.config.yaml",
+    "test": "jest"
   },
   "dependencies": {
     "@popperjs/core": "^2.9.2",
     "@theme-ui/color": "^0.3.1",
     "@types/cheerio": "^0.22.28",
+    "@types/jest": "^26.0.24",
     "@types/theme-ui": "^0.3.2",
     "axios": "^0.21.1",
     "browser-monads": "^1.0.0",
@@ -37,6 +39,7 @@
     "gatsby-source-youtube-v2": "^1.0.1",
     "gatsby-source-youtube-v3": "^3.0.1",
     "isomorphic-fetch": "^3.0.0",
+    "jest": "^27.0.6",
     "lunr": "^2.3.8",
     "react-helmet": "5.2.1",
     "react-icons": "^3.10.0",
@@ -46,6 +49,7 @@
     "source-map-support": "^0.5.19",
     "striptags": "^3.1.1",
     "theme-ui": "^0.3.1",
+    "ts-jest": "^27.0.4",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
   },

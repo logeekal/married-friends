@@ -124,7 +124,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
             alternateColor={"accent"}
           />
         </div>
-        <Link as={GatsbyLink} to="/">
+      <Link as={GatsbyLink} to="/">
           <div
             className="header__heading"
             sx={

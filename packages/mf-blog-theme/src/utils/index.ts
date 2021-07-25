@@ -34,7 +34,7 @@ export function getFormattedDate(
     date = new Date(dateInString);
   }
 
-  let dateFormat = new Intl.DateTimeFormat("en", dateFormatOption);
+  let dateFormat = new Intl.DateTimeFormat("en", dateFormatOption as any);
 
   let formattedParts: Array<{
     type: string;
@@ -52,18 +52,6 @@ export function getFormattedDate(
   }
 
   return result;
-}
-
-export function makePostSlug(post: Post): string {
-  const baseCategory = post.categories.nodes[0];
-  let slug = `/${baseCategory.slug}`;
-  let currCategory = baseCategory;
-  while (currCategory.parent) {
-    slug += `/${currCategory.parent.node.slug}`;
-    currCategory = currCategory.parent;
-  }
-
-  return `${slug}/${post.slug}`;
 }
 
 export function genCompleteURL(
@@ -139,24 +127,28 @@ export const addDurations = (durations: IDuration[])  => {
 
 export const convertTimeToHighestUnit = (duration :IDuration): IDuration  => {
   let additionalHours : number = 0
-  let leftoverMinutes: number = 0
-  if(duration.minutes  > 60){
-    additionalHours = parseInt(duration.minutes/60);
+  let leftoverMinutes: number;
+  if(duration.minutes  >= 60){
+    additionalHours = Math.floor(duration.minutes/60);
     leftoverMinutes = duration.minutes % 60;
+  }
+
+  if(typeof leftoverMinutes === 'undefined'){
+    leftoverMinutes = duration.minutes
   }
 
   return {
     hours: duration.hours + additionalHours,
-    minutes: leftoverMinutes || duration.minutes
+    minutes: leftoverMinutes
   }
 }
 
 export const convertDurationToISO8601 = (duration: IDuration): string => {
   let result = "PT";
 
-  if(!duration.hours && !duration.minutes){
-    throw new Error(`Invalid Duration value :${JSON.stringify(duration) }`)
-  }
+  //if(!duration.hours && !duration.minutes){
+    //throw new Error(`Invalid Duration value :${JSON.stringify(duration) }`)
+  //}
 
   if(duration.hours > 0){
     result += duration.hours + "H"  

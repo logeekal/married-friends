@@ -9,7 +9,7 @@ import SocialShare from "../components/SocialShare";
 import { Recipe } from "../types/wp-graphql.types";
 import RecipeCardDetailBlock from "../components/RecipeCardDetailBlock";
 import { addDurations, getStepURL, log } from "../utils";
-import {IDuration} from "../types/common";
+import { IDuration } from "../types/common";
 
 interface RecipeCardProps {
   recipe: ICompleteRecipe[number]["content"];
@@ -17,30 +17,29 @@ interface RecipeCardProps {
 }
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
-
   const getTimeUnitName = (unit: string) => {
-    if(unit.toLowerCase().startsWith("m")) return "minutes";
-    if(unit.toLowerCase().startsWith("h")) return "hours";
-  }
+    if (unit.toLowerCase().startsWith("m")) return "minutes";
+    if (unit.toLowerCase().startsWith("h")) return "hours";
+  };
 
-  let defaultDuration :IDuration  = {hours: 0, minutes: 0};
+  let defaultDuration: IDuration = { hours: 0, minutes: 0 };
 
-  if(!recipe.prepTime || !recipe.cookTime || !recipe.prepTime){
-    console.warn("Prep time or cook time is missing")
+  if (!recipe.prepTime || !recipe.cookTime || !recipe.prepTime) {
+    console.warn("Prep time or cook time is missing");
   }
 
   let totalTime = addDurations([
     {
       ...defaultDuration,
-      [getTimeUnitName(recipe.cookTimeUnit)] : parseInt(recipe.cookTime) || 2
+      [getTimeUnitName(recipe.cookTimeUnit)]: parseInt(recipe.cookTime) || 2,
     },
     {
       ...defaultDuration,
-      [getTimeUnitName(recipe.prepTimeUnit)]: parseInt(recipe.prepTime) || 5
-    }
-  ])
+      [getTimeUnitName(recipe.prepTimeUnit)]: parseInt(recipe.prepTime) || 5,
+    },
+  ]);
 
-  log({totalTime, cook: recipe.cookTimeUnit, prep: recipe.prepTimeUnit})
+  log({ totalTime, cook: recipe.cookTimeUnit, prep: recipe.prepTimeUnit });
   return (
     <div
       className="recipe-card"
@@ -212,7 +211,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
                             lineHeight: "2rem",
                             WebkitPaddingStart: 0,
                             MozPaddingStart: "5px",
-                            marginBottom: "0px"
+                            marginBottom: "0px",
                           }}
                         >
                           <Text as="span">{`${ingredient.quantity} ${ingredient.unit} ${ingredient.ingredient}`}</Text>
@@ -267,8 +266,11 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
                       paddingInlineStart: "1rem",
                     }}
                   >
-                    {instructionSection.instruction.map(
-                      (instruction, index) => {
+                    {instructionSection.instruction
+                      .filter(
+                        (instruction) => instruction.instruction.length > 0
+                      )
+                      .map((instruction, index) => {
                         return (
                           <li
                             id={getStepURL(
@@ -296,8 +298,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
                             )}
                           </li>
                         );
-                      }
-                    )}
+                      })}
                   </ol>
                 </Box>
               );
@@ -316,7 +317,10 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
         >
           <Box className="recipe-card__reactions"> </Box>
           <Box>
-            <SocialShare pageTitle={recipePost.title} pageURI={`https://marriedfriends.in${recipePost.uri}`}  />
+            <SocialShare
+              pageTitle={recipePost.title}
+              pageURI={`https://marriedfriends.in${recipePost.uri}`}
+            />
           </Box>
         </Flex>
       </Box>
