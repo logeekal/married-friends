@@ -5,6 +5,7 @@
     "packages/*"
   ],
   "scripts": {
+    "dev": "yarn workspace mf dev",
     "start": "yarn workspace mf start",
     "deploy": "yarn workspace mf deploy",
     "build": "yarn workspace mf build",

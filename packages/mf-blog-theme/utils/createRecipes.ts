@@ -55,13 +55,15 @@ const createRecipes = async ({ actions, graphql }: CustomCreatePageArgs, allFAQs
   
   const allRecipeObj = await getAllRecipeObj({graphql, actions});
 
-  await generateRecipePages({ actions, graphql }, allFAQs);
+  const completeRecipe = await generateRecipePages({ actions, graphql }, allFAQs);
 
   await generateAllCuisinePages({ actions, graphql }, allRecipeObj);
 
   await generateAllCoursesPages({actions, graphql}, allRecipeObj)
 
   await createHomePage(actions,allRecipeObj)
+
+  return completeRecipe
 };
 
 const createHomePage =  async (actions: CustomCreatePageArgs["actions"], allRecipeObj: IRecipeObject) => {
@@ -89,7 +91,7 @@ const createHomePage =  async (actions: CustomCreatePageArgs["actions"], allReci
 const generateRecipePages = async ({
   actions,
   graphql,
-}: CustomCreatePageArgs, allFAQs: IFAQObj) => {
+}: CustomCreatePageArgs, allFAQs: IFAQObj)  => {
   log("Creating Recipe Pages");
   const recipeService = new RecipeService(graphql, actions);
 
@@ -139,6 +141,8 @@ const generateRecipePages = async ({
       },
     });
   }
+
+  return completeRecipe
 };
 
 const generateAllCuisinePages = async ({

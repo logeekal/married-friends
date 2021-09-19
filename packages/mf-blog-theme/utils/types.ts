@@ -12,11 +12,14 @@ export interface IWPGraphQL<T>{
 }
 
 
-export interface ICompleteRecipe {
-  [k: number]: {
+export interface ICompleteRecipeObj  {
     post: Recipe;
     content: IRecipeContent["data"][number]["recipe_metas"];
-  };
+  }
+
+
+export interface ICompleteRecipe {
+  [k: number]: ICompleteRecipeObj;
 }
 
 
