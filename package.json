@@ -5,11 +5,10 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "yarn workspace mf dev",
+    "fresh": "yarn workspace mf fresh",
     "start": "yarn workspace mf start",
     "deploy": "yarn workspace mf deploy",
     "build": "yarn workspace mf build",
     "serve": "yarn workspace mf serve"
-
   }
 }

@@ -34,6 +34,7 @@ export default class RecipeService {
               date
               dateGmt
               recipeId
+              databaseId
               title
               featuredImage {
                 node {
@@ -117,6 +118,7 @@ export default class RecipeService {
               uri
               slug
               description
+              databaseId
               recipes {
                 nodes {
                   id
@@ -149,6 +151,7 @@ export default class RecipeService {
               uri
               slug
               description
+              databaseId
               recipes {
                 nodes {
                   id

@@ -23,7 +23,7 @@ import useWindow from "../hooks/useWindow";
 import { SEO, SEOWithQuery } from "../components/SEO";
 import { IRecipeObject } from "../../utils/types";
 import genItemListSchema from "../components/SEO/utils/genItemListSchema";
-import {log} from "../utils";
+import { log } from "../utils";
 
 interface CategoryProps {
   pageContext: {
@@ -34,12 +34,9 @@ interface CategoryProps {
   };
 }
 
-log(`Carousel is ${Caraousel}`);
-
 function RecipeCategoryPage({
   pageContext,
 }: CategoryProps): React.ReactFragment {
-
   const { postObj, tagLine, category } = pageContext;
 
   const isHomePage = category == undefined || category == null;
@@ -72,7 +69,11 @@ function RecipeCategoryPage({
     <Layout>
       <GoToTop />
       <SEOWithQuery
-        title={`${tagLine} | Kitchen of Married Friends`}
+        title={`${
+          tagLine
+            ? tagLine + " | Kitchen of Married Friends"
+            : "Welcome to the Kitchen of Married Friends."
+        }`}
         description={
           pageContext.type === "home" ? null : pageContext.category.description
         }
@@ -82,8 +83,8 @@ function RecipeCategoryPage({
         schemas={[
           {
             type: "list",
-            schema: genItemListSchema(Object.values(postObj), tagLine)
-          }
+            schema: genItemListSchema(Object.values(postObj)),
+          },
         ]}
       />
       <div

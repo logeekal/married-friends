@@ -3,7 +3,8 @@ import * as striptags from "striptags";
 import * as lunr from "lunr";
 
 interface IRecipeSearchObj {
-  id: number;
+  id: string;
+  title: string;
   content: string;
   instructions: string;
   ingredients: string;
@@ -12,10 +13,15 @@ interface IRecipeSearchObj {
 export function genIndexableRecipe(recipes: ICompleteRecipe) {
   const allRecipes: ICompleteRecipeObj[] = Object.values(recipes);
 
-  const indexableRecipe: IRecipeSearchObj = {} as IRecipeSearchObj;
+  const indexableRecipeObj: {
+    [k: string]: IRecipeSearchObj;
+  } = {};
 
-  const allIndexableRecipes = allRecipes.map((recipe) => {
-    indexableRecipe["id"] = recipe.post.databaseId;
+  allRecipes.forEach((recipe, index) => {
+    const indexableRecipe: IRecipeSearchObj = {} as IRecipeSearchObj;
+    const recipeId = recipe.post.databaseId.toString()
+    indexableRecipe["id"] = recipeId;
+    indexableRecipe["title"] = recipe.post.title;
     indexableRecipe["content"] = sanitizeTextsForSearch(recipe.post.content);
     indexableRecipe["instructions"] = combineInstruction(
       recipe.content.recipeInstructions
@@ -23,18 +29,23 @@ export function genIndexableRecipe(recipes: ICompleteRecipe) {
     indexableRecipe["ingredients"] = combineIngredient(
       recipe.content.recipeIngredients
     );
-    return indexableRecipe;
+
+    indexableRecipeObj[recipeId] = indexableRecipe;
+
+    if (index === 0) console.log(indexableRecipeObj);
   });
-  return allIndexableRecipes;
+
+  return indexableRecipeObj;
 }
 
-export function genSearchIdx(recipes: ICompleteRecipe) {
-  const indexableRecipes = genIndexableRecipe(recipes);
+export function genSearchIdx(indexableRecipes: IRecipeSearchObj[]) {
   return lunr(function () {
     this.ref("id");
+    this.field("title");
     this.field("content");
-    //this.field("instructions");
-    //this.field("ingredients");
+    this.metadataWhitelist = ["position"];
+    this.field("instructions");
+    this.field("ingredients");
     indexableRecipes.forEach((indexableRecipe) => {
       this.add(indexableRecipe);
     });
@@ -64,7 +75,15 @@ function combineIngredient(
   return ingredients.reduce<string>((prev, current) => {
     let result = "";
     current.ingredients.forEach((item) => {
-      result = result + +item.quantity + item.unit + item.ingredient + "\n";
+      result =
+        result +
+        " " +
+        (item.quantity || "") +
+        " " +
+        (item.unit || "") +
+        " " +
+        item.ingredient +
+        "\n";
     });
 
     return prev + result;

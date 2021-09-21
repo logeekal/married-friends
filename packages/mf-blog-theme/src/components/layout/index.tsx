@@ -1,6 +1,6 @@
 /* @jsx jsx */
 import React from "react";
-import { jsx } from "theme-ui";
+import { Input, jsx } from "theme-ui";
 import Footer from "../footer";
 import HeaderSection from "../../sections/HeaderSections";
 

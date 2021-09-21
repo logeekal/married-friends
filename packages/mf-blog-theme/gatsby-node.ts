@@ -1,9 +1,10 @@
 import createRecipes, { getAllFAQs } from "./utils/createRecipes";
-import { genSearchIdx } from "./utils/genSearchIndex";
+import { genIndexableRecipe, genSearchIdx } from "./utils/genSearchIndex";
 import { ICompleteRecipe, IFAQObj } from "./utils/types";
 
 import * as fs from "fs";
 import * as path from "path";
+import {log} from "./src/utils";
 
 exports.createPages = async ({ actions, graphql }) => {
   const allFAQs: IFAQObj = await getAllFAQs({ graphql, actions });
@@ -12,7 +13,9 @@ exports.createPages = async ({ actions, graphql }) => {
     allFAQs
   );
 
-  const recipeIndex = genSearchIdx(allRecipeObj);
+  const indexableRecipesObj = genIndexableRecipe(allRecipeObj)
+
+  const recipeIndex = genSearchIdx(Object.values(indexableRecipesObj));
 
   const indexPath = path.join("netlify", "functions", "assets");
 
@@ -20,8 +23,12 @@ exports.createPages = async ({ actions, graphql }) => {
     fs.mkdirSync(indexPath);
   }
 
+  log("Writing Recipes and indices")
+
+  fs.writeFileSync(path.join(indexPath, "recipes.json"), JSON.stringify(indexableRecipesObj))
+
   fs.writeFileSync(
-    path.join(indexPath, "recipeIndex.txt"),
+    path.join(indexPath, "recipeIndex.json"),
     JSON.stringify(recipeIndex)
   );
 };
