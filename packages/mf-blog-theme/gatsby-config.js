@@ -20,7 +20,7 @@ module.exports = {
       options: {
         typeName: "WPGraphQL",
         fieldName: "wpgraphql",
-        url: "https://backend.marriedfriends.in/graphql",
+        url: `${process.env.MF_HOST}/graphql`,
       },
     },
     {

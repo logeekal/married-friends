@@ -6,15 +6,17 @@ import {
 import { IRecipeContent, IWPGraphQL } from "../utils/types";
 import axios from "axios";
 
-const host = `https://backend.marriedfriends.in`;
 
 export default class RecipeService {
   graphql: any;
   actions: any;
+  host: string;
 
   constructor(graphql: any, actions: any) {
     this.graphql = graphql;
     this.actions = actions;
+    this.host = process.env.MF_HOST;
+    if (!this.host) throw new Error(`Backend host is empty : ${this.host}`)
   }
 
   getAllRecipePosts = async (): Promise<Array<Recipe>> => {
@@ -87,7 +89,7 @@ export default class RecipeService {
      *});
      */
     const response = await axios.get(
-      `${host}/wp-json/deliciousrecipe/v1/recipe?per_page=100`,
+      `${this.host}/wp-json/deliciousrecipe/v1/recipe?per_page=100`,
       {
         auth: {
           username: process.env.USERNAME,
