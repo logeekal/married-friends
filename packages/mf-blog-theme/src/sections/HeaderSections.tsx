@@ -34,7 +34,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({
   const [isHeaderSticky, setIsHeaderSticky] = React.useState(false);
   const { width: windowWidth, height } = useWindowDims();
   const [menuVisible, setMenuVisible] = React.useState(false);
-  const keyPressed = useKeyCode(menuVisible);
+  const {key: keyPressed} = useKeyCode(menuVisible);
   log(`windowwidth`, windowWidth);
 
   React.useEffect(() => {

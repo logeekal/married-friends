@@ -36,8 +36,6 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
 
   let date = getFormattedDate(post.date);
 
-  log(post);
-
   const categories: Array<RecipeCourse | RecipeCuisine | Category> =
     "recipeCuisines" in post
       ? [(post as Recipe).recipeCuisines.nodes[0]]

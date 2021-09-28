@@ -1,6 +1,6 @@
 import { Post } from "../types/wp-graphql.types";
 import { document } from "browser-monads";
-import { IDuration } from '../types/common'
+import { IDuration } from "../types/common";
 
 let defaultDateFormatOption = {
   day: "2-digit",
@@ -103,67 +103,69 @@ export const getStepURL = (
   return stepURL;
 };
 
-
-export const addDurations = (durations: IDuration[])  => {
-
-  const totalDuration : IDuration = {
+export const addDurations = (durations: IDuration[]) => {
+  const totalDuration: IDuration = {
     hours: 0,
-    minutes: 0
- 
-  }
+    minutes: 0,
+  };
 
-  console.log('Adding durations : ', durations)
+  console.log("Adding durations : ", durations);
 
-  durations.forEach(duration => {
+  durations.forEach((duration) => {
     totalDuration.hours += duration.hours;
     totalDuration.minutes += duration.minutes;
-  })
+  });
 
+  return convertTimeToHighestUnit(totalDuration);
+};
 
-  return convertTimeToHighestUnit(totalDuration)
-
-}
-
-
-export const convertTimeToHighestUnit = (duration :IDuration): IDuration  => {
-  let additionalHours : number = 0
+export const convertTimeToHighestUnit = (duration: IDuration): IDuration => {
+  let additionalHours: number = 0;
   let leftoverMinutes: number;
-  if(duration.minutes  >= 60){
-    additionalHours = Math.floor(duration.minutes/60);
+  if (duration.minutes >= 60) {
+    additionalHours = Math.floor(duration.minutes / 60);
     leftoverMinutes = duration.minutes % 60;
   }
 
-  if(typeof leftoverMinutes === 'undefined'){
-    leftoverMinutes = duration.minutes
+  if (typeof leftoverMinutes === "undefined") {
+    leftoverMinutes = duration.minutes;
   }
 
   return {
     hours: duration.hours + additionalHours,
-    minutes: leftoverMinutes
-  }
-}
+    minutes: leftoverMinutes,
+  };
+};
 
 export const convertDurationToISO8601 = (duration: IDuration): string => {
   let result = "PT";
 
   //if(!duration.hours && !duration.minutes){
-    //throw new Error(`Invalid Duration value :${JSON.stringify(duration) }`)
+  //throw new Error(`Invalid Duration value :${JSON.stringify(duration) }`)
   //}
 
-  if(duration.hours > 0){
-    result += duration.hours + "H"  
+  if (duration.hours > 0) {
+    result += duration.hours + "H";
   }
 
-  if(duration.minutes > 0) {
-    result += duration.minutes + "M"
+  if (duration.minutes > 0) {
+    result += duration.minutes + "M";
   }
 
-  return result
+  return result;
+};
+
+export function log(...args) {
+  if (process.env.NODE_ENV === "development") {
+    console.log(new Date().toUTCString(), "---", ...args);
+  }
 }
 
-
-export function log(...args){
-  if (process.env.NODE_ENV === 'development'){
-    console.log( new Date().toUTCString(),'---',...args)
+export function getURLWithEndpoint(functionName: string) {
+  const path="/.netlify/functions"
+  if (process.env.NODE_ENV === "development") {
+    return `http://localhost:9999${path}/${functionName}`;
   }
+
+  return `${path}/${functionName}`;
 }

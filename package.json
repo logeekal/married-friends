@@ -6,9 +6,12 @@
   ],
   "scripts": {
     "fresh": "yarn workspace mf fresh",
-    "start": "yarn workspace mf start",
+    "start": "concurrently \"yarn workspace mf start\"  \"netlify functions:serve \"",
     "deploy": "yarn workspace mf deploy",
     "build": "yarn workspace mf build",
     "serve": "yarn workspace mf serve"
+  },
+  "dependencies": {
+    "concurrently": "^6.2.2"
   }
 }

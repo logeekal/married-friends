@@ -5,7 +5,8 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "esModuleInterOp": true,
-    "isolatedModules": true
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true
   }
 }

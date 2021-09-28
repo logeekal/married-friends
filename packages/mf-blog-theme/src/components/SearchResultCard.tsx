@@ -14,7 +14,8 @@ const SearchResultCard: FC<SearchResultCardProps> = props => {
   const { post } = props;
   if(!post) return null;
   console.log("SearchResult : ", post);
-  let { sourceUrl } = post.featuredImage
+
+  let { sourceUrl } = post.featuredImage 
     ? post.featuredImage.node.mediaDetails.sizes.find(size => {
         return size.name === "thumbnail";
       })
@@ -39,7 +40,8 @@ const SearchResultCard: FC<SearchResultCardProps> = props => {
               height: "auto"
             }
           },
-          "@media only screen and (max-Width: 700px)": {
+          /* disabling image for now */
+          "@media only screen and (max-Width: 7000px)": {
             ".search__result__image": {
               display: "none"
             }
@@ -71,11 +73,13 @@ const SearchResultCard: FC<SearchResultCardProps> = props => {
         } as SxStyleProp
       }
     >
-      <div className="search__result__image">
-        <Link href={post.slug} sx={{ color: "primary" }}>
-          <img src={sourceUrl} alt={post.title} />
-        </Link>
-      </div>
+      {/*
+        *<div className="search__result__image">
+        *  <Link href={post.slug} sx={{ color: "primary" }}>
+        *    <img src={sourceUrl} alt={post.title} />
+        *  </Link> 
+        *</div>
+        */}
       <div className="search__result__details">
         <Link href={post.slug} sx={{ color: "primary" }}>
           <h2

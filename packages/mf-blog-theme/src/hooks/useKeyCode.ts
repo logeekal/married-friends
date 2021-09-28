@@ -1,32 +1,47 @@
 import React from "react";
-import {log} from "../utils";
+import { log } from "../utils";
 import useWindow from "./useWindow";
 
-export default function useKeyCode(switchCondition: boolean): string {
+interface KeyCodeResult {
+  key: string;
+  ctrl: boolean;
+  alt: boolean;
+}
+
+export default function useKeyCode(switchCondition: boolean): KeyCodeResult {
   const hasWindow = useWindow()[0];
   const [keyPressed, setKeyPressed] = React.useState("");
+  const [isAltKey, setIsAltKey] = React.useState(false);
+  const [isCtrlKey, setIsCtrlKey] = React.useState(false);
 
   React.useEffect(() => {
     const cleanup = () => {
-      hasWindow && window.removeEventListener("keyup", keyCodeListener);
+      hasWindow && window.removeEventListener("keydown", keyCodeListener);
     };
 
     const keyCodeListener = (e: KeyboardEvent) => {
-      log("Key Pressed ---", e.keyCode, e.key);
-      setKeyPressed(e.key);
+      console.log("Key Pressed ---", e.keyCode, e.key, e);
+      if (e.ctrlKey || e.altKey || e.shiftKey || e.key === "Escape") {
+        e.preventDefault();
+        setKeyPressed(e.key);
+        setIsCtrlKey(e.ctrlKey);
+        setIsAltKey(e.ctrlKey);
+      } else {
+        console.log("Key Pressed --- doing nothing");
+      }
     };
 
     if (switchCondition) {
-      hasWindow && window.addEventListener("keyup", keyCodeListener);
+      hasWindow && window.addEventListener("keydown", keyCodeListener);
     } else {
       setKeyPressed("");
       cleanup();
     }
 
     return cleanup;
-  }, [switchCondition]);
+  }, [switchCondition, hasWindow]);
 
-  return keyPressed;
+  return { key: keyPressed, ctrl: isCtrlKey, alt: isAltKey };
 }
 
 const KEY_CODES = {
@@ -211,5 +226,5 @@ const KEY_CODES = {
   "244": "kanji",
   "251": "unlock trackpad (Chrome/Edge)",
   "255": "toggle touchpad",
-  "Key Code": "Key"
+  "Key Code": "Key",
 };

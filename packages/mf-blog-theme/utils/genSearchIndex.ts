@@ -8,6 +8,8 @@ interface IRecipeSearchObj {
   content: string;
   instructions: string;
   ingredients: string;
+  excerpt: string;
+  uri: string;
 }
 
 export function genIndexableRecipe(recipes: ICompleteRecipe) {
@@ -22,6 +24,7 @@ export function genIndexableRecipe(recipes: ICompleteRecipe) {
     const recipeId = recipe.post.databaseId.toString()
     indexableRecipe["id"] = recipeId;
     indexableRecipe["title"] = recipe.post.title;
+    indexableRecipe["excerpt"] = recipe.post.excerpt;
     indexableRecipe["content"] = sanitizeTextsForSearch(recipe.post.content);
     indexableRecipe["instructions"] = combineInstruction(
       recipe.content.recipeInstructions
@@ -29,6 +32,7 @@ export function genIndexableRecipe(recipes: ICompleteRecipe) {
     indexableRecipe["ingredients"] = combineIngredient(
       recipe.content.recipeIngredients
     );
+    indexableRecipe["uri"] = recipe.post.uri
 
     indexableRecipeObj[recipeId] = indexableRecipe;
 

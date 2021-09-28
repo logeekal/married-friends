@@ -24,6 +24,7 @@ import { SEO, SEOWithQuery } from "../components/SEO";
 import { IRecipeObject } from "../../utils/types";
 import genItemListSchema from "../components/SEO/utils/genItemListSchema";
 import { log } from "../utils";
+import SearchBox from "../sections/SearchBox";
 
 interface CategoryProps {
   pageContext: {
@@ -97,7 +98,6 @@ function RecipeCategoryPage({
           margin: "0 auto",
         }}
       >
-        <Box className={`home__search ${isHomePage ? "" : "category"}`}></Box>
         <div
           className="home-left__container"
           sx={{
@@ -111,6 +111,9 @@ function RecipeCategoryPage({
             },
           }}
         >
+          <Box className={`home__search ${isHomePage ? "" : "category"}`}>
+            <SearchBox />
+          </Box>
           <Grid postIds={postIds} postObj={postObj} />
         </div>
       </div>
