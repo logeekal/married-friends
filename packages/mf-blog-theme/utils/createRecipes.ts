@@ -161,7 +161,7 @@ const generateAllCuisinePages = async ({
 
   allCuisines.forEach((cuisine) => {
     console.log(`Create Cuisins : ${cuisine.uri}`);
-    if(cuisine.recipes.nodes.length === 0){
+    if(cuisine?.recipes?.nodes?.length === 0){
       console.log(`Oops. No recipe found for cuisine : ${cuisine.name}. Not creating page`)
       return;
     }
@@ -200,7 +200,7 @@ const generateAllCoursesPages = async ({
 
   allCourses.forEach((course) => {
     console.log(`Create Courses : ${course.uri}`);
-    if(course.recipes.nodes.length === 0){
+    if(course?.recipes?.nodes?.length === 0){
 
       console.log(`Oops. No recipe found for course : ${course.name}. Not creating page`)
       return;

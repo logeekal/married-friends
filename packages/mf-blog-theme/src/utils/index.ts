@@ -162,10 +162,20 @@ export function log(...args) {
 }
 
 export function getURLWithEndpoint(functionName: string) {
-  const path="/.netlify/functions"
+  const path = "/.netlify/functions";
   if (process.env.NODE_ENV === "development") {
     return `http://localhost:9999${path}/${functionName}`;
   }
 
   return `${path}/${functionName}`;
 }
+
+//export function debounce (fn: any, timer: number)  {
+  //let runIdMain;
+  //return function () {
+    //const runId = setTimeout(function(){
+      //fn.call(...Array.from(arguments));
+    //}, timer);
+    //runIdMain = runId
+  //};
+//};

@@ -1,11 +1,11 @@
-function log(msg) {
+export function log(msg: string) {
   console.log("*******************************");
   console.log(`************ ${msg} ***********`);
   console.log("*******************************");
 }
 
-function array2Obj(arr, keyAttr) {
-  let obj = {};
+export function array2Obj(arr: Array<Record<string, string>>, keyAttr: string) {
+  let obj = {} as any;
   for (let item of arr) {
     obj[item[keyAttr]] = item;
   }
@@ -13,7 +13,7 @@ function array2Obj(arr, keyAttr) {
   return obj;
 }
 
-function cleanContentURLS(content) {
+export function cleanContentURLS(content: string) {
   if(!content) return;
   return content.replace(/((http(s)?):\/\/)?marriedfriends.in\/blog/g, "");
 }
@@ -24,8 +24,4 @@ function cleanContentURLS(content) {
  *}
  */
 
-module.exports = {
-  log,
-  array2Obj,
-  cleanContentURLS
-};
+

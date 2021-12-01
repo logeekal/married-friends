@@ -15,7 +15,7 @@ export default class RecipeService {
   constructor(graphql: any, actions: any) {
     this.graphql = graphql;
     this.actions = actions;
-    this.host = process.env.MF_HOST;
+    this.host = process.env.MF_HOST! ;
     if (!this.host) throw new Error(`Backend host is empty : ${this.host}`)
   }
 
@@ -93,8 +93,8 @@ export default class RecipeService {
       `${this.host}/wp-json/deliciousrecipe/v1/recipe?per_page=100`,
       {
         auth: {
-          username: process.env.USERNAME,
-          password: process.env.TOKEN,
+          username: process.env.USERNAME!,
+          password: process.env.TOKEN!,
         },
       }
     );
