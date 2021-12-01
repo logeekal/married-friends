@@ -6,7 +6,7 @@ import {
 import { IRecipeContent, IWPGraphQL } from "../utils/types";
 import axios from "axios";
 
-
+const pagesHeaderName = "x-wp-totalpages"
 export default class RecipeService {
   graphql: any;
   actions: any;
@@ -16,7 +16,7 @@ export default class RecipeService {
     this.graphql = graphql;
     this.actions = actions;
     this.host = process.env.MF_HOST;
-    if (!this.host) throw new Error(`Backend host is empty : ${this.host}`)
+    if (!this.host) throw new Error(`Backend host is empty : ${this.host}`);
   }
 
   getAllRecipePosts = async (): Promise<Array<Recipe>> => {
@@ -88,18 +88,35 @@ export default class RecipeService {
      *  pass: process.env.TOKEN,
      *});
      */
-    const response = await axios.get(
-      `${this.host}/wp-json/deliciousrecipe/v1/recipe?per_page=100`,
-      {
+
+    const recipeURL = `${this.host}/wp-json/deliciousrecipe/v1/recipe?per_page=100`;
+
+    const getRecipePage = async (url: string) => {
+      return await axios.get<IRecipeContent>(url, {
         auth: {
           username: process.env.USERNAME,
           password: process.env.TOKEN,
         },
-      }
-    );
+      });
+    };
+    const response = await getRecipePage(recipeURL);
 
     if ([200, 201].includes(response.status)) {
-      const recipeContent: IRecipeContent = await response.data;
+      const recipeContent: IRecipeContent = response.data;
+
+      if (pagesHeaderName in response.headers) {
+        // fetch further pages
+        let totalPages = parseInt(response.headers[pagesHeaderName]);
+        if (totalPages == 1) return recipeContent;
+        let counter = 1;
+        while (counter != totalPages) {
+          counter++;
+          const newRecipePage = await getRecipePage(
+            `${recipeURL}&page=${counter}`
+          );
+          recipeContent.data.push(...newRecipePage.data.data);
+        }
+      }
       return recipeContent;
     } else {
       throw Error("Error Occured in getRecipeContent : " + response);
