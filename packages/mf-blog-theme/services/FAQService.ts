@@ -1,8 +1,9 @@
 import { Faq } from "../src/types/wp-graphql.types";
-import { IFAQRestContent, IWPGraphQL } from '../utils/types'
-import axios from 'axios'
+import { IFAQRestContent, IWPGraphQL } from "../utils/types";
+import axios from "axios";
 
-const host = `https://www.backend-primary.marriedfriends.in`;
+
+const pagesHeaderName = "x-wp-totalpages"
 
 export default class FAQService {
   graphql: any;
@@ -13,7 +14,7 @@ export default class FAQService {
     this.graphql = graphql;
     this.actions = actions;
     this.host = process.env.MF_HOST;
-    if (!this.host) throw new Error(`Backend host is empty : ${this.host}`)
+    if (!this.host) throw new Error(`Backend host is empty : ${this.host}`);
   }
 
   getAllFAQs = async (): Promise<Array<Faq>> => {
@@ -32,21 +33,39 @@ export default class FAQService {
       }
     `;
 
-    const response:  IWPGraphQL<{
+    const response: IWPGraphQL<{
       faqs: { nodes: Array<Faq> };
     }> = await this.graphql(GET_ALL_FAQ);
 
     return response.data.wpgraphql.faqs.nodes;
-
   };
 
+  getAllFAQREST = async (): Promise<Array<IFAQRestContent>> => {
+    const faqURL = `${this.host}/wp-json/wp/v2/helpie_faq?per_page=100`;
 
-  getAllFAQREST =  async(): Promise<Array<IFAQRestContent>> => {
-    
-    const res = await axios.get<Array<IFAQRestContent>>(`${this.host}/wp-json/wp/v2/helpie_faq?per_page=100`);
+    const res = await axios.get<Array<IFAQRestContent>>(faqURL);
+    console.log(res.headers);
 
-    const faqs = res.data
+    let faqs = res.data;
+
+    console.log(`Got ${faqs.length} faqs in first iteration`);
+
+    if (pagesHeaderName in res.headers) {
     
-    return faqs
-  }
+      let totalPages = parseInt(res.headers[pagesHeaderName]);
+      console.log({totalPages})
+      if (totalPages == 1) return faqs;
+      let counter = 1;
+      while (counter != totalPages) {
+        counter++;
+        const newPage = await axios.get<Array<IFAQRestContent>>(
+          `${faqURL}&page=${counter}`
+        );
+        console.log(`Got ${newPage.data.length} faqs in ${counter} iteration`);
+        faqs.push(...newPage.data);
+      }
+    }
+
+    return faqs;
+  };
 }

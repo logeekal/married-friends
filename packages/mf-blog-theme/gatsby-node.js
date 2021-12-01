@@ -1,12 +1,3 @@
-'use strict';
+const  { useGatsbyConfig } = require("gatsby-plugin-ts-config")
 
-require('source-map-support').install();
-try{
-
-require('ts-node').register();
-}catch(err){
-  console.error(err)
-}
-
-
-module.exports= require('./gatsby-node.ts');
+module.exports = useGatsbyConfig(() => require("./gatsby-node.ts"), {})
