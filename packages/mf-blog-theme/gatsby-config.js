@@ -77,10 +77,9 @@ module.exports = {
           {
             serialize: ({query: { site, wpgraphql }}) => {
               console.log("****************")
-              console.log("Serializing RSS Feed", wpgraphql)
+              console.log("Serializing RSS Feed")
               console.log("****************")
               return wpgraphql.recipes.edges.map(edge => {
-                console.log(edge)
                 return Object.assign({}, edge.node, {
                   description: edge.node.excerpt,
                   guid: edge.node.databaseId,

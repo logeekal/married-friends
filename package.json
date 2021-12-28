@@ -9,6 +9,6 @@
     "deploy": "yarn workspace mf deploy",
     "build": "yarn workspace mf build",
     "serve": "yarn workspace mf serve"
-
-  }
+  },
+  "dependencies": {}
 }
