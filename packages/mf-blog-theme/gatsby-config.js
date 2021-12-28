@@ -59,5 +59,59 @@ module.exports = {
         timeout: 3500,
       },
     },
+    {
+      resolve: "gatsby-plugin-feed",
+      options: {
+        query: `
+        {
+          site {
+            siteMetadata {
+              title 
+              description
+              siteUrl
+            }
+          }
+        }
+        `,
+        feeds: [
+          {
+            serialize: ({query: { site, wpgraphql }}) => {
+              console.log("****************")
+              console.log("Serializing RSS Feed", wpgraphql)
+              console.log("****************")
+              return wpgraphql.recipes.edges.map(edge => {
+                console.log(edge)
+                return Object.assign({}, edge.node, {
+                  description: edge.node.excerpt,
+                  guid: edge.node.databaseId,
+                  date: edge.node.date,
+                  url: site.siteMetadata.siteUrl + edge.node.uri,
+                  //custom_elements: [{ "content:encoded": edge.node.content }]
+                })
+              })
+            },
+            query: `
+              {
+                wpgraphql {
+                  recipes(first: 1000, where: {orderby: {field: DATE, order: DESC}}) {
+                    edges {
+                      node {
+                        databaseId
+                        date
+                        title
+                        excerpt
+                        uri
+                      }
+                    }
+                  }
+                }
+              }
+            `,
+            output: "/rss.xml",
+            title: "Feed from the Kitchen of Married Friends"
+          },
+        ]
+      }
+    }
   ],
 };
