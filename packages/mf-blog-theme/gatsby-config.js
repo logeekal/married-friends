@@ -7,6 +7,7 @@ require("dotenv").config({
 module.exports = {
   plugins: [
     "gatsby-plugin-theme-ui",
+    "gatsby-plugin-emotion",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sitemap",
     {
