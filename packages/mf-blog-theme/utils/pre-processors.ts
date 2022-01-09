@@ -1,5 +1,5 @@
 import * as Cheerio from "cheerio";
-import {log} from ".";
+import {log} from "./utils";
 
 export function getFAQs(htmlString: string): number[] {
   const $ = Cheerio.load(htmlString);
@@ -17,17 +17,15 @@ export function getFAQs(htmlString: string): number[] {
       return parseInt(ques.attribs["data-id"].split("-")[1]);
     }
   });
+  log(`FAQ IDs : ${faqIds}`)
 
   return faqIds;
 }
 
 export function stripFAQSection(htmlString: string) {
-  log("=== stripping");
   const $ = Cheerio.load(htmlString);
 
   $("section.helpie-faq").remove();
-
-  log($.html());
 
   return $.html();
 }
@@ -54,7 +52,6 @@ export function getYoutubeVideoId(htmlString: string) {
   const $ = Cheerio.load(htmlString);
 
   const ytIframe = $("iframe.youtube-player").toArray();
-  log({ytIframe})
 
   if (!ytIframe) {
     return null;
@@ -64,7 +61,6 @@ export function getYoutubeVideoId(htmlString: string) {
 
   if (ytIframe[0] && ytIframe[0].type === "tag") {
     let ytEmbedURL = new URL(ytIframe[0].attribs["src"]);
-    log({ytEmbedURL})
 
     let vidId = ytEmbedURL.pathname.split("/")[2];
     log(`Found video ID: ${vidId}`);

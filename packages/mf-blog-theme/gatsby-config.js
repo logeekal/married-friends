@@ -1,8 +1,8 @@
 const path = require("path");
 
 require("dotenv").config({
-    path: `.env.${process.env.NODE_ENV}`,
-})
+  path: `.env.${process.env.NODE_ENV}`,
+});
 
 module.exports = {
   plugins: [
@@ -10,10 +10,16 @@ module.exports = {
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sitemap",
     {
+      resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
+      options: {
+        analyzerMode: "static",
+      },
+    },
+    {
       resolve: "gatsby-plugin-google-gtag",
       options: {
-        trackingIds: ["UA-24329901-2"]
-      }
+        trackingIds: ["UA-24329901-2"],
+      },
     },
     {
       resolve: "gatsby-source-graphql",
@@ -48,8 +54,8 @@ module.exports = {
       options: {
         channelId: ["UCnuR03UvNf4t3WQosG1qPAA"],
         apiKey: process.env.YT_API_KEY,
-        maxVideos: 20
-      }
+        maxVideos: 20,
+      },
     },
     {
       resolve: "gatsby-plugin-mailchimp",
@@ -75,19 +81,19 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({query: { site, wpgraphql }}) => {
-              console.log("****************")
-              console.log("Serializing RSS Feed")
-              console.log("****************")
-              return wpgraphql.recipes.edges.map(edge => {
+            serialize: ({ query: { site, wpgraphql } }) => {
+              console.log("****************");
+              console.log("Serializing RSS Feed");
+              console.log("****************");
+              return wpgraphql.recipes.edges.map((edge) => {
                 return Object.assign({}, edge.node, {
                   description: edge.node.excerpt,
                   guid: edge.node.databaseId,
                   date: edge.node.date,
                   url: site.siteMetadata.siteUrl + edge.node.uri,
                   //custom_elements: [{ "content:encoded": edge.node.content }]
-                })
-              })
+                });
+              });
             },
             query: `
               {
@@ -107,10 +113,10 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title: "Feed from the Kitchen of Married Friends"
+            title: "Feed from the Kitchen of Married Friends",
           },
-        ]
-      }
-    }
+        ],
+      },
+    },
   ],
 };

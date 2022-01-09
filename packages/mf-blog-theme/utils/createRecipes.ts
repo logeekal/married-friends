@@ -1,10 +1,11 @@
 import RecipeService from "../services/RecipeService";
-import { Recipe } from "../src/types/wp-graphql.types";
+import { Post, Recipe } from "../src/types/wp-graphql.types";
 import { ICompleteRecipe, IFAQObj, IRecipeObject } from "./types";
 const path = require("path");
 import { Actions } from "gatsby";
 import { log } from "./utils";
 import FAQService from "../services/FAQService";
+import {getFAQs, getYoutubeVideoId, replaceYTwithLiteTY, stripFAQSection} from "./pre-processors";
 
 console.log("Loading Evn file");
 require("dotenv").config({
@@ -19,7 +20,6 @@ interface CustomCreatePageArgs {
 
 
 export const getAllRecipeObj = async({graphql, actions} :CustomCreatePageArgs) => {
-
   const recipeService = new RecipeService(graphql, actions);
   
   const allRecipesPosts = await recipeService.getAllRecipePosts();
@@ -31,7 +31,6 @@ export const getAllRecipeObj = async({graphql, actions} :CustomCreatePageArgs) =
   })
 
   return allRecipeObj;
-
 }
 
 export const getAllFAQs = async ({ graphql, actions }: CustomCreatePageArgs) => {
@@ -125,17 +124,24 @@ const generateRecipePages = async ({
 
   for (const key in completeRecipe) {
     const recipeContent = completeRecipe[key];
+
     if (!("content" in recipeContent)) {
       //if any of the recipe does not have recipeData, remove do not create corresponding page.
       console.log(`No Recipe Data found for recipe Id : ${key}`);
     }
+
+    const recipeFAQIds = getFAQs(recipeContent.post.content)
+    const recipeVideoId = getYoutubeVideoId(recipeContent.post.content)
+    recipeContent.post = preProcessRecipeContent(recipeContent.post)
     console.log("creating Page : " + recipeContent.post.uri);
     createPage({
       path: recipeContent.post.uri,
       component: template,
       context: {
         data: recipeContent,
-        faqs: allFAQs
+        faqs: allFAQs,
+        faqIds: recipeFAQIds,
+        videoId: recipeVideoId
       },
     });
   }
@@ -222,4 +228,10 @@ const generateAllCoursesPages = async ({
  *  await generateAllCuisinePages({actions, graphql});
  *};
  */
+
+const preProcessRecipeContent = (post: ICompleteRecipe[0]["post"]) => {
+  post.content = replaceYTwithLiteTY(stripFAQSection(post.content), post.title)
+  return post
+} 
+
 export default createRecipes;
