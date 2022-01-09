@@ -25,7 +25,6 @@ export interface RecipePageProps {
     faqs: IFAQObj;
     faqIds: Array<number>;
     videoId: string;
-
   };
 }
 
@@ -47,9 +46,7 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
   
   const postContent = post.content
 
-  log({recipe, allFAQObject, post, faqIds, recipeVideoId})
-
-  //log({ postContent });
+  //log({recipe, allFAQObject, post, faqIds, recipeVideoId})
 
   let date = getFormattedDate(post.date);
   const category = post.recipeCuisines.nodes[0];
