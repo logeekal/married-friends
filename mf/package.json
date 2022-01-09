@@ -4,10 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@netlify/functions": "^0.7.2",
     "axios": "^0.21.2",
     "babel-preset-gatsby": "^1.5.0",
     "gatsby": "3.1.2",
+    "gatsby-plugin-emotion": "^7.4.0",
     "global": "^4.4.0",
     "mf-blog-theme": "*",
     "netlify-cli": "^3.29.17",
