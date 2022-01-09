@@ -8,7 +8,6 @@ import {
   ifWindow,
   log,
 } from "../../../utils";
-import { getYoutubeVideoId } from "../../../utils/modHTMLContent";
 import striptags from "striptags";
 import { IDuration } from "../../../types/common";
 
@@ -21,7 +20,8 @@ type RecipeStep = Array<{
 
 const genRecipeSchema = (
   post: Recipe,
-  recipe: IRecipeContent["data"][number]["recipe_metas"]
+  recipe: IRecipeContent["data"][number]["recipe_metas"],
+  recipeVideoId: string
 ) => {
   log("Generating Recipe Schema for  :  " + post.title);
   let videoId = null;
@@ -29,7 +29,7 @@ const genRecipeSchema = (
   if (videoGallery && videoGallery.vidID) {
     videoId = videoGallery.vidID;
   } else {
-    videoId = getYoutubeVideoId(post.content);
+    videoId = recipeVideoId;
   }
 
   let prepTime: IDuration = {

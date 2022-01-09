@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Box, Divider, Flex, Heading, jsx, Text } from "theme-ui";
 import { IFAQObj } from "../../utils/types";
-import {log} from "../utils";
+import { log } from "../utils";
 
 interface FAQProps {
   faqs: IFAQObj;
@@ -12,7 +12,7 @@ interface FAQProps {
 
 const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
   // stores the indices of expanded QnAs
-  log({faqs, faqIds})
+  log({ faqs, faqIds });
   const [expandedIdx, setExpandedIdx] = useState(
     new Array(faqIds.length).fill(false)
   );
@@ -53,7 +53,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
       >
         <img
           src="/fork_white.png"
-          alt='frequently asked questions'
+          alt="frequently asked questions"
           style={{
             width: "100%",
             height: "auto",
@@ -82,8 +82,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
         }}
       >
         {faqIds.map((faqId, index) => {
-
-          log(`Issue with faqid ${faqId} : ${faqId in faqs}`)
+          log(`Issue with faqid ${faqId} : ${faqId in faqs}`);
           return (
             <div
               className={`qna_container ${isExpanded(index) ? "expanded" : ""}`}
@@ -135,11 +134,17 @@ const FAQ: React.FC<FAQProps> = ({ faqs, faqIds }) => {
                 <div
                   className="qna__answer"
                   itemProp="text"
-                  dangerouslySetInnerHTML={{ __html: faqs[faqId].content.rendered }}
+                  dangerouslySetInnerHTML={{
+                    __html: faqs[faqId].content.rendered,
+                  }}
                   sx={{
                     fontWeight: 200,
                     marginTop: "0px",
                     marginBottom: "0px",
+                    a: {
+                      color: "bgPrimary",
+                      textDecoration: "underline",
+                    },
                     "p:first-child": {
                       marginBottom: "0px",
                       marginTop: [0, 1, 1],

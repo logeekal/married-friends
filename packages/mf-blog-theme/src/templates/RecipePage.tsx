@@ -14,11 +14,6 @@ import * as striptags from "striptags";
 import { Link as GastbyLink } from "gatsby";
 import { ICompleteRecipe, IFAQObj } from "../../utils/types";
 import RecipeCard from "../sections/RecipeCard";
-import {
-  getFAQs,
-  replaceYTwithLiteTY,
-  stripFAQSection,
-} from "../utils/modHTMLContent";
 import FAQ from "../sections/FAQ";
 import useWindow from "../hooks/useWindow";
 import SocialShare from "../components/SocialShare";
@@ -28,10 +23,14 @@ export interface RecipePageProps {
   pageContext: {
     data: ICompleteRecipe[number];
     faqs: IFAQObj;
+    faqIds: Array<number>;
+    videoId: string;
   };
 }
 
 const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
+
+  console.log({pageContext})
 
   const [hasWindow] = useWindow();
 
@@ -41,13 +40,13 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
 
   const { faqs: allFAQObject } = pageContext;
 
-  const faqIds = getFAQs(post.content);
+  const faqIds = pageContext.faqIds || [];
 
-  const postContent = replaceYTwithLiteTY(stripFAQSection(post.content), post.title);
+  const recipeVideoId = pageContext.videoId
+  
+  const postContent = post.content
 
-  log({recipe, allFAQObject, post})
-
-  //log({ postContent });
+  //log({recipe, allFAQObject, post, faqIds, recipeVideoId})
 
   let date = getFormattedDate(post.date);
   const category = post.recipeCuisines.nodes[0];
@@ -105,7 +104,7 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
         schemas={[
           {
             type: "recipe",
-            schema: genRecipeSchema(post as Recipe, recipe),
+            schema: genRecipeSchema(post as Recipe, recipe, pageContext.videoId),
           },
         ]}
       />
