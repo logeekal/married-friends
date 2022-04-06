@@ -98,7 +98,7 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
       <SEOWithQuery
         title={`${post.title} - Kitchen of Married Friends` }
         description={striptags(post.excerpt)}
-        image={post.featuredImage?.node?.mediaItemUrl}
+        image={post.featuredImage?.node?.sourceUrl || post.featuredImage?.node?.mediaItemUrl}
         isArticle={true}
         url=""
         schemas={[
