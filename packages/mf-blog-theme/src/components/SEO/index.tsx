@@ -90,7 +90,7 @@ export function SEO({
                 />
                 <meta
                     property="og:image"
-                    content={image || siteMetadata.image}
+                    content={  image || siteMetadata.image}
                 />
                 <meta
                     property="og:image:alt"
