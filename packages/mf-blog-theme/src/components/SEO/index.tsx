@@ -75,7 +75,7 @@ export function SEO({
                 {/* Open Graph Tags */}
                 <meta
                     property="og:url"
-                    content={url || siteMetadata.canonicalUrl}
+                    content={siteMetadata.canonicalUrl + url}
                 />
                 {isArticle ? (
                     <meta property="og:type" content="article" />

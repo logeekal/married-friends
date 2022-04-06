@@ -32,7 +32,7 @@ const ArticlePage: FC<ArticlePageProps> = ({ pageContext }) => {
         description={striptags(post.excerpt)}
         image={post.featuredImage?.node?.mediaItemUrl}
         isArticle={false}
-        url=""
+        url={post.uri}
       />
       <main
         sx={

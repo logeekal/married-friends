@@ -100,7 +100,7 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
         description={striptags(post.excerpt)}
         image={post.featuredImage?.node?.mediaItemUrl}
         isArticle={true}
-        url=""
+        url={post.uri}
         schemas={[
           {
             type: "recipe",
