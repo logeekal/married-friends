@@ -113,7 +113,7 @@ module.exports = {
               }
             `,
             output: "/rss.xml",
-            title: "Feed from the Kitchen of Married Friends",
+            title: "Feeding you from The Fearless Cooking",
           },
         ],
       },
