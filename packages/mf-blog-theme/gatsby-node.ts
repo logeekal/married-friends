@@ -7,14 +7,5 @@ exports.createPages = async ({ actions, graphql }: any) => {
 };
 
 exports.onCreateWebpackConfig = ({ stage, loaders, actions } : any) => {
-  if (stage === "build-html") {
-    console.log("Ignoring Carousel");
-    actions.setWebpackConfig({
-      module: {
-        rules: [
-          { test: /responsive-react-image-carousel/, use: loaders.null() }
-        ]
-      }
-    });
-  }
+  if (stage === "build-html") {}
 };

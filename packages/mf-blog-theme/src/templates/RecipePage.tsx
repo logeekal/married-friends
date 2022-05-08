@@ -30,8 +30,6 @@ export interface RecipePageProps {
 
 const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
 
-  console.log({pageContext})
-
   const [hasWindow] = useWindow();
 
 
