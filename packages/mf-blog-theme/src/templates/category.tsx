@@ -1,7 +1,6 @@
 /* @jsx jsx */
 
 import { jsx, Styled, Box } from "theme-ui";
-import Caraousel from "responsive-react-image-carousel";
 import React, { useState } from "react";
 import Layout from "../components/layout";
 import Instagram from "../sections/instagram";
@@ -33,8 +32,6 @@ interface CategoryProps {
     postObj: IRecipeObject;
   };
 }
-
-log(`Carousel is ${Caraousel}`);
 
 function RecipeCategoryPage({
   pageContext,
