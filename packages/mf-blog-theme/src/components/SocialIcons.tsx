@@ -153,9 +153,9 @@ SocialIcons.defaultProps = {
   includeSearch: true,
   socialProfiles: [
     {
-      name: "Twitter",
-      type: "twitter",
-      target: "https://www.twitter.com/thefearlesscooking/"
+      name: "Instagram",
+      type: "instagram",
+      target: "https://www.instagram.com/thefearlesscooking/"
     },
     {
       name: "Facebook",

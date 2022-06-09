@@ -21,7 +21,7 @@ import {
 
 import { RiMessengerLine } from "react-icons/ri";
 import { MdMenu } from "react-icons/md";
-import {FaFacebookSquare, FaTwitterSquare, FaYoutubeSquare} from "react-icons/fa";
+import {FaFacebookSquare, FaInstagramSquare, FaTwitterSquare, FaYoutubeSquare} from "react-icons/fa";
 
 /*
  *export const ICON_COMPONENTS = {
@@ -40,6 +40,7 @@ export const ICON_COMPONENTS = (iconProps) => ({
   facebook: <FaFacebookSquare {...iconProps} />,
   twitter: <FaTwitterSquare {...iconProps} />,
   youtube: <FaYoutubeSquare {...iconProps} />,
+  instagram: <FaInstagramSquare {...iconProps} />,
   mail: <TiMail {...iconProps} />,
   search: <TiZoom {...iconProps} />,
   menu: <MdMenu {...iconProps} />,
