@@ -319,7 +319,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, recipePost }) => {
           <Box>
             <SocialShare
               pageTitle={recipePost.title}
-              pageURI={`https://marriedfriends.in${recipePost.uri}`}
+              pageURI={`https://thefearlesscooking.com${recipePost.uri}`}
             />
           </Box>
         </Flex>

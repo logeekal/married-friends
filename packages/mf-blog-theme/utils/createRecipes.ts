@@ -64,7 +64,6 @@ const createRecipes = async ({ actions, graphql }: CustomCreatePageArgs, allFAQs
 };
 
 const createHomePage =  async (actions: CustomCreatePageArgs["actions"], allRecipeObj: IRecipeObject) => {
-
   log(" Creating Home Page")
 
   const homeTemplate = path.resolve(
@@ -76,13 +75,11 @@ const createHomePage =  async (actions: CustomCreatePageArgs["actions"], allReci
     component: homeTemplate,
     context: {
         type: "home",
-        tagLine: `Welcome to the Kitchen of Married Friends.`,
+        tagLine: `Welcome to The Fearless Cooking`,
         category: undefined,
         postObj: allRecipeObj
     }
   })
-
-
 }
 
 const generateRecipePages = async ({

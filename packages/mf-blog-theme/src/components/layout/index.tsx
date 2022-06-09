@@ -15,8 +15,8 @@ const Layout: React.FC<{}> = ({ children }) => {
       }}
     >
       <HeaderSection
-        title="Married Friends."
-        subTitle="creating a delicious lifestyle together"
+        title="The Fearless Cooking"
+        subTitle="Every great recipe is a result of a fearless experiment"
         menu={[
           {
             label: "Test 1",

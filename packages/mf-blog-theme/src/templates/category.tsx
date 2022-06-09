@@ -69,7 +69,7 @@ function RecipeCategoryPage({
     <Layout>
       <GoToTop />
       <SEOWithQuery
-        title={`${tagLine} | Kitchen of Married Friends`}
+        title={`${tagLine} | The Fearless Cooking`}
         description={
           pageContext.type === "home" ? null : pageContext.category.description
         }
@@ -79,7 +79,7 @@ function RecipeCategoryPage({
         schemas={[
           {
             type: "list",
-            schema: genItemListSchema(Object.values(postObj), tagLine)
+            schema: genItemListSchema(Object.values(postObj))
           }
         ]}
       />

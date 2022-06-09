@@ -135,7 +135,7 @@ const getRecipeInstructions = (recipe: IRecipeMeta, post: Recipe, videoId) => {
           step.instructionTitle,
           index + 1
         );
-        let completeURL = `https://marriedfriends.in${post.uri.slice(
+        let completeURL = `https://thefearlesscooking.com${post.uri.slice(
           0,
           -1
         )}#${stepURLID}`;

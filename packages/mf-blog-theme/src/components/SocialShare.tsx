@@ -74,11 +74,11 @@ const SocialShare: React.FC<SocialShareProps> = ({ pageTitle, pageURI }) => {
           window.location.href
         )}`,
         twitter: genCompleteURL("https://twitter.com/intent/tweet", {
-          hashtags: "kitchenofmarriedfriends,marriedfriends",
-          original_referer: "https://marriedfriends.in",
+          hashtags: "thefearlesscooking, fearlesscooking",
+          original_referer: "https://thefearlesscooking.com",
           text: pageTitle,
           url: window.location.href,
-          via: "marriedfriendss",
+          via: "thefearlesscooking",
         }),
         pinterest: genCompleteURL("https://pinterest.com/pin/create/button", {
           url: window.location.href,

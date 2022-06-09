@@ -153,19 +153,19 @@ SocialIcons.defaultProps = {
   includeSearch: true,
   socialProfiles: [
     {
-      name: "Twitter",
-      type: "twitter",
-      target: "https://www.twitter.com/marriedfriendss/"
+      name: "Instagram",
+      type: "instagram",
+      target: "https://www.instagram.com/thefearlesscooking/"
     },
     {
       name: "Facebook",
       type: "facebook",
-      target: "https://www.facebook.com/marriedfriendss/"
+      target: "https://www.facebook.com/thefearlesscooking/"
     },
     {
       name: "Youtube",
       type: "youtube",
-      target: "https://www.youtube.com/c/marriedfriends"
+      target: "https://www.youtube.com/c/thefearlesscooking"
     }
   ]
 };

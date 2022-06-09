@@ -27,7 +27,7 @@ type TSiteMeta = {
         youtube: string;
     };
     author: {
-        name: "Married Friends";
+        name: "The Fearless Cooking";
     };
     organization: {
         name: string;
