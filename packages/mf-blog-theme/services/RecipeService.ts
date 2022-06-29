@@ -2,11 +2,21 @@ import {
   Recipe,
   RecipeCourse,
   RecipeCuisine,
+  WpPageInfo,
 } from "../src/types/wp-graphql.types";
 import { IRecipeContent, IWPGraphQL } from "../utils/types";
 import axios from "axios";
 
 const pagesHeaderName = "x-wp-totalpages"
+
+interface RecipeResponse {
+  recipes: {
+    pageInfo: WpPageInfo,
+    nodes: Array<Recipe>
+  };
+
+}
+
 export default class RecipeService {
   graphql: any;
   actions: any;
@@ -20,10 +30,16 @@ export default class RecipeService {
   }
 
   getAllRecipePosts = async (): Promise<Array<Recipe>> => {
-    const GET_RECIPE_POSTS = `
+    const GEN_GET_RECIPE_POSTS_QUERY = (first: number = 100, endCursor: string | null = null, startCursor: string | null = null) => `
       query GET_RECIPE_POSTS {
         wpgraphql {
-          recipes(first: 1000) {
+          recipes(first:${first}, after:"${endCursor}", before:"${startCursor}") {
+            pageInfo {
+              endCursor
+              startCursor
+              hasNextPage
+              hasPreviousPage
+            }
             nodes {
               id
               content
@@ -74,10 +90,21 @@ export default class RecipeService {
       }
     `;
 
-    const response: IWPGraphQL<{
-      recipes: { nodes: Array<Recipe> };
-    }> = await this.graphql(GET_RECIPE_POSTS);
-    return response.data.wpgraphql.recipes.nodes;
+    let hasNextPage = true
+    let endCursor;
+    let result: Array<Recipe> = []
+    let pageCounter = 0
+    while (hasNextPage) {
+      let response: IWPGraphQL<RecipeResponse> = await this.graphql(GEN_GET_RECIPE_POSTS_QUERY(100,endCursor));
+      let { nodes: recipeNodes, pageInfo } = response.data.wpgraphql.recipes;
+      console.log(`Found ${recipeNodes.length} recipes on page : ${pageCounter}`)
+      result.push(...recipeNodes);
+      hasNextPage = pageInfo.hasNextPage
+      endCursor = pageInfo.endCursor
+      pageCounter++
+    }
+    console.log(`Found overall ${result.length} recipes`)
+    return result;
   };
 
   getAllRecipesData = async (): Promise<IRecipeContent> => {

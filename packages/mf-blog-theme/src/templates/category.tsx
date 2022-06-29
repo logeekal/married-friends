@@ -58,8 +58,6 @@ function RecipeCategoryPage({
     }
   }
 
-  log("PostIds for category:", postIds);
-
   const minMargin = 0;
 
   const [hasWindow, hasDocument] = useWindow();
