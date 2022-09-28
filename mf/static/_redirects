@@ -1,3 +1,4 @@
 # http and https need separate rules if you don’t force_ssl!
 http://marriedfriends.in/* https://thefearlesscooking.com/:splat 301!
 https://marriedfriends.in/* https://thefearlesscooking.com/:splat 301!
+https://www.marriedfriends.in/* https://thefearlesscooking.com/:splat 301!
