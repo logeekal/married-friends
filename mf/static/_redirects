@@ -1,2 +1,8 @@
+<<<<<<< Updated upstream
 https://marriedfriends.in/* https://thefearlesscooking.com/:splat 301!
 /marriedfriends/ https://thefearlesscooking.netlify.app/:splat 301!
+=======
+# http and https need separate rules if you don’t force_ssl!
+http://marriedfriends.in/* https://thefearlesscooking.com/:splat 301!
+https://marriedfriends.in/* https://thefearlesscooking.com/:splat 301!
+>>>>>>> Stashed changes
