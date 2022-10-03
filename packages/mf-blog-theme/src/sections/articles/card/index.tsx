@@ -41,7 +41,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
   const categories: Array<RecipeCourse | RecipeCuisine | Category> =
     "recipeCuisines" in post && post.recipeCuisines.nodes.length > 0
       ? [(post as Recipe).recipeCuisines.nodes[0]]
-      : [(post as Post).categories.nodes[0]];
+      : [];
 
       if ("recipeCourses" in post && post.recipeCourses.nodes.length > 0) {
     categories.push((post as Recipe).recipeCourses.nodes[0]);

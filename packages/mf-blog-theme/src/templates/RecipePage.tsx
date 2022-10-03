@@ -47,7 +47,6 @@ const RecipePage: FC<RecipePageProps> = ({ pageContext }) => {
   //log({recipe, allFAQObject, post, faqIds, recipeVideoId})
 
   let date = getFormattedDate(post.date);
-  const category = post.recipeCuisines.nodes[0];
   const cuisines = post.recipeCuisines.nodes;
   const courses = post.recipeCourses.nodes;
 
