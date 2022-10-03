@@ -70,8 +70,8 @@ const genRecipeSchema = (
     totalTime: convertDurationToISO8601(addDurations([prepTime, cookTime])),
     keywords: recipe.recipeKeywords,
     recipeYield: recipe.noOfServings,
-    recipeCategory: post.recipeCuisines.nodes[0].name,
-    recipeCuisine: post.recipeCuisines.nodes[0].name,
+    recipeCategory: post.recipeCuisines.nodes.length > 0 ? post.recipeCuisines.nodes[0].name: '',
+    recipeCuisine: post.recipeCuisines.nodes.length > 0 ? post.recipeCuisines.nodes[0].name: '',
     recipeIngredient: getRecipeIngredients(recipe.recipeIngredients),
     recipeInstructions: getRecipeInstructions(recipe, post, videoId),
     aggregateRating: {
